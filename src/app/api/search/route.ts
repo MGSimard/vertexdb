@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server";
+import { type NextRequest, NextResponse } from "next/server";
 import { searchGames } from "@/server/queries";
 
 // API Endpoint @api/search?query=xxxx
