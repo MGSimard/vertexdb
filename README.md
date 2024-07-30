@@ -1,29 +1,55 @@
-# Create T3 App
+## https://vertexdb.vercel.app/
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+## NextJS Project
 
-## What's next? How do I make an app with this?
+VertexDB (Vertex Database) is a web app which is intended to have the following features:
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+- Video game information lookup.
+- User-provided submissions for helpful resources.
+- Democratic voting on resources, show top resources at the top of their respective categories.
+  An example of this would be submitting links for useful tools, or top subreddits and other communities related to a video game.
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+Playing around with Nextjs to experience fullstack. Currently in FE phase, eventually need to create DB for user submissions and vote tracking.
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+- Submissions (id, type, gameID, link, text, description, score, author)
+- Votes (Need to somehow keep track of someone's vote on a submission, allow up-down-cancel, can only vote once at a time on a submission)
 
-## Learn More
+## Tasks
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+- [x] Feature planning
+- [x] Establish design guidelines
+- [x] Build mock layouts for index & game pages
+- [x] Create placeholder images for card and thumbnail (When unavailable)
+- [x] Make a decision on DB seeding (No)
+- [x] Create api/search?query= endpoint
+- [x] Create api/gamedata?query= endpoint
+- [x] Set up request bodies
+- [x] Build searchbar component
+- [x] Move searchbar to nav while in game page
+- [x] Plug searchbar into search API
+- [x] Make searchbar expand on click to show ~max 10 matching results
+- [x] Make a submit searchbar query button
+- [x] Make a clear searchbar query button
+- [x] Skeleton loading component for game page
+- [x] Add websites to game page button links
+- [x] Deploy to vercel for testing, add env variables
+- [x] Start setting up database
+- [ ] Rework submission cards, need better visual separation
+- [ ] Find Steam svg icon outline for steam button
+- [ ] Make decision on displayed storefront links
+- [ ] Finalize websites
+- [ ] Before moving to BE, think about code-splitting CSS
+- [ ] If so, rework CSS classes and selection methods
+- [ ] Implement auth
+- [ ] Create DB for submissions, scoring & voter tracking
+- [ ] Implement item submission functionality (links in cards)
+- [ ] Implement voting functionality
+- [ ] Implement admin dashboard
+- [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+## Few conventions
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
-
-## How do I deploy this?
-
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+- Import order: React Core > Other core > Types > Components > functions > styles
+- export default function() for pages
+- export function() for components
+- const = () => {} for anything "in-house"

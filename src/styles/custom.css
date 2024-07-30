@@ -1,0 +1,209 @@
+/* GAME PAGE */
+.gamesection-header {
+  position: relative;
+  display: flex;
+  gap: 1rem;
+}
+.game-image-container,
+.game-metadata {
+  z-index: 2;
+}
+.game-background {
+  z-index: 1;
+  position: absolute;
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  -webkit-mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.1) 35%, rgba(0, 0, 0, 0) 80%);
+  mask-image: linear-gradient(to right, rgba(0, 0, 0, 0.1) 35%, rgba(0, 0, 0, 0) 80%);
+  filter: blur(8px);
+  -webkit-filter: blur(8px);
+}
+.game-image-container {
+  width: 100%;
+  max-width: 30rem;
+  min-width: 10rem;
+  aspect-ratio: 0.70588/1;
+  border: 0.2rem solid hsl(from var(--clr-primary) h calc(s - 30) calc(l - 10));
+  background: hsl(from var(--clr-primary) h calc(s - 30) calc(l - 10));
+  clip-path: polygon(
+    calc(0% + 0.5rem) 0,
+    100% 0,
+    100% calc(100% - 4rem),
+    calc(100% - 4rem) 100%,
+    calc(0% + 0.8rem) 100%,
+    0 calc(100% - 0.8rem),
+    0 calc(0% + 8rem),
+    calc(0% + 0.5rem) calc(0% + 7.5rem)
+  );
+}
+.gic-inner {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(
+    calc(0% + 0.5rem) 0,
+    100% 0,
+    100% calc(100% - 4rem),
+    calc(100% - 4rem) 100%,
+    calc(0% + 0.8rem) 100%,
+    0 calc(100% - 0.8rem),
+    0 calc(0% + 8rem),
+    calc(0% + 0.5rem) calc(0% + 7.5rem)
+  );
+}
+.gic-left,
+.gic-right {
+  flex-shrink: 0;
+  background: var(--clr-primary);
+}
+.gic-left {
+  width: 0.8rem;
+}
+.gic-right {
+  width: 1.8rem;
+}
+.gic-middle {
+  flex-grow: 1;
+  background-position: center;
+  background-size: cover;
+}
+.game-table {
+  margin-bottom: 2rem;
+}
+.game-table h1 {
+  margin-bottom: 1rem;
+}
+.game-officialrss {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.game-officialrss a {
+  width: 12rem;
+}
+.game-resourcesection {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+}
+/* VERTICAL TABLE */
+.table-vertical {
+  text-align: left;
+}
+.table-vertical tbody {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+.table-vertical tr {
+  display: flex;
+  flex-direction: column;
+}
+.table-vertical th {
+  font-weight: 600;
+}
+/* CARD */
+.card {
+  display: flex;
+}
+.card-left {
+  width: 2rem;
+  flex-shrink: 0;
+}
+.card-content {
+  position: relative;
+  padding: 1rem;
+  flex-grow: 1;
+}
+.card-left,
+.card-content {
+  background: var(--clr-ui-bg-95);
+  border: 2px solid var(--clr-ui-border-idle);
+}
+.card:hover > .card-content,
+.card:focus > .card-content {
+  border: 2px solid var(--clr-ui-border-notidle);
+}
+.card:hover > .card-content::after,
+.card:focus > .card-content::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: var(--clr-ui-overlay-hover);
+  pointer-events: none;
+}
+/* .card:active > .card-content {
+  color: var(--clr-bg);
+  background: var(--clr-ui-overlay-active);
+} */
+.card li:not(:last-child) {
+  margin-bottom: 1rem;
+}
+.card:hover li:not(:hover) {
+  opacity: 0.5;
+}
+.card-submission {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem 0;
+}
+.card-submission:hover p {
+  color: var(--clr-secondary);
+}
+.cs-left {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 3rem;
+  text-align: center;
+  flex-shrink: 0;
+}
+.cs-left button {
+  background: none;
+  color: var(--clr-secondary);
+  border: none;
+  font-size: 1.5rem;
+}
+.cs-left button:hover svg {
+  stroke: none;
+  fill: currentColor;
+}
+.card-submission h3 {
+  font-weight: 600;
+}
+.cs-right {
+  flex-grow: 1;
+}
+.cs-bot {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+@media only screen and (max-width: 968px) {
+  .game-resourcesection {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media only screen and (max-width: 480px) {
+  .gamesection-header {
+    flex-direction: column;
+  }
+  .table-vertical tr {
+    display: flex;
+    flex-direction: column;
+  }
+  .game-officialrss .button-styled-a {
+    width: 100%;
+  }
+}
