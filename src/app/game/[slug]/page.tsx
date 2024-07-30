@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { type GamedataResponseTypes } from "@/utils/types";
+import type { GamedataResponseTypes } from "@/utils/types";
 import { GameSkeleton } from "@/components/page_game/GameSkeleton";
 import { Card } from "@/components/Card";
 import { Globe, Discord } from "@/components/icons";
@@ -60,7 +60,7 @@ const contentResources = [
 ];
 
 export default function Page() {
-  const { slug } = useParams<{ slug: string }>();
+  const { slug } = useParams();
 
   const [{ isPending, error, data: gameData }, setFetchResult] = useState<StateTypes>({
     isPending: true,
