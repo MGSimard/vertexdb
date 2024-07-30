@@ -108,7 +108,7 @@ export default function Page() {
   }
 
   const LinkButton = ({ category, icon, text }: LinkButtonTypes) => {
-    const website = gameData?.websites.find((site) => site.category === category)?.url;
+    const website = gameData?.websites?.find((site) => site.category === category)?.url;
     return (
       <a
         href={website}
