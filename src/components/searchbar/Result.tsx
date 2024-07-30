@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { SearchbarTypes } from "@/utils/types";
+import type { SearchbarTypes } from "@/utils/types";
 import { coverPath } from "@/utils/coverPath";
 
 export function Result({ game }: { game: SearchbarTypes }) {

@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { StateTypes } from "./types";
+import type { StateTypes } from "./types";
 import { GameSkeleton } from "@/components/page_game/GameSkeleton";
 import { Card } from "@/components/Card";
 import { Globe, Discord } from "@/components/icons";

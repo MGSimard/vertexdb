@@ -1,6 +1,4 @@
 // CONTENT FETCHER (FOR GAME PAGE)
-// fields: name, cover.image_id, first_release_date, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, summary, websites.category, websites.url;
-// where: slug = urlparamslug & version_parent = null & category = (0,4,8,9,12)
 export async function getGameInfo(query: string) {
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
@@ -25,10 +23,7 @@ export async function getGameInfo(query: string) {
 }
 
 // SEARCHBAR RESULT FETCHER
-// fields: name, slug, cover.image_id;
-// where: version_parent = null & category = (0,4,8,9,12);
-// limit: 9
-// search: "${query}" (from query params in api/search?query=, set by user search in searchbar)
+// "${query}" (from query params in api/search?query=, set by user search in searchbar)
 export async function searchGames(query: string) {
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
