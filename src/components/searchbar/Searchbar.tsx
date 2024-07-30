@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import { type SearchbarTypes } from "@/utils/types";
+import { type SearchResponseTypes } from "@/utils/types";
 import { Result } from "@/components/searchbar/Result";
 import { Clear, MagnifyingGlass } from "@/components/icons";
 import { flatnamed } from "@/utils/flatnamed";
@@ -10,7 +10,7 @@ import "./searchbar.css";
 
 export function Searchbar() {
   const [query, setQuery] = useState("");
-  const [games, setGames] = useState<SearchbarTypes[]>([]);
+  const [games, setGames] = useState<SearchResponseTypes[]>([]);
   const pathname = usePathname();
   const router = useRouter();
 

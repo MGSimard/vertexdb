@@ -1,8 +1,8 @@
 import Link from "next/link";
-import { type SearchbarTypes } from "@/utils/types";
+import { type SearchResponseTypes } from "@/utils/types";
 import { coverPath } from "@/utils/coverPath";
 
-export function Result({ game }: { game: SearchbarTypes }) {
+export function Result({ game }: { game: SearchResponseTypes }) {
   return (
     <li className="search-result">
       <Link href={`/game/${game.slug}`}>

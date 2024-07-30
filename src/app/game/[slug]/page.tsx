@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import type { StateTypes } from "./types";
+import { type GamedataResponseTypes } from "@/utils/types";
 import { GameSkeleton } from "@/components/page_game/GameSkeleton";
 import { Card } from "@/components/Card";
 import { Globe, Discord } from "@/components/icons";
@@ -12,6 +12,12 @@ interface LinkButtonTypes {
   category: number;
   icon: React.ReactNode | undefined;
   text: string;
+}
+
+interface StateTypes {
+  isPending: boolean;
+  error: string | null;
+  data: GamedataResponseTypes | null;
 }
 
 // mock data for UI previewing
