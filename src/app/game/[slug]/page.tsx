@@ -54,7 +54,7 @@ const contentResources = [
 ];
 
 export default function Page() {
-  const { slug } = useParams();
+  const { slug } = useParams<{ slug: string }>();
 
   const [{ isPending, error, data: gameData }, setFetchResult] = useState<StateTypes>({
     isPending: true,
