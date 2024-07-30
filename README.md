@@ -33,7 +33,7 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Skeleton loading component for game page
 - [x] Add websites to game page button links
 - [x] Migrate to T3 Stack
-- [ ] Deploy to vercel for testing, add env variables
+- [x] Deploy to vercel for testing, add env variables
 - [ ] Start setting up database
 - [ ] Create DB for submissions, scoring & voter tracking
 - [ ] Rework submission cards, need better visual separation
