@@ -22,7 +22,7 @@ export function Searchbar() {
         if (!res.ok) {
           throw new Error(`HTTP Error: ${res.status}`);
         }
-        const data = await res.json();
+        const data: SearchResponseTypes[] = await res.json();
         if (!ignore) setGames(data);
       } catch (err) {
         console.log(err);
