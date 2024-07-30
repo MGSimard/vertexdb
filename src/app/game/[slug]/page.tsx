@@ -74,7 +74,7 @@ export default function Page() {
 
     const fetchGameData = async () => {
       try {
-        const res = await fetch(`/api/gamedata?query=${slug}`);
+        const res = await fetch(`/api/gamedata?query=${slug as string}`);
 
         if (!res.ok) {
           throw new Error(`HTTP Error: ${res.status}`);
