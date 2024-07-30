@@ -2,7 +2,7 @@
 import { useState, useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
-import type { SearchbarTypes } from "@/utils/types";
+import { type SearchbarTypes } from "@/utils/types";
 import { Result } from "@/components/searchbar/Result";
 import { Clear, MagnifyingGlass } from "@/components/icons";
 import { flatnamed } from "@/utils/flatnamed";
