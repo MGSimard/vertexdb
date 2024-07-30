@@ -32,8 +32,10 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Make a clear searchbar query button
 - [x] Skeleton loading component for game page
 - [x] Add websites to game page button links
-- [x] Deploy to vercel for testing, add env variables
-- [x] Start setting up database
+- [x] Migrate to T3 Stack
+- [ ] Deploy to vercel for testing, add env variables
+- [ ] Start setting up database
+- [ ] Create DB for submissions, scoring & voter tracking
 - [ ] Rework submission cards, need better visual separation
 - [ ] Find Steam svg icon outline for steam button
 - [ ] Make decision on displayed storefront links
@@ -41,10 +43,9 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [ ] Before moving to BE, think about code-splitting CSS
 - [ ] If so, rework CSS classes and selection methods
 - [ ] Implement auth
-- [ ] Create DB for submissions, scoring & voter tracking
-- [ ] Implement item submission functionality (links in cards)
-- [ ] Implement voting functionality
-- [ ] Implement admin dashboard
+- [ ] Implement item submission functionality (links in cards) (server actions)
+- [ ] Implement voting functionality (server actions)
+- [ ] Implement admin dashboard (server actions)
 - [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)
 
 ## Few conventions
