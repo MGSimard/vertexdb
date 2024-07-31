@@ -96,6 +96,8 @@ export default function Page() {
     };
   }, []);
 
+  console.log(gameData);
+
   const doCover = () => {
     return gameData?.cover?.image_id ? coverPath("720p", gameData.cover.image_id) : "/missingasset.webp";
   };
