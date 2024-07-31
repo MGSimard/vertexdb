@@ -94,7 +94,7 @@ export default function Page() {
       ignore = true;
       setFetchResult({ isPending: true, error: null, data: null });
     };
-  }, []); // eslint-disable-line react-hooks/exhaustive-deps
+  }, []);
 
   const doCover = () => {
     return gameData?.cover?.image_id ? coverPath("720p", gameData.cover.image_id) : "/missingasset.webp";
