@@ -6,11 +6,14 @@ import { gameRssEntries } from "@/server/db/schema";
 export default async function Page() {
   const currentGameId = 202956;
 
-  const test = await db.query.gameRssEntries.findMany({
+  const submissions = await db.query.gameRssEntries.findMany({
     where: eq(gameRssEntries.gameId, currentGameId),
   });
 
-  console.log(test);
+  const resources = submissions.filter((entry) => entry.section === "resources");
+  const communities = submissions.filter((entry) => entry.section === "communities");
+  const contentCreators = submissions.filter((entry) => entry.section === "contentCreators");
+  console.log(contentCreators);
 
   return (
     <main className="index-main">
@@ -23,21 +26,15 @@ export default async function Page() {
       </div>
       <div>
         <h2>Resources</h2>
-        <ul>
-          <li>Test</li>
-        </ul>
+        {resources.length > 0 && resources.map((entry) => <li key={entry.rssId}>{entry.title}</li>)}
       </div>
       <div>
         <h2>Communities</h2>
-        <ul>
-          <li>Test</li>
-        </ul>
+        {communities.length > 0 && communities.map((entry) => <li key={entry.rssId}>{entry.title}</li>)}
       </div>
       <div>
         <h2>Content Creators</h2>
-        <ul>
-          <li>Test</li>
-        </ul>
+        {contentCreators.length > 0 && contentCreators.map((entry) => <li key={entry.rssId}>{entry.title}</li>)}
       </div>
     </main>
   );

@@ -1,7 +1,6 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 import { sql } from "drizzle-orm";
-
 import { pgTableCreator, serial, timestamp, varchar, integer, boolean, index, uniqueIndex } from "drizzle-orm/pg-core";
 
 /**
@@ -16,10 +15,11 @@ export const gameRssEntries = createTable(
     rssId: serial("rss_id").primaryKey(),
     gameId: integer("game_id").notNull(),
     author: varchar("author", { length: 255 }).notNull(),
-    title: varchar("title", { length: 32 }).notNull(),
+    title: varchar("title", { length: 255 }).notNull(),
     url: varchar("url", { length: 255 }).notNull().unique(),
-    description: varchar("description", { length: 128 }).notNull(),
-    section: varchar("section", { length: 32 }).notNull(),
+    description: varchar("description", { length: 255 }).notNull(),
+    section: varchar("section", { length: 255 }).notNull(),
+    score: integer("score").default(1).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -45,6 +45,7 @@ export const gameRssVotes = createTable(
     updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
   },
   (table) => ({
-    voteIdx: uniqueIndex("idx_gameRssVotes_rssId").on(table.rssId),
+    rssIdx: index("idx_gameRssVotes_rssId").on(table.rssId),
+    voterIdx: index("idx_gameRssVotes_voterId").on(table.voterId),
   })
 );
