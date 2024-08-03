@@ -46,3 +46,5 @@ export async function searchGames(query: string) {
     console.log(err);
   }
 }
+
+// ADD SUBMISSION (FOR USERS)
