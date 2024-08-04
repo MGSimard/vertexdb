@@ -20,45 +20,6 @@ interface StateTypes {
   data: GamedataResponseTypes | null;
 }
 
-// mock data for UI previewing
-const contentResources = [
-  {
-    id: 1,
-    score: 198,
-    text: "Prydwen.gg",
-    href: "https://www.prydwen.gg/wuthering-waves/",
-    description: "General tools & guides.",
-  },
-  {
-    id: 2,
-    score: 145,
-    text: "Interactive Map",
-    href: "https://genshin-impact-map.appsample.com/wuthering-waves-map/",
-    description: "Interactive world map, same service as Genshin's.",
-  },
-  {
-    id: 3,
-    score: 93,
-    text: "Wuthering Waves Assets",
-    href: "https://wanderer.moe/wuthering-waves",
-    description: "Data-mined assets from Wuthering Waves.",
-  },
-  {
-    id: 4,
-    score: 84,
-    text: "Wuwatools",
-    href: "https://wuwatools.web.app/",
-    description: "Multi-purpose tools website.",
-  },
-  {
-    id: 5,
-    score: 54,
-    text: "Pity Tracker",
-    href: "https://wuwatracker.com/",
-    description: "Universal pity tracking tool with stats.",
-  },
-];
-
 export default function Page() {
   const { slug } = useParams();
 
@@ -182,7 +143,7 @@ export default function Page() {
           <section className="game-resourcesection">
             <div>
               <h2>Resources</h2>
-              <Card content={contentResources} />
+              <Card content={[]} />
             </div>
             <div>
               <h2>Communities</h2>

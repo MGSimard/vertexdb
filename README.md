@@ -36,10 +36,10 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Deploy to vercel for testing, add env variables
 - [x] Start setting up database
 - [x] Create DB for submissions, scoring & voter tracking
+- [ ] Separate game page down to retain SSR, fragment client components down
 - [ ] Implement auth
 - [ ] Implement item submission functionality (links in cards) (server actions)
 - [ ] Implement voting functionality (server actions)
-- [ ] Separate game page down to retain SSR, fragment client components down
 - [ ] Rework submission cards, need better visual separation
 - [ ] Find Steam svg icon outline for steam button
 - [ ] Make decision on displayed storefront links
