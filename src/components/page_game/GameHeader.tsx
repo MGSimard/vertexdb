@@ -64,7 +64,7 @@ export function GameHeader() {
   };
 
   if (gameData?.websites && gameData.websites.length > 0) {
-    console.log(gameData.websites);
+    console.log("WEBSITES:", gameData.websites);
   }
 
   const LinkButton = ({ category, icon, text }: LinkButtonTypes) => {
@@ -81,7 +81,7 @@ export function GameHeader() {
     );
   };
 
-  console.log(gameData);
+  console.log("GAME DATA:", gameData);
 
   if (isPending) return <GameSkeleton />;
 

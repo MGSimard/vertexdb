@@ -29,6 +29,10 @@ export default async function Page() {
   const resources = initialRssRender.filter((entry) => entry.section === "resources");
   const communities = initialRssRender.filter((entry) => entry.section === "communities");
   const contentCreators = initialRssRender.filter((entry) => entry.section === "contentCreators");
+
+  console.log("COMMUNITIES:", resources);
+  console.log("RESOURCES:", communities);
+  console.log("CONTENT CREATORS:", contentCreators);
   return (
     <main>
       <GameHeader />
