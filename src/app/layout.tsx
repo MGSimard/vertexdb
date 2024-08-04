@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Rajdhani } from "next/font/google";
+import { Providers } from "@/utils/Providers";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { GamesIndexed } from "@/components/layout/GamesIndexed";
@@ -21,12 +22,14 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${rajdhani.className} antialiased`}>
-        <header>
-          <Navbar />
-          <GamesIndexed />
-        </header>
-        {children}
-        <Footer />
+        <Providers>
+          <header>
+            <Navbar />
+            <GamesIndexed />
+          </header>
+          {children}
+          <Footer />
+        </Providers>
       </body>
     </html>
   );

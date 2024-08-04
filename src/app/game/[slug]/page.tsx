@@ -1,38 +1,20 @@
 import { GameHeader } from "@/components/page_game/GameHeader";
 import { Card } from "@/components/Card";
-import { db } from "@/server/db";
-import { gameRssEntries, gameRssVotes } from "@/server/db/schema";
-import { eq, and } from "drizzle-orm";
+import { getInitialRss } from "@/server/actions";
 
 export default async function Page() {
   const currentGameId = 202956;
   const currentUser = "TESTUSER5";
 
-  // GRAB ALL SUBMITTED RESOURCES FOR A GAME
-  // AND THE CURRENT USER'S VOTE ON THEM IF THEY VOTED (RETURN TRUE, FALSE, NULL)
-  const initialRssRender = await db
-    .select({
-      rssId: gameRssEntries.rssId,
-      author: gameRssEntries.author,
-      title: gameRssEntries.title,
-      url: gameRssEntries.url,
-      description: gameRssEntries.description,
-      section: gameRssEntries.section,
-      score: gameRssEntries.score,
-      currentUserVote: gameRssVotes.voteType,
-      voteAuthor: gameRssVotes.voterId,
-    })
-    .from(gameRssEntries)
-    .leftJoin(gameRssVotes, and(eq(gameRssEntries.rssId, gameRssVotes.rssId), eq(gameRssVotes.voterId, currentUser)))
-    .where(eq(gameRssEntries.gameId, currentGameId));
+  const initialRss = await getInitialRss(currentGameId, currentUser);
+  console.log(initialRss);
 
-  const resources = initialRssRender.filter((entry) => entry.section === "resources");
-  const communities = initialRssRender.filter((entry) => entry.section === "communities");
-  const contentCreators = initialRssRender.filter((entry) => entry.section === "contentCreators");
-
-  console.log("COMMUNITIES:", resources);
-  console.log("RESOURCES:", communities);
-  console.log("CONTENT CREATORS:", contentCreators);
+  // const resources = initialRssRender.filter((entry) => entry.section === "resources");
+  // const communities = initialRssRender.filter((entry) => entry.section === "communities");
+  // const contentCreators = initialRssRender.filter((entry) => entry.section === "contentCreators");
+  // console.log("COMMUNITIES:", resources);
+  // console.log("RESOURCES:", communities);
+  // console.log("CONTENT CREATORS:", contentCreators);
   return (
     <main>
       <GameHeader />

@@ -1,3 +1,5 @@
+import "server-only";
+
 // CONTENT FETCHER (FOR GAME PAGE)
 export async function getGameInfo(query: string) {
   try {
