@@ -1,4 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
+import type { GamedataResponseTypes } from "@/utils/types";
 
 export function useGameData(slug: string) {
   const {
@@ -11,7 +12,7 @@ export function useGameData(slug: string) {
       const res = await fetch(`/api/gamedata?query=${slug as string}`);
       if (!res.ok) throw new Error(`HTTP Error: ${res.status}`);
       const data = await res.json();
-      return data[0];
+      return data[0] as GamedataResponseTypes;
     },
     refetchOnWindowFocus: false,
   });

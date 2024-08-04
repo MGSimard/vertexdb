@@ -1,43 +1,19 @@
 "use client";
 import { useParams } from "next/navigation";
 import { useGameData } from "@/utils/hooks/useGameData";
-import type { GamedataResponseTypes } from "@/utils/types";
-import { Globe, Discord } from "@/components/icons";
-import { convertUnix, coverPath } from "@/utils/helpers";
 import { GameSkeleton } from "./GameSkeleton";
-
-interface LinkButtonTypes {
-  category: number;
-  icon: React.ReactNode | undefined;
-  text: string;
-}
+import { LinkButton } from "@/components/page_game/LinkButton";
+import { Globe, Discord, Steam } from "@/components/icons";
+import { convertUnix, coverPath } from "@/utils/helpers";
 
 export function GameHeader() {
   const { slug } = useParams();
 
-  console.log(slug);
   const { isPending, error, gameData } = useGameData(slug as string);
-
-  if (gameData) console.log(gameData[0]);
-  if (error) console.log(error);
 
   if (gameData?.websites && gameData.websites.length > 0) {
     console.log("WEBSITES:", gameData.websites);
   }
-
-  const LinkButton = ({ category, icon, text }: LinkButtonTypes) => {
-    const website = gameData?.websites?.find((site) => site.category === category)?.url;
-    return (
-      <a
-        href={website}
-        target="_blank"
-        aria-disabled={!website}
-        className={`button-styled-a${website ? "" : " disabled"}`}>
-        {icon}
-        <span>{text}</span>
-      </a>
-    );
-  };
 
   if (isPending) return <GameSkeleton />;
 
@@ -96,9 +72,9 @@ export function GameHeader() {
           </table>
         </div>
         <div className="game-officialrss">
-          <LinkButton category={1} icon={<Globe />} text="WEBSITE" />
-          <LinkButton category={13} icon={undefined} text="STEAM" />
-          <LinkButton category={18} icon={<Discord />} text="DISCORD" />
+          <LinkButton category={1} icon={<Globe />} text="WEBSITE" gameData={gameData} />
+          <LinkButton category={13} icon={<Steam />} text="STEAM" gameData={gameData} />
+          <LinkButton category={18} icon={<Discord />} text="DISCORD" gameData={gameData} />
         </div>
       </div>
     </section>
