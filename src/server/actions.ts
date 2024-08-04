@@ -28,3 +28,9 @@ export async function getInitialRss(currentGameId: number, currentUser: string) 
     return { err };
   }
 }
+
+export async function getGameData(slug: string) {
+  const res = await fetch(`/api/gamedata?query=${slug as string}`);
+  if (!res.ok) throw new Error(`Failed to Fetch Game Data: ${res.status}`);
+  return res.json();
+}

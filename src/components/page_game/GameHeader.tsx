@@ -1,16 +1,9 @@
-"use client";
-import { useParams } from "next/navigation";
-import { useGameData } from "@/utils/hooks/useGameData";
 import { GameSkeleton } from "./GameSkeleton";
 import { LinkButton } from "@/components/page_game/LinkButton";
 import { Globe, Discord, Steam } from "@/components/icons";
 import { convertUnix, coverPath } from "@/utils/helpers";
 
-export function GameHeader() {
-  const { slug } = useParams();
-
-  const { isPending, error, gameData } = useGameData(slug as string);
-
+export function GameHeader(slug: string) {
   if (gameData?.websites && gameData.websites.length > 0) {
     console.log("WEBSITES:", gameData.websites);
   }

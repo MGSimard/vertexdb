@@ -22,14 +22,12 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${rajdhani.className} antialiased`}>
-        <Providers>
-          <header>
-            <Navbar />
-            <GamesIndexed />
-          </header>
-          {children}
-          <Footer />
-        </Providers>
+        <header>
+          <Navbar />
+          <GamesIndexed />
+        </header>
+        {children}
+        <Footer />
       </body>
     </html>
   );

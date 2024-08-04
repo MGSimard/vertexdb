@@ -31,7 +31,6 @@ export function Card({ content }: { content: SubmissionTypes[] | [] }) {
 }
 
 const SubmissionEntry = ({ submission }: { submission: SubmissionTypes }) => {
-  console.log("SUBMISSION:", submission);
   return (
     <li className="card-submission">
       <form className="cs-left">
