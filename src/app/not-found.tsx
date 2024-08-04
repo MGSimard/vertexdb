@@ -1,7 +1,6 @@
 import Link from "next/link";
 
 export default function NotFound() {
-  console.log(process.env.POSTGRES_URL);
   return (
     <main className="not-found">
       <h2>404</h2>
