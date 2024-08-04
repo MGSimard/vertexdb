@@ -20,3 +20,14 @@ export interface SearchResponseTypes {
     image_id: string;
   };
 }
+
+export interface SubmissionTypes {
+  rssId: number;
+  author: string;
+  title: string;
+  url: string;
+  description: string;
+  section: string;
+  score: number;
+  currentUserVote: boolean | null;
+}

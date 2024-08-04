@@ -14,7 +14,6 @@ export function Searchbar() {
   const pathname = usePathname();
   const router = useRouter();
 
-  // Not using TanStack Query for this one
   useEffect(() => {
     let ignore = false;
     const getMatchingGames = async () => {

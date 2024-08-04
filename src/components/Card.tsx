@@ -1,14 +1,5 @@
 import { ArrowUp, ArrowDown } from "@/components/icons";
-
-interface SubmissionTypes {
-  rssId: number;
-  author: string;
-  title: string;
-  url: string;
-  description: string;
-  score: number;
-  currentUserVote: boolean | null;
-}
+import { SubmissionTypes } from "@/utils/types";
 
 export function Card({ content }: { content: SubmissionTypes[] | [] }) {
   return (
@@ -31,6 +22,7 @@ export function Card({ content }: { content: SubmissionTypes[] | [] }) {
 }
 
 const SubmissionEntry = ({ submission }: { submission: SubmissionTypes }) => {
+  console.log(submission);
   return (
     <li className="card-submission">
       <form className="cs-left">
