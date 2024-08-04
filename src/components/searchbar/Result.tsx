@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { SearchResponseTypes } from "@/utils/types";
-import { coverPath } from "@/utils/coverPath";
+import { coverPath } from "@/utils/helpers";
 
 export function Result({ game }: { game: SearchResponseTypes }) {
   return (
