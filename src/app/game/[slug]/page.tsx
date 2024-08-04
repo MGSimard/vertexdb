@@ -4,7 +4,7 @@ import { getInitialRss } from "@/server/actions";
 
 export default async function Page() {
   const currentGameId = 202956;
-  const currentUser = "TESTUSER5";
+  const currentUser = "TESTUSER";
   const initialRss = await getInitialRss(currentGameId, currentUser);
 
   const sections = ["Resources", "Communities", "Creators"];
@@ -19,6 +19,7 @@ export default async function Page() {
           </div>
         ))}
       </section>
+      {/* Bring back full link list in small later */}
     </main>
   );
 }

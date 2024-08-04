@@ -8,7 +8,6 @@ interface SubmissionTypes {
   description: string;
   score: number;
   currentUserVote: boolean | null;
-  voteAuthor: string | null;
 }
 
 export function Card({ content }: { content: SubmissionTypes[] | [] }) {

@@ -17,7 +17,6 @@ export async function getInitialRss(currentGameId: number, currentUser: string) 
         section: gameRssEntries.section,
         score: gameRssEntries.score,
         currentUserVote: gameRssVotes.voteType,
-        voteAuthor: gameRssVotes.voterId,
       })
       .from(gameRssEntries)
       .leftJoin(gameRssVotes, and(eq(gameRssEntries.rssId, gameRssVotes.rssId), eq(gameRssVotes.voterId, currentUser)))
