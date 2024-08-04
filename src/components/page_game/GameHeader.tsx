@@ -8,7 +8,7 @@ import { GamedataResponseTypes, SubmissionTypes } from "@/utils/types";
 export async function GameHeader({ slug }: { slug: string }) {
   const currentUser = "TESTUSER";
   const gameData = (await getGameData(slug)) as GamedataResponseTypes;
-  const initialRss = gameData ? ((await getInitialRss(gameData.id, currentUser)) as SubmissionTypes[]) : [];
+  const initialRss = (await getInitialRss(gameData.id, currentUser)) as SubmissionTypes[];
 
   // if (gameData?.websites && gameData.websites.length > 0) {
   //   console.log("WEBSITES:", gameData.websites);
