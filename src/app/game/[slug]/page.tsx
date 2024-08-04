@@ -9,9 +9,9 @@ export default async function Page() {
   const initialRss = await getInitialRss(currentGameId, currentUser);
   console.log(initialRss);
 
-  // const resources = initialRssRender.filter((entry) => entry.section === "resources");
-  // const communities = initialRssRender.filter((entry) => entry.section === "communities");
-  // const contentCreators = initialRssRender.filter((entry) => entry.section === "contentCreators");
+  // const resources = initialRss.filter((entry) => entry.section === "resources");
+  // const communities = initialRss.filter((entry) => entry.section === "communities");
+  // const contentCreators = initialRss.filter((entry) => entry.section === "contentCreators");
   // console.log("COMMUNITIES:", resources);
   // console.log("RESOURCES:", communities);
   // console.log("CONTENT CREATORS:", contentCreators);
