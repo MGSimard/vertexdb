@@ -1,8 +1,9 @@
 "use client";
 import { usePathname } from "next/navigation";
 import Link from "next/link";
+import { SignedOut, SignInButton, SignedIn, UserButton } from "@clerk/nextjs";
 import { Searchbar } from "@/components/searchbar/Searchbar";
-import { Tech, Chip, Add } from "@/components/icons";
+import { Tech, Chip, Add, UserIcon } from "@/components/icons";
 
 export function Navbar() {
   const pathname = usePathname();
@@ -44,9 +45,18 @@ export function Navbar() {
         </div>
       )}
       <div className="nav-ele nav-ele-right">
-        <div>
-          <button className="btn-ui nav-account"></button>
-        </div>
+        <SignedOut>
+          <SignInButton>
+            <button className="btn-ui nav-account">
+              <UserIcon />
+            </button>
+          </SignInButton>
+        </SignedOut>
+        <SignedIn>
+          <div className="btn-ui nav-account">
+            <UserButton />
+          </div>
+        </SignedIn>
       </div>
     </nav>
   );

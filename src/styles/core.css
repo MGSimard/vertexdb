@@ -102,15 +102,59 @@ nav h1 {
   border-radius: 4px;
 }
 .nav-account {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 3rem;
   height: 3rem;
   border-radius: 999rem;
   border: 1px solid var(--clr-ui-border-idle);
   cursor: pointer;
+  padding: 0 !important;
 }
 .nav-account:hover {
   border-color: var(--clr-primary);
 }
+.cl-userButton-root,
+.cl-userButtonTrigger,
+.cl-userButtonBox,
+.cl-userButtonAvatarBox {
+  width: 100%;
+  height: 100%;
+}
+/* .cl-userButtonPopoverCard {
+  background: var(--clr-ui-bg-95);
+  border: 2px solid var(--clr-ui-border-idle);
+  border-radius: 0;
+}
+.cl-userButtonPopoverCard * {
+  font: inherit;
+  color: white;
+}
+.cl-userButtonPopoverMain,
+.cl-userButtonPopoverFooter {
+  background: none;
+}
+.cl-userButtonPopoverFooter {
+  opacity: 0.1;
+}
+.cl-userButtonPopoverActionButton:hover {
+  color: red;
+}
+.cl-userButtonPopoverActionButton:hover::after,
+.cl-userButtonPopoverActionButton:hover::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: var(--clr-ui-overlay-hover);
+  pointer-events: none;
+}
+.cl-userButtonPopoverActionButton:active:focus {
+  color: var(--clr-bg);
+  background: var(--clr-ui-overlay-active);
+} */
 .indexed-vertribbon {
   position: absolute;
   top: 70%;

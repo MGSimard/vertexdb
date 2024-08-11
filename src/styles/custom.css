@@ -11,10 +11,7 @@
 .game-background {
   z-index: 1;
   position: absolute;
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
+  inset: 0;
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -84,7 +81,7 @@
   gap: 1rem;
 }
 .game-officialrss a {
-  width: 12rem;
+  max-width: 12rem;
 }
 .game-resourcesection {
   display: grid;
@@ -139,10 +136,6 @@
   background: var(--clr-ui-overlay-hover);
   pointer-events: none;
 }
-/* .card:active > .card-content {
-  color: var(--clr-bg);
-  background: var(--clr-ui-overlay-active);
-} */
 .card li:not(:last-child) {
   margin-bottom: 1rem;
 }
