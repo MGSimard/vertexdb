@@ -257,6 +257,12 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+button {
+  all: unset;
+}
+button:not(:disabled) {
+  cursor: pointer;
+}
 .button-styled-a {
   text-align: center;
 }

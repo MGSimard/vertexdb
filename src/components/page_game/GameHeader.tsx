@@ -1,6 +1,6 @@
 import { getInitialRss, getGameData } from "@/server/actions";
 import { LinkButton } from "@/components/page_game/LinkButton";
-import { Card } from "@/components/Card";
+import { Card } from "@/components/page_game/Card";
 import { Globe, Discord, Steam } from "@/components/icons";
 import { convertUnix, coverPath } from "@/utils/helpers";
 import { GamedataResponseTypes, SubmissionTypes } from "@/utils/types";
@@ -8,7 +8,7 @@ import { GamedataResponseTypes, SubmissionTypes } from "@/utils/types";
 export async function GameHeader({ slug }: { slug: string }) {
   const currentUser = "TESTUSER";
   const gameData = (await getGameData(slug)) as GamedataResponseTypes;
-  const initialRss = (await getInitialRss(gameData.id, currentUser)) as SubmissionTypes[];
+  const initialRss = (await getInitialRss(gameData?.id, currentUser)) as SubmissionTypes[];
 
   // if (gameData?.websites && gameData.websites.length > 0) {
   //   console.log("WEBSITES:", gameData.websites);
@@ -78,7 +78,7 @@ export async function GameHeader({ slug }: { slug: string }) {
           </div>
         </div>
       </section>
-      <section className="game-resourcesection">
+      <section className="game-resources">
         {sections.map((section) => (
           <div key={section}>
             <h2>{section}</h2>

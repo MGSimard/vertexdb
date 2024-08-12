@@ -52,7 +52,7 @@ export function GameSkeleton() {
           </div>
         </div>
       </section>
-      <section className="game-resourcesection">
+      <section className="game-resources">
         <div>
           <h2>Resources</h2>
           <SkeleCard />
@@ -65,9 +65,6 @@ export function GameSkeleton() {
           <h2>Top Content Creators</h2>
           <SkeleCard />
         </div>
-      </section>
-      <section>
-        <h2>Related Links</h2>
       </section>
     </>
   );

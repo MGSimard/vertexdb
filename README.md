@@ -37,10 +37,11 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Start setting up database
 - [x] Create DB for submissions, scoring & voter tracking
 - [x] Implement auth
+- [x] Fix grid blowout when long word
+- [ ] Rework submission cards, need better visual separation
 - [ ] Use currentuser initial vote match to conditionally render active arrow color or something
 - [ ] Implement item submission functionality (links in cards) (server actions)
 - [ ] Implement voting functionality (server actions)
-- [ ] Rework submission cards, need better visual separation
 - [ ] Find Steam svg icon outline for steam button
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
