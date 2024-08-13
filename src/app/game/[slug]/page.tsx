@@ -1,9 +1,13 @@
 import { Suspense } from "react";
 import { GameHeader } from "@/components/page_game/GameHeader";
 import { GameSkeleton } from "@/components/page_game/GameSkeleton";
+import { auth } from "@clerk/nextjs/server";
 
 export default function Page({ params }: { params: { slug: string } }) {
   const slug = params.slug;
+
+  const user = auth();
+  console.log("USER:", user.userId);
 
   return (
     <main>

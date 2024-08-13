@@ -53,3 +53,5 @@ export async function getGameData(query: string) {
     console.log(err);
   }
 }
+
+// export async function submitSubmission(formData: formData) {}
