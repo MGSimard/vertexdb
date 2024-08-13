@@ -1,9 +1,9 @@
 import { ArrowUp, ArrowDown } from "@/components/icons";
 import { SubmissionTypes } from "@/utils/types";
 import { SignedOut, SignedIn } from "@clerk/nextjs";
+import { AddSubmission } from "./AddSubmission";
 
 export function Card({ content }: { content: SubmissionTypes[] | [] }) {
-  console.log("CONTENT:", content);
   return (
     <>
       {content?.length > 0 && (
@@ -24,7 +24,7 @@ export function Card({ content }: { content: SubmissionTypes[] | [] }) {
           <div className="card-content">/ / AUTHORIZE TO ADD SUBMISSIONS</div>
         </SignedOut>
         <SignedIn>
-          <button className="card-content">[+] ADD</button>
+          <AddSubmission />
         </SignedIn>
       </div>
     </>
@@ -46,7 +46,7 @@ const SubmissionEntry = ({ submission }: { submission: SubmissionTypes }) => {
         </form>
         <a className="cs-right" href={submission.url} target="_blank">
           <h3>{submission.title}</h3>
-          <p>{submission.description}gf@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@</p>
+          <p>{submission.description}</p>
         </a>
       </article>
     </li>

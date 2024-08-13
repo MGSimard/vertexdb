@@ -39,6 +39,7 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Implement auth
 - [x] Fix grid blowout when long word
 - [ ] Rework submission cards, need better visual separation
+- [ ] Set up maximum query returns on page load, query all on see all click? Or query all and just show top 5, see all show all?
 - [ ] Use currentuser initial vote match to conditionally render active arrow color or something
 - [ ] Implement item submission functionality (links in cards) (server actions)
 - [ ] Implement voting functionality (server actions)

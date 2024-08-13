@@ -85,8 +85,11 @@
 }
 .game-resources {
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2rem;
+}
+.rss-wrapper > div:not(:last-child) {
+  margin-bottom: 0.175rem;
 }
 /* CARD */
 .card {
@@ -127,31 +130,33 @@
   opacity: 0.5;
 }
 .card-submission {
-  border: 1px solid #0000ff !important;
-}
-.card-submission * {
-  border: 1px solid yellow !important;
-}
-.card-submission {
   display: flex;
-  justify-content: space-between;
   gap: 1rem;
   padding: 1rem 0;
 }
-.card-submission:hover p {
+.card-submission:hover h3 {
   color: var(--clr-secondary);
 }
 .cs-left {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  min-width: 3rem;
+  align-items: center;
+  width: 3rem;
   text-align: center;
   flex-shrink: 0;
 }
 .cs-left button {
   color: var(--clr-secondary);
   font-size: 1.5rem;
+}
+.cs-up {
+  display: flex;
+  align-items: flex-end;
+}
+.cs-down {
+  display: flex;
+  align-items: flex-start;
 }
 .cs-left button:hover svg {
   stroke: none;
@@ -163,6 +168,10 @@
 .cs-right {
   flex-grow: 1;
 }
+.cs-right h3 {
+  overflow-wrap: anywhere;
+  overflow: hidden;
+}
 .cs-right p {
   display: -webkit-box; /* Necessary for -webkit-line-clamp to work */
   -webkit-box-orient: vertical; /* Specify vertical orientation */
@@ -171,7 +180,7 @@
   line-height: 1em;
   overflow: hidden;
   text-overflow: ellipsis;
-  word-break: break-word; /* Break long words */
+  overflow-wrap: anywhere;
 }
 /* VERTICAL TABLE */
 .table-vertical {
