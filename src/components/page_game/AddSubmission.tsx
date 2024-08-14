@@ -1,9 +1,13 @@
 "use client";
 import { useState } from "react";
 import { createSubmission } from "@/server/actions";
+import { useActionState } from "react";
+
+const initialState = { message: "" };
 
 export function AddSubmission({ gameId, slug, section }: { gameId: number; slug: string; section: string }) {
   const [modalOpen, setModalOpen] = useState(false);
+  const [state, formAction, pending] = useActionState(createSubmission, initialState);
 
   return !modalOpen ? (
     <button className="card-content" onClick={() => setModalOpen(true)}>
@@ -11,7 +15,7 @@ export function AddSubmission({ gameId, slug, section }: { gameId: number; slug:
     </button>
   ) : (
     <div className="card-content">
-      <form className="submissionForm" action={createSubmission}>
+      <form className="submissionForm" action={formAction}>
         <h3>/ / ADD TO [{section}]</h3>
         <label htmlFor={`title-${section}`}>
           Title:
@@ -33,8 +37,8 @@ export function AddSubmission({ gameId, slug, section }: { gameId: number; slug:
           <button className="btn-ui" type="button" onClick={() => setModalOpen(false)}>
             Cancel
           </button>
-          <button className="btn-ui" type="submit">
-            Submit
+          <button className="btn-ui" type="submit" aria-disabled={pending}>
+            {pending ? "Submitting . . ." : "Submit"}
           </button>
         </fieldset>
       </form>

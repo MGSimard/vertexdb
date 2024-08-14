@@ -33,7 +33,7 @@ const CreateSubmission = submissionSchema.omit({ rssId: true, score: true, creat
 // });
 // const CreateVote = voteSchema.omit({ voteId: true, createdAt: true, updatedAt: true });
 
-export async function createSubmission(formData: FormData) {
+export async function createSubmission(prevState: any, formData: FormData) {
   const user = auth();
 
   if (!user.userId) throw new Error("Submission Failed: Unauthorized");
@@ -48,7 +48,6 @@ export async function createSubmission(formData: FormData) {
   });
 
   if (!validated.success) {
-    console.log("ERROR:", validated.error);
     return { errors: validated.error.flatten().fieldErrors, message: "Invalid Fields. Failed to Create Submission." };
   }
 
@@ -59,13 +58,11 @@ export async function createSubmission(formData: FormData) {
     await db
       .insert(gameRssEntries)
       .values({ gameId: gameId, author: author, title: title, url: url, description: description, section: section });
-
-    revalidatePath(`/game/${slug}`);
-    redirect(`/game/${slug}`);
   } catch (err) {
-    console.log("ERROR, DATABASE INSERTION FAILURE", err);
-    // return { message: "Database Error: Failed to Create Submission." };
+    return { message: "Database Error: Failed to Create Submission." };
   }
+  revalidatePath(`/game/${slug}`);
+  redirect(`/game/${slug}`);
 }
 
 // GRAB ALL SUBMITTED RESOURCES FOR A GAME

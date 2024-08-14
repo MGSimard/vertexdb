@@ -40,9 +40,10 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Fix grid blowout when long word
 - [x] Rework submission cards, need better visual separation
 - [x] Implement item submission functionality (links in cards) (server actions)
+- [ ] Error handling
 - [ ] Show top 10? submissions, see all shows all of them
 - [ ] Use currentuser initial vote match to conditionally render active arrow color or something
-- [ ] Implement voting functionality (server actions)
+- [ ] Implement voting functionality (server actions) https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#server-side-form-validation
 - [ ] Find Steam svg icon outline for steam button
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
