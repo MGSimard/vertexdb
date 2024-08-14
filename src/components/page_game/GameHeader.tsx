@@ -78,11 +78,17 @@ export async function GameHeader({ slug }: { slug: string }) {
           </div>
         </div>
       </section>
+
       <section className="game-resources">
         {sections.map((section) => (
           <div key={section} className="rss-wrapper">
             <h2>{section}</h2>
-            <Card content={initialRss.filter((entry) => entry.section === section.toLowerCase()) ?? []} />
+            <Card
+              gameId={gameData.id}
+              slug={slug}
+              section={section.toLowerCase()}
+              content={initialRss.filter((entry) => entry.section === section.toLowerCase()) ?? []}
+            />
           </div>
         ))}
       </section>

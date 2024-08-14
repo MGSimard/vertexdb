@@ -3,7 +3,17 @@ import { SubmissionTypes } from "@/utils/types";
 import { SignedOut, SignedIn } from "@clerk/nextjs";
 import { AddSubmission } from "./AddSubmission";
 
-export function Card({ content }: { content: SubmissionTypes[] | [] }) {
+export function Card({
+  gameId,
+  slug,
+  section,
+  content,
+}: {
+  gameId: number;
+  slug: string;
+  section: string;
+  content: SubmissionTypes[] | [];
+}) {
   return (
     <>
       {content?.length > 0 && (
@@ -24,7 +34,7 @@ export function Card({ content }: { content: SubmissionTypes[] | [] }) {
           <div className="card-content">/ / AUTHORIZE TO ADD SUBMISSIONS</div>
         </SignedOut>
         <SignedIn>
-          <AddSubmission />
+          <AddSubmission gameId={gameId} slug={slug} section={section} />
         </SignedIn>
       </div>
     </>

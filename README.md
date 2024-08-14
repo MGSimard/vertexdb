@@ -38,16 +38,14 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Create DB for submissions, scoring & voter tracking
 - [x] Implement auth
 - [x] Fix grid blowout when long word
-- [ ] Rework submission cards, need better visual separation
-- [ ] Set up maximum query returns on page load, query all on see all click? Or query all and just show top 5, see all show all?
+- [x] Rework submission cards, need better visual separation
+- [x] Implement item submission functionality (links in cards) (server actions)
+- [ ] Show top 10? submissions, see all shows all of them
 - [ ] Use currentuser initial vote match to conditionally render active arrow color or something
-- [ ] Implement item submission functionality (links in cards) (server actions)
 - [ ] Implement voting functionality (server actions)
 - [ ] Find Steam svg icon outline for steam button
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
-- [ ] Before moving to BE, think about code-splitting CSS
-- [ ] If so, rework CSS classes and selection methods
 - [ ] Implement admin dashboard (server actions)
 - [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)
 

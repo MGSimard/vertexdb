@@ -6,7 +6,6 @@ import type { SearchResponseTypes } from "@/utils/types";
 import { Result } from "@/components/searchbar/Result";
 import { Clear, MagnifyingGlass } from "@/components/icons";
 import { flatnamed } from "@/utils/helpers";
-import "./searchbar.css";
 
 export function Searchbar() {
   const [query, setQuery] = useState("");
