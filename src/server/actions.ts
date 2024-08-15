@@ -61,6 +61,7 @@ export async function createSubmission(prevState: any, formData: FormData) {
   } catch (err) {
     return { message: "Database Error: Failed to Create Submission." };
   }
+
   revalidatePath(`/game/${slug}`);
   redirect(`/game/${slug}`);
 }
