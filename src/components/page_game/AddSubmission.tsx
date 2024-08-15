@@ -8,6 +8,9 @@ export function AddSubmission({ gameId, slug, section }: { gameId: number; slug:
   const [modalOpen, setModalOpen] = useState(false);
 
   // const [state, formAction] = useFormState(createSubmission, initialState);
+  const placehold = () => {
+    console.log("Submitted");
+  };
 
   return !modalOpen ? (
     <button className="card-content" onClick={() => setModalOpen(true)}>
@@ -15,7 +18,7 @@ export function AddSubmission({ gameId, slug, section }: { gameId: number; slug:
     </button>
   ) : (
     <div className="card-content">
-      <form className="submissionForm" action={}>
+      <form className="submissionForm" action={placehold}>
         <h3>/ / ADD TO [{section}]</h3>
         <label htmlFor={`title-${section}`}>
           Title:
