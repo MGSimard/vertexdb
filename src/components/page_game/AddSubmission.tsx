@@ -3,12 +3,11 @@ import { useState } from "react";
 import { createSubmission } from "@/server/actions";
 import { useActionState } from "react";
 
-const initialState = { message: "" };
-
 export function AddSubmission({ gameId, slug, section }: { gameId: number; slug: string; section: string }) {
   const [modalOpen, setModalOpen] = useState(false);
 
-  const [state, formAction, pending] = useActionState(createSubmission, initialState);
+  const initialFormState = { message: "", errors: {} };
+  const [formState, formAction, pending] = useActionState(createSubmission, initialFormState);
 
   return !modalOpen ? (
     <button className="card-content" onClick={() => setModalOpen(true)}>
@@ -42,6 +41,7 @@ export function AddSubmission({ gameId, slug, section }: { gameId: number; slug:
             {pending ? "Submitting . . ." : "Submit"}
           </button>
         </fieldset>
+        {formState?.errors && formState.message}
       </form>
     </div>
   );
