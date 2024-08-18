@@ -40,6 +40,7 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Fix grid blowout when long word
 - [x] Rework submission cards, need better visual separation
 - [x] Implement item submission functionality (links in cards) (server actions)
+- [x] Conditionally ignore currentUser in query if currentUser is null (don't need to get initialVotes)
 - [ ] Error handling
 - [ ] Show top 10? submissions, see all shows all of them
 - [ ] Use currentuser initial vote match to conditionally render active arrow color or something
@@ -47,6 +48,7 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [ ] Find Steam svg icon outline for steam button
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
+- [ ] Give a shit about replacing :any with typeguards for initialRss
 - [ ] Implement admin dashboard (server actions)
 - [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)
 

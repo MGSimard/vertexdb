@@ -1,7 +1,7 @@
-import { ArrowUp, ArrowDown } from "@/components/icons";
 import { SubmissionTypes } from "@/utils/types";
 import { SignedOut, SignedIn } from "@clerk/nextjs";
 import { AddSubmission } from "./AddSubmission";
+import { VoteBlock } from "./VoteBlock";
 
 export function Card({
   gameId,
@@ -45,15 +45,13 @@ const SubmissionEntry = ({ submission }: { submission: SubmissionTypes }) => {
   return (
     <li>
       <article className="card-submission">
-        <form className="cs-left">
-          <button type="button" className="cs-up">
-            <ArrowUp />
-          </button>
-          <div>{submission.score}</div>
-          <button type="button" className="cs-down">
-            <ArrowDown />
-          </button>
-        </form>
+        <div className="cs-left">
+          <VoteBlock
+            rssId={submission.rssId}
+            initialScore={submission.score}
+            initialVote={submission.currentUserVote ? submission.currentUserVote : null}
+          />
+        </div>
         <a className="cs-right" href={submission.url} target="_blank">
           <h3>{submission.title}</h3>
           <p>{submission.description}</p>

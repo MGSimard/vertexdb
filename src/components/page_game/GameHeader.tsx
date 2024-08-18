@@ -6,9 +6,8 @@ import { convertUnix, coverPath } from "@/utils/helpers";
 import { GamedataResponseTypes, SubmissionTypes } from "@/utils/types";
 
 export async function GameHeader({ slug }: { slug: string }) {
-  const currentUser = "TESTUSER";
   const gameData = (await getGameData(slug)) as GamedataResponseTypes;
-  const initialRss = (await getInitialRss(gameData?.id, currentUser)) as SubmissionTypes[];
+  const initialRss = (await getInitialRss(gameData?.id)) as any;
 
   // if (gameData?.websites && gameData.websites.length > 0) {
   //   console.log("WEBSITES:", gameData.websites);
@@ -83,12 +82,16 @@ export async function GameHeader({ slug }: { slug: string }) {
         {sections.map((section) => (
           <div key={section} className="rss-wrapper">
             <h2>{section}</h2>
-            <Card
-              gameId={gameData.id}
-              slug={slug}
-              section={section.toLowerCase()}
-              content={initialRss.filter((entry) => entry.section === section.toLowerCase()) ?? []}
-            />
+            {initialRss.error ? (
+              <div>{initialRss.error}</div>
+            ) : (
+              <Card
+                gameId={gameData.id}
+                slug={slug}
+                section={section.toLowerCase()}
+                content={initialRss.filter((entry: any) => entry.section === section.toLowerCase()) ?? []}
+              />
+            )}
           </div>
         ))}
       </section>

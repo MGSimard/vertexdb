@@ -159,7 +159,9 @@
   align-items: flex-start;
 }
 .cs-left button:hover svg {
-  stroke: none;
+  fill: currentColor;
+}
+.cs-left button.activeVote svg {
   fill: currentColor;
 }
 .card-submission h3 {

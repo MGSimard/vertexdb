@@ -29,5 +29,5 @@ export interface SubmissionTypes {
   description: string;
   section: string;
   score: number;
-  currentUserVote: boolean | null;
+  currentUserVote?: boolean | null;
 }

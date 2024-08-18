@@ -1,5 +1,5 @@
 "use server";
-import { eq, and, desc } from "drizzle-orm";
+import { eq, and, desc, sql } from "drizzle-orm";
 import { db } from "@/server/db";
 import { gameRssEntries, gameRssVotes } from "@/server/db/schema";
 import { z } from "zod";
@@ -7,9 +7,81 @@ import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
 import { auth } from "@clerk/nextjs/server";
 
+/**
+ * GRAB ALL SUBMISSIONS FOR A GAME
+ * PLUS THE CURRENT USER'S VOTE FOR INITIAL RENDER STATE OF ARROWS
+ */
+export async function getInitialRss(currentGameId: number) {
+  const user = auth();
+  const currentUser = user.userId;
+  console.log("CURRENT USER:", currentUser);
+
+  const query = db
+    .select({
+      rssId: gameRssEntries.rssId,
+      author: gameRssEntries.author,
+      title: gameRssEntries.title,
+      url: gameRssEntries.url,
+      description: gameRssEntries.description,
+      section: gameRssEntries.section,
+      score: gameRssEntries.score,
+      ...(currentUser ? { currentUserVote: gameRssVotes.voteType } : {}),
+    })
+    .from(gameRssEntries)
+    .where(eq(gameRssEntries.gameId, currentGameId))
+    .orderBy(desc(gameRssEntries.score));
+
+  const dynamicQuery = query.$dynamic();
+
+  try {
+    // If user isn't logged in ignore leftJoin() and currentUserVote field check
+    if (!currentUser) {
+      return await query;
+    }
+
+    return await dynamicQuery.leftJoin(
+      gameRssVotes,
+      and(eq(gameRssEntries.rssId, gameRssVotes.rssId), eq(gameRssVotes.voterId, currentUser))
+    );
+  } catch (err) {
+    return { error: "Database Error: Failed to Fetch Resources." };
+  }
+}
+
+/**
+ * FETCH DATA FOR CURRENT GAME
+ */
+export async function getGameData(query: string) {
+  try {
+    const res = await fetch("https://api.igdb.com/v4/games", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Client-ID": process.env.CLIENT_ID,
+        Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
+      } as HeadersInit,
+      body: `fields name, cover.image_id, first_release_date, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, summary, websites.category, websites.url; where slug = "${query}" & version_parent = null & category = (0,4,8,9,12);`,
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP Error: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    return data[0];
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+/**
+ * USERS ADDING SUBMISSIONS
+ */
 const submissionSchema = z.object({
   rssId: z.number().int().positive().lte(2147483647), // Ignore, DB auto
   gameId: z.coerce.number().int().positive().lte(2147483647),
+  author: z.string().max(255), // Ignore, get from auth
   title: z.string().trim().min(1).max(255),
   url: z.string().url().trim().min(1).max(255),
   description: z.string().trim().min(1).max(255),
@@ -20,18 +92,13 @@ const submissionSchema = z.object({
   createdAt: z.date(), // Ignore, DB auto
   updatedAt: z.date(), // Ignore, DB auto
 });
-const CreateSubmission = submissionSchema.omit({ rssId: true, score: true, createdAt: true, updatedAt: true });
-
-// vote stuff for later
-// const voteSchema = z.object({
-//   voteId: z.number().int().positive().lte(2147483647),
-//   rssId: z.coerce.number().int().positive().lte(2147483647),
-//   voterId: z.string().max(255),
-//   voteType: z.boolean(),
-//   createdAt: z.date(),
-//   updatedAt: z.date(),
-// });
-// const CreateVote = voteSchema.omit({ voteId: true, createdAt: true, updatedAt: true });
+const CreateSubmission = submissionSchema.omit({
+  rssId: true,
+  author: true,
+  score: true,
+  createdAt: true,
+  updatedAt: true,
+});
 
 export async function createSubmission(prevState: any, formData: FormData) {
   const user = auth();
@@ -67,53 +134,45 @@ export async function createSubmission(prevState: any, formData: FormData) {
   redirect(`/game/${slug}`);
 }
 
-// GRAB ALL SUBMITTED RESOURCES FOR A GAME
-// AND THE CURRENT USER'S VOTE ON THEM IF THEY VOTED (RETURN TRUE, FALSE, NULL)
-export async function getInitialRss(currentGameId: number, currentUser: string) {
-  try {
-    const data = await db
-      .select({
-        rssId: gameRssEntries.rssId,
-        author: gameRssEntries.author,
-        title: gameRssEntries.title,
-        url: gameRssEntries.url,
-        description: gameRssEntries.description,
-        section: gameRssEntries.section,
-        score: gameRssEntries.score,
-        currentUserVote: gameRssVotes.voteType,
-      })
-      .from(gameRssEntries)
-      .leftJoin(gameRssVotes, and(eq(gameRssEntries.rssId, gameRssVotes.rssId), eq(gameRssVotes.voterId, currentUser)))
-      .where(eq(gameRssEntries.gameId, currentGameId))
-      .orderBy(desc(gameRssEntries.score));
+/**
+ * USERS VOTING
+ */
+const voteSchema = z.object({
+  voteId: z.number().int().positive().lte(2147483647), // Ignore, DB auto
+  rssId: z.coerce.number().int().positive().lte(2147483647),
+  voterId: z.string().max(255), // Ignore, get from auth
+  voteType: z.enum(["upvote", "downvote"], { invalid_type_error: "Invalid Vote Type." }),
+  createdAt: z.date(), // Ignore, DB auto
+  updatedAt: z.date(), // Ignore, DB auto
+});
+const CreateVote = voteSchema.omit({ voteId: true, voterId: true, createdAt: true, updatedAt: true });
 
-    return data;
-  } catch (err) {
-    return err;
+export async function createVote(rssId: number, voteType: "upvote" | "downvote") {
+  console.log("Server Action Triggered (createVote):", rssId, voteType);
+  const user = auth();
+  if (!user.userId) return { message: "Vote Failed: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+
+  const validated = CreateVote.safeParse({
+    rssId,
+    voteType,
+  });
+  if (!validated.success) {
+    return { message: "Invalid Vote. Failed to Create Vote.", errors: validated.error.flatten().fieldErrors };
   }
-}
 
-// CONTENT FETCHER (FOR GAME PAGE)
-export async function getGameData(query: string) {
+  const { rssId: submissionId, voteType: vote } = validated.data;
+  const voteAuthor = user.userId;
+
+  console.log("Validated action", submissionId, vote, voteAuthor);
+
   try {
-    const res = await fetch("https://api.igdb.com/v4/games", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Client-ID": process.env.CLIENT_ID,
-        Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
-      } as HeadersInit,
-      body: `fields name, cover.image_id, first_release_date, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, summary, websites.category, websites.url; where slug = "${query}" & version_parent = null & category = (0,4,8,9,12);`,
-    });
-
-    if (!res.ok) {
-      throw new Error(`HTTP Error: ${res.status}`);
-    }
-
-    const data = await res.json();
-
-    return data[0];
+    // LOGIC
   } catch (err) {
-    console.log(err);
+    return { message: "Database Error: Failed to Create Vote.", errors: { database: ["Database Error"] } };
   }
+
+  return "Passthrough Success.";
+
+  // revalidatePath(`/game/${slug}`);
+  // redirect(`/game/${slug}`);
 }
