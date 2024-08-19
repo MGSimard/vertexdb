@@ -160,10 +160,10 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
     return { message: "Invalid Vote. Failed to Create Vote.", errors: validated.error.flatten().fieldErrors };
   }
 
-  const { rssId: submissionId, voteType: vote } = validated.data;
+  const { rssId: submissionId, voteType: newVote } = validated.data;
   const currentUser = user.userId;
 
-  console.log("Validated action", submissionId, vote, currentUser);
+  console.log("Validated action", submissionId, newVote, currentUser);
 
   try {
     const currentUserVote = await db
@@ -172,16 +172,36 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
       })
       .from(gameRssVotes)
       .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
+    console.log("CURRENT USER VOTE:", currentUserVote);
+    console.log("ATTEMPTED NEW VOTE:", newVote === "upvote");
 
     // If user has no active vote on this submission, add new vote entry
     if (currentUserVote.length <= 0) {
-      await db.insert(gameRssVotes).values({ rssId: submissionId, voterId: currentUser, voteType: vote === "upvote" });
-      return vote;
+      console.log("NO EXISTING VOTE, ADDING NEW:", newVote === "upvote");
+      await db
+        .insert(gameRssVotes)
+        .values({ rssId: submissionId, voterId: currentUser, voteType: newVote === "upvote" });
+      //.returning({updatedVote: voteType})
+      console.log("ADDED NEW VOTE ENTRY.");
     } else {
+      console.log("EXISTING VOTE DETECTED");
       // If user has existing vote for this submission
-      console.log(`Existing Vote: ${currentUserVote}. New Vote: ${vote === "upvote"}`);
-      // If vote is different, modify existing entry in table
-      // If vote is identical, delete vote entry from table (canceling existing vote)
+      const storedVote = currentUserVote[0]?.currentUserVote;
+
+      if (storedVote === (newVote === "upvote")) {
+        // If new vote same as old vote, delete vote (simulate cancelation)
+        console.log("IDENTICAL VOTE - DELETING");
+        await db
+          .delete(gameRssVotes)
+          .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
+      } else {
+        // If vote is different, modify existing entry in table
+        console.log("DIFFERENT VOTE - UPDATING");
+        await db
+          .update(gameRssVotes)
+          .set({ voteType: newVote === "upvote" })
+          .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
+      }
     }
     // Think about trigger later
   } catch (err) {
