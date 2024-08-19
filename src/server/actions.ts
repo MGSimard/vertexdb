@@ -167,6 +167,12 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
 
   try {
     // LOGIC
+    // 1. Get current user's vote on submissionId if exists
+    // 2. Compare new vote with old vote
+    // 3. If vote identical, delete the vote entry (canceling vote)
+    // 4. If vote not identical, modify the entry
+    // 5. If no old vote, add new entry
+    // 6. Worry about score trigger later
   } catch (err) {
     return { message: "Database Error: Failed to Create Vote.", errors: { database: ["Database Error"] } };
   }
