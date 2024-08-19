@@ -18,8 +18,8 @@ export function VoteBlock({
 
   const handleVote = async (voteType: "upvote" | "downvote") => {
     console.log("Vote Clicked:", voteType);
-    const response = await createVote(rssId, voteType);
-    console.log("Submitted Vote - Voted as:", response);
+    const result = await createVote(rssId, voteType);
+    console.log("Submitted Vote - Voted as:", result);
     // If response is specifically true or false update setActiveVote with it
 
     // Get response from createVote

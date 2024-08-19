@@ -14,7 +14,6 @@ import { auth } from "@clerk/nextjs/server";
 export async function getInitialRss(currentGameId: number) {
   const user = auth();
   const currentUser = user.userId;
-  console.log("CURRENT USER:", currentUser);
 
   const query = db
     .select({
@@ -148,6 +147,7 @@ const voteSchema = z.object({
 const CreateVote = voteSchema.omit({ voteId: true, voterId: true, createdAt: true, updatedAt: true });
 
 export async function createVote(rssId: number, voteType: "upvote" | "downvote") {
+  console.log("================================================");
   console.log("Server Action Triggered (createVote):", rssId, voteType);
   const user = auth();
   if (!user.userId) return { message: "Vote Failed: Unauthorized", errors: { auth: ["User is not Authorized."] } };
@@ -166,14 +166,6 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
   console.log("Validated action", submissionId, vote, currentUser);
 
   try {
-    // LOGIC
-    // 1. Get current user's vote on submissionId if exists
-    // 2. Compare new vote with old vote
-    // 3. If vote identical, delete the vote entry (canceling vote)
-    // 4. If vote not identical, modify the entry
-    // 5. If no old vote, add new entry
-    // 6. Worry about score trigger later
-
     const currentUserVote = await db
       .select({
         currentUserVote: gameRssVotes.voteType,
@@ -185,15 +177,13 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
     if (currentUserVote.length <= 0) {
       await db.insert(gameRssVotes).values({ rssId: submissionId, voterId: currentUser, voteType: vote === "upvote" });
       return vote;
+    } else {
+      // If user has existing vote for this submission
+      console.log(`Existing Vote: ${currentUserVote}. New Vote: ${vote === "upvote"}`);
+      // If vote is different, modify existing entry in table
+      // If vote is identical, delete vote entry from table (canceling existing vote)
     }
-    // Else if user already has an active voted on this submission
-    // If vote is different, modify existing entry in table
-    // If vote is identical, delete vote entry from table
-    else {
-      console.log("STANDING VOTE ALREADY AVAILABLE, TEST");
-      console.log("OLD VOTE:", currentUserVote);
-      console.log("NEW VOTE:", vote === "upvote");
-    }
+    // Think about trigger later
   } catch (err) {
     return { message: "Database Error: Failed to Create Vote.", errors: { database: ["Database Error"] } };
   }
