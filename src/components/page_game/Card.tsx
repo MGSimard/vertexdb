@@ -11,7 +11,7 @@ const SubmissionEntry = ({ submission }: { submission: SubmissionTypes }) => {
           <VoteBlock
             rssId={submission.rssId}
             initialScore={submission.score}
-            initialVote={submission.currentUserVote ? submission.currentUserVote : null}
+            initialVote={submission.currentUserVote ?? null}
           />
         </div>
         <a className="cs-right" href={submission.url} target="_blank">

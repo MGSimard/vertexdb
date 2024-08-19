@@ -161,9 +161,9 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
   }
 
   const { rssId: submissionId, voteType: vote } = validated.data;
-  const voteAuthor = user.userId;
+  const currentUser = user.userId;
 
-  console.log("Validated action", submissionId, vote, voteAuthor);
+  console.log("Validated action", submissionId, vote, currentUser);
 
   try {
     // LOGIC
@@ -173,6 +173,24 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
     // 4. If vote not identical, modify the entry
     // 5. If no old vote, add new entry
     // 6. Worry about score trigger later
+
+    const currentUserVote = await db
+      .select({
+        currentUserVote: gameRssVotes.voteType,
+      })
+      .from(gameRssVotes)
+      .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
+
+    if (currentUserVote.length <= 0) {
+      console.log("NEW VOTE DETECTED!");
+      console.log("OLD VOTE", currentUserVote);
+      console.log("NEW VOTE", vote === "upvote");
+      await db.insert(gameRssVotes).values({ rssId: submissionId, voterId: currentUser, voteType: vote === "upvote" });
+    } else {
+      console.log("STANDING VOTE ALREADY AVAILABLE, TEST");
+      console.log("OLD VOTE:", currentUserVote);
+      console.log("NEW VOTE:", vote === "upvote");
+    }
   } catch (err) {
     return { message: "Database Error: Failed to Create Vote.", errors: { database: ["Database Error"] } };
   }
