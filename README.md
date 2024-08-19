@@ -42,8 +42,9 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Implement item submission functionality (links in cards) (server actions)
 - [x] Conditionally ignore currentUser in query if currentUser is null (don't need to get initialVotes)
 - [x] Use currentuser initial vote match to conditionally render active arrow color or something
-- [ ] USE RETURNING UPDATE TO GET BACK INSTEAD OF DOING ANOTHER QUERY
-- [ ] Limit character input within the actual fields themselves
+- [x] USE RETURNING UPDATE TO GET BACK INSTEAD OF DOING ANOTHER QUERY
+- [x] Limit character input within the actual fields themselves
+- [ ] Think about potentially adding current character count above inputs
 - [ ] Collapse "add submission" section back into "Add" after successful submit
 - [ ] Show top 8 submissions, see all shows all of them
 - [ ] Implement voting functionality (server actions) https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#server-side-form-validation

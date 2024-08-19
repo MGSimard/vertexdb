@@ -175,40 +175,43 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
     console.log("CURRENT USER VOTE:", currentUserVote);
     console.log("ATTEMPTED NEW VOTE:", newVote === "upvote");
 
+    // If user has no active vote on this submission, add new vote entry
     if (currentUserVote.length <= 0) {
-      // If user has no active vote on this submission, add new vote entry
       console.log("NO EXISTING VOTE, ADDING NEW:", newVote === "upvote");
-      await db
+      const voteResult = await db
         .insert(gameRssVotes)
-        .values({ rssId: submissionId, voterId: currentUser, voteType: newVote === "upvote" });
-      //.returning({updatedVote: voteType})
-      console.log("ADDED NEW VOTE ENTRY.");
-    } else {
-      // If user has existing vote for this submission
-      console.log("EXISTING VOTE DETECTED");
-      const storedVote = currentUserVote[0]?.currentUserVote;
+        .values({ rssId: submissionId, voterId: currentUser, voteType: newVote === "upvote" })
+        .returning({ voteResult: gameRssVotes.voteType });
 
-      if (storedVote === (newVote === "upvote")) {
-        // If new vote same as old vote, delete vote (simulate cancelation)
-        console.log("IDENTICAL VOTE - DELETING");
-        await db
-          .delete(gameRssVotes)
-          .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
-      } else {
-        // If vote is different, modify existing entry in table
-        console.log("DIFFERENT VOTE - UPDATING");
-        await db
-          .update(gameRssVotes)
-          .set({ voteType: newVote === "upvote" })
-          .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
-      }
+      return { data: voteResult, message: "New Vote Successfully Added.", errors: {} };
     }
+
+    // If user has existing vote for this submission
+    const storedVote = currentUserVote[0]?.currentUserVote;
+
+    // If new vote same as old vote, delete vote (simulate cancelation)
+    if (storedVote === (newVote === "upvote")) {
+      await db
+        .delete(gameRssVotes)
+        .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
+      return { data: [{ currentUserVote: null }], message: "Existing Vote Successfully Deleted.", errors: {} };
+    } else {
+      // If vote is different, modify existing entry in table
+      const voteResult = await db
+        .update(gameRssVotes)
+        .set({ voteType: newVote === "upvote" })
+        .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)))
+        .returning({ voteResult: gameRssVotes.voteType });
+
+      return { data: voteResult, message: "Existing Vote Successfully Modified.", errors: {} };
+    }
+
     // Think about trigger later
   } catch (err) {
     return { message: "Database Error: Failed to Create Vote.", errors: { database: ["Database Error"] } };
   }
 
-  // return "Passthrough Success.";
+  return "Passthrough Success.";
 
   // revalidatePath(`/game/${slug}`);
   // redirect(`/game/${slug}`);

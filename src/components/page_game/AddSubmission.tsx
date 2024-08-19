@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import { createSubmission } from "@/server/actions";
 import { useActionState } from "react";
 
@@ -8,6 +8,12 @@ export function AddSubmission({ gameId, slug, section }: { gameId: number; slug:
 
   const initialFormState = { message: "", errors: {} };
   const [formState, formAction, pending] = useActionState(createSubmission, initialFormState);
+
+  const [yeet, setYeet] = useState(0);
+
+  const handleCount = (e) => {
+    setYeet(e.target.value.length);
+  };
 
   return !modalOpen ? (
     <button className="card-content" onClick={() => setModalOpen(true)}>
@@ -33,12 +39,13 @@ export function AddSubmission({ gameId, slug, section }: { gameId: number; slug:
           <input type="text" name="url" id={`url-${section}`} placeholder="/ / URL . . ." maxLength={255} required />
         </label>
         <label htmlFor={`description-${section}`}>
-          Description:
+          Description:<small>{yeet > 0 && ` ${yeet}/255`}</small>
           <textarea
             name="description"
             id={`description-${section}`}
             placeholder="/ / DESCRIPTION . . ."
             maxLength={255}
+            onChange={handleCount}
             required
           />
         </label>
