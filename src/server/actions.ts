@@ -181,12 +181,15 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
       .from(gameRssVotes)
       .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
 
+    // If user has no active vote on this submission, add new vote entry
     if (currentUserVote.length <= 0) {
-      console.log("NEW VOTE DETECTED!");
-      console.log("OLD VOTE", currentUserVote);
-      console.log("NEW VOTE", vote === "upvote");
       await db.insert(gameRssVotes).values({ rssId: submissionId, voterId: currentUser, voteType: vote === "upvote" });
-    } else {
+      return vote;
+    }
+    // Else if user already has an active voted on this submission
+    // If vote is different, modify existing entry in table
+    // If vote is identical, delete vote entry from table
+    else {
       console.log("STANDING VOTE ALREADY AVAILABLE, TEST");
       console.log("OLD VOTE:", currentUserVote);
       console.log("NEW VOTE:", vote === "upvote");
