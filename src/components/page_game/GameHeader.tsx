@@ -3,7 +3,7 @@ import { LinkButton } from "@/components/page_game/LinkButton";
 import { Card } from "@/components/page_game/Card";
 import { Globe, Discord, Steam } from "@/components/icons";
 import { convertUnix, coverPath } from "@/utils/helpers";
-import { GamedataResponseTypes, SubmissionTypes } from "@/utils/types";
+import { GamedataResponseTypes } from "@/utils/types";
 
 export async function GameHeader({ slug }: { slug: string }) {
   const gameData = (await getGameData(slug)) as GamedataResponseTypes;
