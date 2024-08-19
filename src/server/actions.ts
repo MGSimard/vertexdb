@@ -175,8 +175,8 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
     console.log("CURRENT USER VOTE:", currentUserVote);
     console.log("ATTEMPTED NEW VOTE:", newVote === "upvote");
 
-    // If user has no active vote on this submission, add new vote entry
     if (currentUserVote.length <= 0) {
+      // If user has no active vote on this submission, add new vote entry
       console.log("NO EXISTING VOTE, ADDING NEW:", newVote === "upvote");
       await db
         .insert(gameRssVotes)
@@ -184,8 +184,8 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
       //.returning({updatedVote: voteType})
       console.log("ADDED NEW VOTE ENTRY.");
     } else {
-      console.log("EXISTING VOTE DETECTED");
       // If user has existing vote for this submission
+      console.log("EXISTING VOTE DETECTED");
       const storedVote = currentUserVote[0]?.currentUserVote;
 
       if (storedVote === (newVote === "upvote")) {
@@ -208,7 +208,7 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
     return { message: "Database Error: Failed to Create Vote.", errors: { database: ["Database Error"] } };
   }
 
-  return "Passthrough Success.";
+  // return "Passthrough Success.";
 
   // revalidatePath(`/game/${slug}`);
   // redirect(`/game/${slug}`);
