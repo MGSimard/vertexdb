@@ -147,23 +147,20 @@ const voteSchema = z.object({
 const CreateVote = voteSchema.omit({ voteId: true, voterId: true, createdAt: true, updatedAt: true });
 
 export async function createVote(rssId: number, voteType: "upvote" | "downvote") {
-  console.log("================================================");
-  console.log("Server Action Triggered (createVote):", rssId, voteType);
   const user = auth();
-  if (!user.userId) return { message: "Vote Failed: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+  if (!user.userId)
+    return { data: [], message: "Vote Failed: Unauthorized", errors: { auth: ["User is not Authorized."] } };
 
   const validated = CreateVote.safeParse({
     rssId,
     voteType,
   });
   if (!validated.success) {
-    return { message: "Invalid Vote. Failed to Create Vote.", errors: validated.error.flatten().fieldErrors };
+    return { data: [], message: "Invalid Vote. Failed to Create Vote.", errors: validated.error.flatten().fieldErrors };
   }
 
   const { rssId: submissionId, voteType: newVote } = validated.data;
   const currentUser = user.userId;
-
-  console.log("Validated action", submissionId, newVote, currentUser);
 
   try {
     const currentUserVote = await db
@@ -210,8 +207,6 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
   } catch (err) {
     return { message: "Database Error: Failed to Create Vote.", errors: { database: ["Database Error"] } };
   }
-
-  return "Passthrough Success.";
 
   // revalidatePath(`/game/${slug}`);
   // redirect(`/game/${slug}`);
