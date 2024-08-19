@@ -176,7 +176,6 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
         .insert(gameRssVotes)
         .values({ rssId: submissionId, voterId: currentUser, voteType: newVote === "upvote" })
         .returning({ voteResult: gameRssVotes.voteType });
-
       return { data: voteResult, message: "New Vote Successfully Added.", errors: {} };
     }
 
@@ -196,7 +195,6 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
         .set({ voteType: newVote === "upvote" })
         .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)))
         .returning({ voteResult: gameRssVotes.voteType });
-
       return { data: voteResult, message: "Existing Vote Successfully Modified.", errors: {} };
     }
 
