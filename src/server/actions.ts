@@ -205,7 +205,7 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
 
     // Think about trigger later
   } catch (err) {
-    return { message: "Database Error: Failed to Create Vote.", errors: { database: ["Database Error"] } };
+    return { data: [], message: "Database Error: Failed to Create Vote.", errors: { database: ["Database Error"] } };
   }
 
   // revalidatePath(`/game/${slug}`);
