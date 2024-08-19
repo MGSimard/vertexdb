@@ -169,12 +169,9 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
       })
       .from(gameRssVotes)
       .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
-    console.log("CURRENT USER VOTE:", currentUserVote);
-    console.log("ATTEMPTED NEW VOTE:", newVote === "upvote");
 
     // If user has no active vote on this submission, add new vote entry
-    if (currentUserVote.length <= 0) {
-      console.log("NO EXISTING VOTE, ADDING NEW:", newVote === "upvote");
+    if (!currentUserVote.length) {
       const voteResult = await db
         .insert(gameRssVotes)
         .values({ rssId: submissionId, voterId: currentUser, voteType: newVote === "upvote" })
