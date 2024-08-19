@@ -3,44 +3,6 @@ import { SignedOut, SignedIn } from "@clerk/nextjs";
 import { AddSubmission } from "./AddSubmission";
 import { VoteBlock } from "./VoteBlock";
 
-export function Card({
-  gameId,
-  slug,
-  section,
-  content,
-}: {
-  gameId: number;
-  slug: string;
-  section: string;
-  content: SubmissionTypes[] | [];
-}) {
-  return (
-    <>
-      {content?.length > 0 && (
-        <div className="card">
-          <div className="card-left"></div>
-          <div className="card-content">
-            <ul>
-              {content.map((submission) => (
-                <SubmissionEntry submission={submission} key={submission.rssId} />
-              ))}
-            </ul>
-          </div>
-        </div>
-      )}
-      <div className="card">
-        <div className="card-left"></div>
-        <SignedOut>
-          <div className="card-content">/ / AUTHORIZE TO ADD SUBMISSIONS</div>
-        </SignedOut>
-        <SignedIn>
-          <AddSubmission gameId={gameId} slug={slug} section={section} />
-        </SignedIn>
-      </div>
-    </>
-  );
-}
-
 const SubmissionEntry = ({ submission }: { submission: SubmissionTypes }) => {
   return (
     <li>
@@ -60,3 +22,43 @@ const SubmissionEntry = ({ submission }: { submission: SubmissionTypes }) => {
     </li>
   );
 };
+
+export function Card({
+  gameId,
+  slug,
+  section,
+  content,
+}: {
+  gameId: number;
+  slug: string;
+  section: string;
+  content: SubmissionTypes[] | [];
+}) {
+  return (
+    <>
+      {content?.length > 0 && (
+        <div className="card">
+          <div className="card-left"></div>
+          <div className="card-content">
+            <ul>
+              {/* Limit to 8 visible submissions per section - show rest in "See All" */}
+              {content.map(
+                (submission, index) => index < 8 && <SubmissionEntry submission={submission} key={submission.rssId} />
+              )}
+            </ul>
+            {content.length > 8 && <button type="button">See All</button>}
+          </div>
+        </div>
+      )}
+      <div className="card">
+        <div className="card-left"></div>
+        <SignedOut>
+          <div className="card-content">/ / AUTHORIZE TO ADD SUBMISSIONS</div>
+        </SignedOut>
+        <SignedIn>
+          <AddSubmission gameId={gameId} slug={slug} section={section} />
+        </SignedIn>
+      </div>
+    </>
+  );
+}
