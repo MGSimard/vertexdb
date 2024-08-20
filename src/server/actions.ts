@@ -1,5 +1,5 @@
 "use server";
-import { eq, and, desc, sql } from "drizzle-orm";
+import { eq, and, desc } from "drizzle-orm";
 import { db } from "@/server/db";
 import { gameRssEntries, gameRssVotes } from "@/server/db/schema";
 import { z } from "zod";
@@ -122,9 +122,17 @@ export async function createSubmission(prevState: any, formData: FormData) {
   const author = user.userId;
 
   try {
-    await db
-      .insert(gameRssEntries)
-      .values({ gameId: gameId, author: author, title: title, url: url, description: description, section: section });
+    await db.transaction(async (tx) => {
+      const [insertedRssId] = await tx
+        .insert(gameRssEntries)
+        .values({ gameId: gameId, author: author, title: title, url: url, description: description, section: section })
+        .returning({ id: gameRssEntries.rssId });
+      if (!insertedRssId) {
+        tx.rollback();
+        throw new Error("Failed to Insert Rss Entry, No ID Returned.");
+      }
+      await tx.insert(gameRssVotes).values({ rssId: insertedRssId.id, voterId: author, voteType: true });
+    });
   } catch (err) {
     return { message: "Database Error: Failed to Create Submission.", errors: { database: ["Database Error"] } };
   }
@@ -149,18 +157,23 @@ const CreateVote = voteSchema.omit({ voteId: true, voterId: true, createdAt: tru
 export async function createVote(rssId: number, voteType: "upvote" | "downvote") {
   const user = auth();
   if (!user.userId)
-    return { data: [], message: "Vote Failed: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+    return { data: null, message: "Vote Failed: Unauthorized", errors: { auth: ["User is not Authorized."] } };
 
   const validated = CreateVote.safeParse({
     rssId,
     voteType,
   });
   if (!validated.success) {
-    return { data: [], message: "Invalid Vote. Failed to Create Vote.", errors: validated.error.flatten().fieldErrors };
+    return {
+      data: null,
+      message: "Invalid Vote. Failed to Create Vote.",
+      errors: validated.error.flatten().fieldErrors,
+    };
   }
 
   const { rssId: submissionId, voteType: newVote } = validated.data;
   const currentUser = user.userId;
+  const newVoteAsBool = newVote === "upvote";
 
   try {
     const currentUserVote = await db
@@ -172,10 +185,29 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
 
     // If user has no active vote on this submission, add new vote entry
     if (!currentUserVote.length) {
-      const voteResult = await db
-        .insert(gameRssVotes)
-        .values({ rssId: submissionId, voterId: currentUser, voteType: newVote === "upvote" })
-        .returning({ voteResult: gameRssVotes.voteType });
+      const voteResult = await db.transaction(async (tx) => {
+        const [currentScore] = await tx
+          .select({ score: gameRssEntries.score })
+          .from(gameRssEntries)
+          .where(eq(gameRssEntries.rssId, submissionId));
+
+        if (currentScore === undefined || currentScore === null || isNaN(currentScore.score)) {
+          tx.rollback();
+          throw new Error("Failed to Get Submission's Score. Vote Failed.");
+        }
+
+        const [newScore] = await tx
+          .update(gameRssEntries)
+          .set({ score: currentScore.score + (newVoteAsBool ? 1 : -1) })
+          .where(eq(gameRssEntries.rssId, submissionId))
+          .returning({ newScore: gameRssEntries.score });
+        const [vote] = await tx
+          .insert(gameRssVotes)
+          .values({ rssId: submissionId, voterId: currentUser, voteType: newVoteAsBool })
+          .returning({ voteResult: gameRssVotes.voteType });
+
+        return [newScore, vote];
+      });
       return { data: voteResult, message: "New Vote Successfully Added.", errors: {} };
     }
 
@@ -183,7 +215,7 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
     const storedVote = currentUserVote[0]?.currentUserVote;
 
     // If new vote same as old vote, delete vote (simulate cancelation)
-    if (storedVote === (newVote === "upvote")) {
+    if (storedVote === newVoteAsBool) {
       await db
         .delete(gameRssVotes)
         .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
@@ -192,15 +224,15 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
       // If vote is different, modify existing entry in table
       const voteResult = await db
         .update(gameRssVotes)
-        .set({ voteType: newVote === "upvote" })
+        .set({ voteType: newVoteAsBool })
         .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)))
         .returning({ voteResult: gameRssVotes.voteType });
-      return { data: voteResult, message: "Existing Vote Successfully Modified.", errors: {} };
+      return { data: voteResult, message: "Existing Vote Successfully Modified.", errors: null };
     }
 
     // Think about trigger later
   } catch (err) {
-    return { data: [], message: "Database Error: Failed to Create Vote.", errors: { database: ["Database Error"] } };
+    return { data: null, message: "Database Error: Failed to Create Vote.", errors: { database: ["Database Error"] } };
   }
 
   // revalidatePath(`/game/${slug}`);
