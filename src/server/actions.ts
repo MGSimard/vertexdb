@@ -172,65 +172,18 @@ export async function createVote(rssId: number, voteType: boolean) {
   }
 
   const { rssId: submissionId, voteType: voteInput } = validated.data;
-  const currentUser = user.userId;
-  const voteInputAsBool = voteInput === "upvote";
-  let result = { data: {}, message: "", errors: {} };
+  const currentUserId = user.userId;
+
+  // RETURN FORMAT: { data: {}, message: "", errors: {} }
+  // GET CURRENTUSER VOTE: await db.select({currentUserVote: gameRssVotes.voteType,}).from(gameRssVotes).where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId)));
+  // GET SUBMISSION SCORE: await db.select({ score: gameRssEntries.score }).from(gameRssEntries).where(eq(gameRssEntries.rssId, submissionId));
+  // UPDATE & GET NEW SUBMISSION SCORE: await db.update(gameRssEntries).set({ score: currentScore.score + (voteInput ? 1 : -1) }).where(eq(gameRssEntries.rssId, submissionId)).returning({ scoreResult: gameRssEntries.score });
+  // UPDATE & GET NEW VOTE: await db.insert(gameRssVotes).values({ rssId: submissionId, voterId: currentUserId, voteType: voteInput }).returning({ voteResult: gameRssVotes.voteType });
+  // DELETE CURRENT VOTE (OLD & NEW SAME): await db.delete(gameRssVotes).where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId)));
+  // MODIFY EXISTING & GET NEW VOTE await db.update(gameRssVotes).set({ voteType: voteInput }).where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId))).returning({ voteResult: gameRssVotes.voteType });
 
   try {
-    const currentUserVote = await db
-      .select({
-        currentUserVote: gameRssVotes.voteType,
-      })
-      .from(gameRssVotes)
-      .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
-
-    // // If user has no active vote on this submission, add new vote entry
-    // if (!currentUserVote.length) {
-    //   const voteResult = await db.transaction(async (tx) => {
-    //     const [currentScore] = await tx
-    //       .select({ score: gameRssEntries.score })
-    //       .from(gameRssEntries)
-    //       .where(eq(gameRssEntries.rssId, 555));
-    //     const [scoreResponse] = await tx
-    //       .update(gameRssEntries)
-    //       .set({ score: currentScore!.score + (voteInputAsBool ? 1 : -1) })
-    //       .where(eq(gameRssEntries.rssId, submissionId))
-    //       .returning({ scoreResult: gameRssEntries.score });
-    //     const [voteResponse] = await tx
-    //       .insert(gameRssVotes)
-    //       .values({ rssId: submissionId, voterId: currentUser, voteType: voteInputAsBool })
-    //       .returning({ voteResult: gameRssVotes.voteType });
-    //     return { scoreOutput: scoreResponse?.scoreResult, voteOutput: voteResponse?.voteResult };
-    //   });
-
-    //   result = { data: voteResult, message: "New Vote Successfully Added.", errors: {} };
-    // }
-
-    // // If user has existing vote for this submission
-    // const storedVote = currentUserVote[0]?.currentUserVote;
-
-    // // If new vote same as old vote, delete vote (simulate cancelation)
-    // if (storedVote === voteInputAsBool) {
-    //   await db
-    //     .delete(gameRssVotes)
-    //     .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
-    //   return { data: [{ currentUserVote: null }], message: "Existing Vote Successfully Deleted.", errors: {} };
-    // } else {
-    //   // If vote is different, modify existing entry in table
-    //   const voteResult = await db
-    //     .update(gameRssVotes)
-    //     .set({ voteType: voteInputAsBool })
-    //     .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)))
-    //     .returning({ voteResult: gameRssVotes.voteType });
-    //   return { data: voteResult, message: "Existing Vote Successfully Modified.", errors: null };
-    // }
-
-    // // Think about trigger later
   } catch (err: any) {
     console.log(err);
-    // return { data: null, message: `Vote Failed: Database Error: ${err.message}`, errors: null };
   }
-
-  // revalidatePath(`/game/${slug}`);
-  // redirect(`/game/${slug}`);
 }
