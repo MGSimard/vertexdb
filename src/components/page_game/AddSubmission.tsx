@@ -11,7 +11,7 @@ export function AddSubmission({ gameId, slug, section }: { gameId: number; slug:
 
   const [yeet, setYeet] = useState(0);
 
-  const handleCount = (e) => {
+  const handleCount = (e: any) => {
     setYeet(e.target.value.length);
   };
 

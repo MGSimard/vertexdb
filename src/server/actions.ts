@@ -183,6 +183,9 @@ export async function createVote(rssId: number, voteType: boolean) {
   // MODIFY EXISTING & GET NEW VOTE await db.update(gameRssVotes).set({ voteType: voteInput }).where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId))).returning({ voteResult: gameRssVotes.voteType });
 
   try {
+    // IF NO EXISTING VOTE: Add it to table + update score
+    // IF EXISTING VOTE + SAME VOTE: Delete vote from table + update score
+    // IF EXISTING VOTE + DIFF VOTE: Update vote in table + update score
   } catch (err: any) {
     console.log(err);
   }
