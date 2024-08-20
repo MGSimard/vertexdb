@@ -148,13 +148,13 @@ const voteSchema = z.object({
   voteId: z.number().int().positive().lte(2147483647), // Ignore, DB auto
   rssId: z.coerce.number().int().positive().lte(2147483647),
   voterId: z.string().max(255), // Ignore, get from auth
-  voteType: z.enum(["upvote", "downvote"], { invalid_type_error: "Invalid Vote Type." }),
+  voteType: z.boolean(),
   createdAt: z.date(), // Ignore, DB auto
   updatedAt: z.date(), // Ignore, DB auto
 });
 const CreateVote = voteSchema.omit({ voteId: true, voterId: true, createdAt: true, updatedAt: true });
 
-export async function createVote(rssId: number, voteType: "upvote" | "downvote") {
+export async function createVote(rssId: number, voteType: boolean) {
   const user = auth();
   if (!user.userId)
     return { data: null, message: "Vote Failed: Unauthorized", errors: { auth: ["User is not Authorized."] } };
@@ -171,9 +171,10 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
     };
   }
 
-  const { rssId: submissionId, voteType: newVote } = validated.data;
+  const { rssId: submissionId, voteType: voteInput } = validated.data;
   const currentUser = user.userId;
-  const newVoteAsBool = newVote === "upvote";
+  const voteInputAsBool = voteInput === "upvote";
+  let result = { data: {}, message: "", errors: {} };
 
   try {
     const currentUserVote = await db
@@ -183,56 +184,51 @@ export async function createVote(rssId: number, voteType: "upvote" | "downvote")
       .from(gameRssVotes)
       .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
 
-    // If user has no active vote on this submission, add new vote entry
-    if (!currentUserVote.length) {
-      const voteResult = await db.transaction(async (tx) => {
-        const [currentScore] = await tx
-          .select({ score: gameRssEntries.score })
-          .from(gameRssEntries)
-          .where(eq(gameRssEntries.rssId, submissionId));
+    // // If user has no active vote on this submission, add new vote entry
+    // if (!currentUserVote.length) {
+    //   const voteResult = await db.transaction(async (tx) => {
+    //     const [currentScore] = await tx
+    //       .select({ score: gameRssEntries.score })
+    //       .from(gameRssEntries)
+    //       .where(eq(gameRssEntries.rssId, 555));
+    //     const [scoreResponse] = await tx
+    //       .update(gameRssEntries)
+    //       .set({ score: currentScore!.score + (voteInputAsBool ? 1 : -1) })
+    //       .where(eq(gameRssEntries.rssId, submissionId))
+    //       .returning({ scoreResult: gameRssEntries.score });
+    //     const [voteResponse] = await tx
+    //       .insert(gameRssVotes)
+    //       .values({ rssId: submissionId, voterId: currentUser, voteType: voteInputAsBool })
+    //       .returning({ voteResult: gameRssVotes.voteType });
+    //     return { scoreOutput: scoreResponse?.scoreResult, voteOutput: voteResponse?.voteResult };
+    //   });
 
-        if (currentScore === undefined || currentScore === null || isNaN(currentScore.score)) {
-          tx.rollback();
-          throw new Error("Failed to Get Submission's Score. Vote Failed.");
-        }
+    //   result = { data: voteResult, message: "New Vote Successfully Added.", errors: {} };
+    // }
 
-        const [newScore] = await tx
-          .update(gameRssEntries)
-          .set({ score: currentScore.score + (newVoteAsBool ? 1 : -1) })
-          .where(eq(gameRssEntries.rssId, submissionId))
-          .returning({ newScore: gameRssEntries.score });
-        const [vote] = await tx
-          .insert(gameRssVotes)
-          .values({ rssId: submissionId, voterId: currentUser, voteType: newVoteAsBool })
-          .returning({ voteResult: gameRssVotes.voteType });
+    // // If user has existing vote for this submission
+    // const storedVote = currentUserVote[0]?.currentUserVote;
 
-        return [newScore, vote];
-      });
-      return { data: voteResult, message: "New Vote Successfully Added.", errors: {} };
-    }
+    // // If new vote same as old vote, delete vote (simulate cancelation)
+    // if (storedVote === voteInputAsBool) {
+    //   await db
+    //     .delete(gameRssVotes)
+    //     .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
+    //   return { data: [{ currentUserVote: null }], message: "Existing Vote Successfully Deleted.", errors: {} };
+    // } else {
+    //   // If vote is different, modify existing entry in table
+    //   const voteResult = await db
+    //     .update(gameRssVotes)
+    //     .set({ voteType: voteInputAsBool })
+    //     .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)))
+    //     .returning({ voteResult: gameRssVotes.voteType });
+    //   return { data: voteResult, message: "Existing Vote Successfully Modified.", errors: null };
+    // }
 
-    // If user has existing vote for this submission
-    const storedVote = currentUserVote[0]?.currentUserVote;
-
-    // If new vote same as old vote, delete vote (simulate cancelation)
-    if (storedVote === newVoteAsBool) {
-      await db
-        .delete(gameRssVotes)
-        .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)));
-      return { data: [{ currentUserVote: null }], message: "Existing Vote Successfully Deleted.", errors: {} };
-    } else {
-      // If vote is different, modify existing entry in table
-      const voteResult = await db
-        .update(gameRssVotes)
-        .set({ voteType: newVoteAsBool })
-        .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUser)))
-        .returning({ voteResult: gameRssVotes.voteType });
-      return { data: voteResult, message: "Existing Vote Successfully Modified.", errors: null };
-    }
-
-    // Think about trigger later
-  } catch (err) {
-    return { data: null, message: "Database Error: Failed to Create Vote.", errors: { database: ["Database Error"] } };
+    // // Think about trigger later
+  } catch (err: any) {
+    console.log(err);
+    // return { data: null, message: `Vote Failed: Database Error: ${err.message}`, errors: null };
   }
 
   // revalidatePath(`/game/${slug}`);

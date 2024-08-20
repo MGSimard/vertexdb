@@ -16,7 +16,7 @@ export function VoteBlock({
   const [score, setScore] = useState(initialScore);
   const [activeVote, setActiveVote] = useState(initialVote);
 
-  const handleVote = async (voteType: "upvote" | "downvote") => {
+  const handleVote = async (voteType: boolean) => {
     console.log("Vote Clicked:", voteType);
     const result = await createVote(rssId, voteType);
 
@@ -35,14 +35,14 @@ export function VoteBlock({
       <button
         type="button"
         className={`cs-up${activeVote === true ? " activeVote" : ""}`}
-        onClick={() => handleVote("upvote")}>
+        onClick={() => handleVote(true)}>
         <ArrowUp />
       </button>
       <div>{score}</div>
       <button
         type="button"
         className={`cs-down${activeVote === false ? " activeVote" : ""}`}
-        onClick={() => handleVote("downvote")}>
+        onClick={() => handleVote(false)}>
         <ArrowDown />
       </button>
     </>
