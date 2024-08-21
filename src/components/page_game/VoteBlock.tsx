@@ -19,7 +19,7 @@ export function VoteBlock({
   const handleVote = async (voteType: boolean) => {
     console.log("Vote Clicked:", voteType);
     const result = await createVote(rssId, voteType);
-    console.log(result);
+    console.log("VOTE RESULT:", result);
 
     if (result.data) {
       setActiveVote(result.data.voteResult);

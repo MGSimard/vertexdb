@@ -222,7 +222,6 @@ export async function createVote(rssId: number, voteType: boolean) {
       // ELSE IF EXISTING VOTE
       if (currentUserVote[0]!.currentUserVote !== voteInput) {
         // AND EXISTING VOTE IS DIFFERENT THAN INPUT VOTE: Update vote to voteInput, update score.
-        console.log("EXISTING VOTE -- VOTE INPUT DIFFERENT THAN CURRENT, MODIFYING VOTE.");
         const voteResult = await db.transaction(async (tx) => {
           const [newVote] = await tx
             .update(gameRssVotes)
