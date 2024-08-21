@@ -6,8 +6,7 @@ import { useActionState } from "react";
 export function AddSubmission({ gameId, slug, section }: { gameId: number; slug: string; section: string }) {
   const [formOpen, setFormOpen] = useState(false);
 
-  const initialState = { message: "", errors: {} };
-  const [formState, formAction, pending] = useActionState(createSubmission, initialState);
+  const [formState, formAction, pending] = useActionState(createSubmission, null);
   const [descCharCount, setDescCharCount] = useState(0);
 
   const handleCharCount = (e: any) => {
@@ -64,7 +63,7 @@ export function AddSubmission({ gameId, slug, section }: { gameId: number; slug:
             {pending ? "Submitting . . ." : "Submit"}
           </button>
         </fieldset>
-        {formState?.errors && formState.message}
+        {formState?.success === false && formState.message}
       </form>
     </div>
   );

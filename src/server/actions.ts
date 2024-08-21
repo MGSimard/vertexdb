@@ -103,7 +103,11 @@ export async function createSubmission(currentState: any, formData: FormData) {
   const user = auth();
 
   if (!user.userId) {
-    return { message: "Submission Failed: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+    // Figure out if I want periods at the end of these error messages for UI style purposes
+    return {
+      success: false,
+      message: "Submission Failed: Unauthorized.",
+    };
   }
 
   const validated = CreateSubmission.safeParse({
@@ -116,7 +120,7 @@ export async function createSubmission(currentState: any, formData: FormData) {
   });
 
   if (!validated.success) {
-    return { message: "Invalid Fields. Failed to Create Submission.", errors: validated.error.flatten().fieldErrors };
+    return { success: false, message: "Submission Failed: Invalid Fields." };
   }
 
   const { gameId, title, url, description, section, slug } = validated.data;
@@ -131,11 +135,14 @@ export async function createSubmission(currentState: any, formData: FormData) {
       await tx.insert(gameRssVotes).values({ rssId: insertedRssId!.id, voterId: author, voteType: true });
     });
   } catch (err) {
-    return { message: "Database Error: Failed to Create Submission.", errors: { database: ["Database Error"] } };
+    return {
+      success: false,
+      message: "Database Error: Failed to Create Submission.",
+    };
   }
 
   revalidatePath(`/game/${slug}`);
-  return { message: "Submission Successfully Added.", errors: {} };
+  return { success: true, message: "Success: Submission Added." };
 }
 
 /**
