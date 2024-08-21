@@ -196,7 +196,7 @@
 .submissionForm {
   display: flex;
   flex-direction: column;
-  gap: 0.5rem;
+  gap: 1rem;
 }
 .submissionForm h3 {
   font-weight: 600;
@@ -230,7 +230,8 @@
 }
 .submissionForm .buttonSet {
   display: flex;
-  justify-content: space-between;
+  gap: 0.5rem;
+  justify-content: flex-end;
 }
 
 /* VERTICAL TABLE */
