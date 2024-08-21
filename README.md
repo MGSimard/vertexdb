@@ -47,6 +47,7 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Implement voting functionality (server actions) https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#server-side-form-validation
 - [ ] Think about potentially adding current character count above inputs
 - [x] On submission add an upvote from the submitter (somehow avoid triggering trigger - unless I start posts at 0pts)
+- [x] Fix submission highlighting on hover being larger than the actual click zone
 - [ ] Collapse "add submission" section back into "Add" after successful submit
 - [ ] Show top 8 submissions, see all shows all of them
 - [ ] Find Steam svg icon outline for steam button

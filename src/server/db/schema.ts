@@ -16,7 +16,7 @@ export const gameRssEntries = createTable(
     gameId: integer("game_id").notNull(),
     author: varchar("author", { length: 255 }).notNull(),
     title: varchar("title", { length: 255 }).notNull(),
-    url: varchar("url", { length: 255 }).notNull().unique(),
+    url: varchar("url", { length: 255 }).notNull(),
     description: varchar("description", { length: 255 }).notNull(),
     section: varchar("section", { length: 255 }).notNull(),
     score: integer("score").default(1).notNull(),

@@ -178,15 +178,87 @@ export async function createVote(rssId: number, voteType: boolean) {
   // GET CURRENTUSER VOTE: await db.select({currentUserVote: gameRssVotes.voteType,}).from(gameRssVotes).where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId)));
   // GET SUBMISSION SCORE: await db.select({ score: gameRssEntries.score }).from(gameRssEntries).where(eq(gameRssEntries.rssId, submissionId));
   // UPDATE & GET NEW SUBMISSION SCORE: await db.update(gameRssEntries).set({ score: currentScore.score + (voteInput ? 1 : -1) }).where(eq(gameRssEntries.rssId, submissionId)).returning({ scoreResult: gameRssEntries.score });
-  // UPDATE & GET NEW VOTE: await db.insert(gameRssVotes).values({ rssId: submissionId, voterId: currentUserId, voteType: voteInput }).returning({ voteResult: gameRssVotes.voteType });
+  // ADD & GET NEW VOTE: await db.insert(gameRssVotes).values({ rssId: submissionId, voterId: currentUserId, voteType: voteInput }).returning({ voteResult: gameRssVotes.voteType });
   // DELETE CURRENT VOTE (OLD & NEW SAME): await db.delete(gameRssVotes).where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId)));
   // MODIFY EXISTING & GET NEW VOTE await db.update(gameRssVotes).set({ voteType: voteInput }).where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId))).returning({ voteResult: gameRssVotes.voteType });
 
+  // TRANSACTION ERROR HANDLING: Throwing an error anywhere within transaction will cause a rollback.
+  // Alternatively, you can call tx.rollback() manually.
+
   try {
-    // IF NO EXISTING VOTE: Add it to table + update score
-    // IF EXISTING VOTE + SAME VOTE: Delete vote from table + update score
-    // IF EXISTING VOTE + DIFF VOTE: Update vote in table + update score
+    // GET CURRENTUSER'S CURRENT VOTE ON SUBMISSION IF EXISTS - Returns [], [{currentUserVote: boolean}]
+    const currentUserVote = await db
+      .select({ currentUserVote: gameRssVotes.voteType })
+      .from(gameRssVotes)
+      .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId)));
+    const [currentSubmissionScore] = await db
+      .select({ score: gameRssEntries.score })
+      .from(gameRssEntries)
+      .where(eq(gameRssEntries.rssId, submissionId));
+
+    if (!currentUserVote || isNaN(currentSubmissionScore!.score)) {
+      return {
+        data: {},
+        message: "Database Error: Could not retrieve current vote or submission score.",
+        errors: { database: ["Could not retrieve current vote or submission score."] },
+      };
+    }
+
+    if (!currentUserVote.length) {
+      // IF NO EXISTING VOTE: Add voteInput to table, update score.
+      const voteResult = await db.transaction(async (tx) => {
+        const [newVote] = await tx
+          .insert(gameRssVotes)
+          .values({ rssId: submissionId, voterId: currentUserId, voteType: voteInput })
+          .returning({ newVote: gameRssVotes.voteType });
+        const [newScore] = await tx
+          .update(gameRssEntries)
+          .set({ score: currentSubmissionScore!.score + (voteInput ? 1 : -1) })
+          .where(eq(gameRssEntries.rssId, submissionId))
+          .returning({ newScore: gameRssEntries.score });
+        return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
+      });
+      return { data: voteResult, message: "Vote Successfully Added.", errors: {} };
+    } else {
+      // ELSE IF EXISTING VOTE
+      if (currentUserVote[0]!.currentUserVote !== voteInput) {
+        // AND EXISTING VOTE IS DIFFERENT THAN INPUT VOTE: Update vote to voteInput, update score.
+        console.log("EXISTING VOTE -- VOTE INPUT DIFFERENT THAN CURRENT, MODIFYING VOTE.");
+        const voteResult = await db.transaction(async (tx) => {
+          const [newVote] = await tx
+            .update(gameRssVotes)
+            .set({ voteType: voteInput })
+            .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId)))
+            .returning({ newVote: gameRssVotes.voteType });
+          const [newScore] = await tx
+            .update(gameRssEntries)
+            .set({ score: currentSubmissionScore!.score + (voteInput ? 2 : -2) })
+            .where(eq(gameRssEntries.rssId, submissionId))
+            .returning({ newScore: gameRssEntries.score });
+          return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
+        });
+        return { data: voteResult, message: "Vote Successfully Modified.", errors: {} };
+      } else {
+        // ELSE - AND EXISTING VOTE IS SAME AS NEW VOTE: Delete vote from table, update score.
+        const voteResult = await db.transaction(async (tx) => {
+          await tx
+            .delete(gameRssVotes)
+            .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId)));
+          const [newScore] = await tx
+            .update(gameRssEntries)
+            .set({ score: currentSubmissionScore!.score + (voteInput ? -1 : 1) })
+            .where(eq(gameRssEntries.rssId, submissionId))
+            .returning({ newScore: gameRssEntries.score });
+          return { voteResult: null, scoreResult: newScore!.newScore };
+        });
+        return { data: voteResult, message: "Vote Successfully Deleted.", errors: {} };
+      }
+    }
   } catch (err: any) {
-    console.log(err);
+    return {
+      data: {},
+      message: "Database Error: Vote and score were not modified.",
+      errors: { database: ["Vote and score were not modified."] },
+    };
   }
 }
