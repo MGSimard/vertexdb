@@ -17,20 +17,14 @@ export function VoteBlock({
   const [activeVote, setActiveVote] = useState(initialVote);
 
   const handleVote = async (voteType: boolean) => {
-    console.log("Vote Clicked:", voteType);
     const result = await createVote(rssId, voteType);
-    console.log("VOTE RESULT:", result);
 
     if (result.data) {
       setActiveVote(result.data.voteResult);
       setScore(result.data.scoreResult);
+    } else if (result.errors) {
+      // Toast error
     }
-
-    // If response is specifically true or false update setActiveVote with it
-
-    // Get response from createVote
-    // setActiveVote to new vote (maybe use useOptimistic)
-    // setScore to new score (maybe use useOptimistic)
   };
 
   return (
