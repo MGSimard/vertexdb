@@ -52,9 +52,9 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [ ] Maybe clear form errors if forms are closed with cancel button and then re-opened?
 - [ ] Think about using toasts for errors and other state messages
 - [ ] Error handling
-- [ ] Collapse "add submission" section back into "Add" after successful submit
-- [ ] Show top 8 submissions, see all shows all of them
-- [ ] Find Steam svg icon outline for steam button
+- [x] Collapse "add submission" section back into "Add" after successful submit
+- [x] Show top 8 submissions, see all shows all of them
+- [x] Find Steam svg icon outline for steam button
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
 - [ ] Give a shit about replacing :any with typeguards for initialRss
