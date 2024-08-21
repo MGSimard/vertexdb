@@ -46,7 +46,17 @@ export function Card({
                 (submission, index) => index < 8 && <SubmissionEntry submission={submission} key={submission.rssId} />
               )}
             </ul>
-            {content.length > 8 && <button type="button">See All</button>}
+            {content.length > 8 && (
+              <details className="seeAllSubmissions">
+                <summary className="noselect">See All</summary>
+                <ul>
+                  {content.map(
+                    (submission, index) =>
+                      index >= 8 && <SubmissionEntry submission={submission} key={submission.rssId} />
+                  )}
+                </ul>
+              </details>
+            )}
           </div>
         </div>
       )}
