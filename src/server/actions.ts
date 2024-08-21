@@ -99,11 +99,12 @@ const CreateSubmission = submissionSchema.omit({
   updatedAt: true,
 });
 
-export async function createSubmission(prevState: any, formData: FormData) {
+export async function createSubmission(currentState: any, formData: FormData) {
   const user = auth();
 
-  if (!user.userId)
+  if (!user.userId) {
     return { message: "Submission Failed: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+  }
 
   const validated = CreateSubmission.safeParse({
     gameId: formData.get("gameId"),
@@ -127,18 +128,14 @@ export async function createSubmission(prevState: any, formData: FormData) {
         .insert(gameRssEntries)
         .values({ gameId: gameId, author: author, title: title, url: url, description: description, section: section })
         .returning({ id: gameRssEntries.rssId });
-      if (!insertedRssId) {
-        tx.rollback();
-        throw new Error("Failed to Insert Rss Entry, No ID Returned.");
-      }
-      await tx.insert(gameRssVotes).values({ rssId: insertedRssId.id, voterId: author, voteType: true });
+      await tx.insert(gameRssVotes).values({ rssId: insertedRssId!.id, voterId: author, voteType: true });
     });
   } catch (err) {
     return { message: "Database Error: Failed to Create Submission.", errors: { database: ["Database Error"] } };
   }
 
   revalidatePath(`/game/${slug}`);
-  redirect(`/game/${slug}`);
+  return { message: "Submission Successfully Added.", errors: {} };
 }
 
 /**

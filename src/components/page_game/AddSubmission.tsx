@@ -1,25 +1,28 @@
 "use client";
-import { useState, useRef } from "react";
+import { useState, useEffect } from "react";
 import { createSubmission } from "@/server/actions";
 import { useActionState } from "react";
 
 export function AddSubmission({ gameId, slug, section }: { gameId: number; slug: string; section: string }) {
-  const [modalOpen, setModalOpen] = useState(false);
+  const [formOpen, setFormOpen] = useState(false);
 
-  const initialFormState = { message: "", errors: {} };
-  const [formState, formAction, pending] = useActionState(createSubmission, initialFormState);
+  const initialState = { message: "", errors: {} };
+  const [formState, formAction, pending] = useActionState(createSubmission, initialState);
+  const [descCharCount, setDescCharCount] = useState(0);
 
-  const [yeet, setYeet] = useState(0);
-
-  const handleCount = (e: any) => {
-    setYeet(e.target.value.length);
+  const handleCharCount = (e: any) => {
+    setDescCharCount(e.target.value.length);
   };
 
-  return !modalOpen ? (
-    <button className="card-content" onClick={() => setModalOpen(true)}>
-      [+] ADD
-    </button>
-  ) : (
+  if (!formOpen) {
+    return (
+      <button className="card-content" onClick={() => setFormOpen(true)}>
+        [+] ADD
+      </button>
+    );
+  }
+
+  return (
     <div className="card-content">
       <form className="submissionForm" action={formAction}>
         <h3>/ / ADD TO [{section}]</h3>
@@ -39,13 +42,13 @@ export function AddSubmission({ gameId, slug, section }: { gameId: number; slug:
           <input type="text" name="url" id={`url-${section}`} placeholder="/ / URL . . ." maxLength={1024} required />
         </label>
         <label htmlFor={`description-${section}`}>
-          Description:<small>{yeet > 0 && ` ${yeet}/160`}</small>
+          Description:<small>{descCharCount > 0 && ` ${descCharCount}/160`}</small>
           <textarea
             name="description"
             id={`description-${section}`}
             placeholder="/ / DESCRIPTION . . ."
             maxLength={160}
-            onChange={handleCount}
+            onChange={handleCharCount}
             required
           />
         </label>
@@ -54,7 +57,7 @@ export function AddSubmission({ gameId, slug, section }: { gameId: number; slug:
         <input type="hidden" name="section" value={section} />
 
         <fieldset className="buttonSet">
-          <button className="btn-ui" type="button" onClick={() => setModalOpen(false)}>
+          <button className="btn-ui" type="button" onClick={() => setFormOpen(false)}>
             Cancel
           </button>
           <button className="btn-ui" type="submit" aria-disabled={pending}>

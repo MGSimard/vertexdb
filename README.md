@@ -45,7 +45,7 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] USE RETURNING UPDATE TO GET BACK INSTEAD OF DOING ANOTHER QUERY
 - [x] Limit character input within the actual fields themselves
 - [x] Implement voting functionality (server actions) https://nextjs.org/docs/app/building-your-application/data-fetching/server-actions-and-mutations#server-side-form-validation
-- [ ] Think about potentially adding current character count above inputs
+- [x] Think about potentially adding current character count above inputs
 - [x] On submission add an upvote from the submitter (somehow avoid triggering trigger - unless I start posts at 0pts)
 - [x] Fix submission highlighting on hover being larger than the actual click zone
 - [ ] Introduce rate-limiting for both submissions and votes (harder limit on submissions)
