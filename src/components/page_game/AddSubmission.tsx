@@ -5,9 +5,14 @@ import { useActionState } from "react";
 
 export function AddSubmission({ gameId, slug, section }: { gameId: number; slug: string; section: string }) {
   const [formOpen, setFormOpen] = useState(false);
-
   const [formState, formAction, pending] = useActionState(createSubmission, null);
   const [descCharCount, setDescCharCount] = useState(0);
+
+  useEffect(() => {
+    if (formState?.success === true) {
+      setFormOpen(false);
+    }
+  }, [formState]);
 
   const handleCharCount = (e: any) => {
     setDescCharCount(e.target.value.length);
