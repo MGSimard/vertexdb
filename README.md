@@ -48,13 +48,14 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [ ] Think about potentially adding current character count above inputs
 - [x] On submission add an upvote from the submitter (somehow avoid triggering trigger - unless I start posts at 0pts)
 - [x] Fix submission highlighting on hover being larger than the actual click zone
+- [ ] Think about using toasts for errors and other state messages
+- [ ] Error handling
 - [ ] Collapse "add submission" section back into "Add" after successful submit
 - [ ] Show top 8 submissions, see all shows all of them
 - [ ] Find Steam svg icon outline for steam button
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
 - [ ] Give a shit about replacing :any with typeguards for initialRss
-- [ ] Error handling
 - [ ] Implement admin dashboard (server actions)
 - [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)
 
