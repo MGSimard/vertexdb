@@ -198,7 +198,6 @@ export async function createVote(rssId: number, voteType: boolean) {
 
     if (!currentUserVote || isNaN(currentSubmissionScore!.score)) {
       return {
-        data: {},
         message: "Database Error: Could not retrieve current vote or submission score.",
         errors: { database: ["Could not retrieve current vote or submission score."] },
       };
@@ -218,7 +217,7 @@ export async function createVote(rssId: number, voteType: boolean) {
           .returning({ newScore: gameRssEntries.score });
         return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
       });
-      return { data: voteResult, message: "Vote Successfully Added.", errors: {} };
+      return { data: voteResult, message: "Vote Successfully Added." };
     } else {
       // ELSE IF EXISTING VOTE
       if (currentUserVote[0]!.currentUserVote !== voteInput) {
@@ -237,7 +236,7 @@ export async function createVote(rssId: number, voteType: boolean) {
             .returning({ newScore: gameRssEntries.score });
           return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
         });
-        return { data: voteResult, message: "Vote Successfully Modified.", errors: {} };
+        return { data: voteResult, message: "Vote Successfully Modified." };
       } else {
         // ELSE - AND EXISTING VOTE IS SAME AS NEW VOTE: Delete vote from table, update score.
         const voteResult = await db.transaction(async (tx) => {
@@ -251,12 +250,11 @@ export async function createVote(rssId: number, voteType: boolean) {
             .returning({ newScore: gameRssEntries.score });
           return { voteResult: null, scoreResult: newScore!.newScore };
         });
-        return { data: voteResult, message: "Vote Successfully Deleted.", errors: {} };
+        return { data: voteResult, message: "Vote Successfully Deleted." };
       }
     }
   } catch (err: any) {
     return {
-      data: {},
       message: "Database Error: Vote and score were not modified.",
       errors: { database: ["Vote and score were not modified."] },
     };

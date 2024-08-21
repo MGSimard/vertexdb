@@ -19,8 +19,12 @@ export function VoteBlock({
   const handleVote = async (voteType: boolean) => {
     console.log("Vote Clicked:", voteType);
     const result = await createVote(rssId, voteType);
-
     console.log(result);
+
+    if (result.data) {
+      setActiveVote(result.data.voteResult);
+      setScore(result.data.scoreResult);
+    }
 
     // If response is specifically true or false update setActiveVote with it
 
