@@ -177,8 +177,8 @@
 .cs-right p {
   display: -webkit-box; /* Necessary for -webkit-line-clamp to work */
   -webkit-box-orient: vertical; /* Specify vertical orientation */
-  -webkit-line-clamp: 3; /* Limit to 3 lines */
-  line-clamp: 3;
+  -webkit-line-clamp: 10; /* Limit to 3 lines */
+  line-clamp: 10;
   line-height: 1em;
   overflow: hidden;
   text-overflow: ellipsis;
