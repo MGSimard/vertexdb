@@ -81,11 +81,11 @@ const submissionSchema = z.object({
   rssId: z.number().int().positive().lte(2147483647), // Ignore, DB auto
   gameId: z.coerce.number().int().positive().lte(2147483647),
   author: z.string().max(255), // Ignore, get from auth
-  title: z.string().trim().min(1).max(255),
-  url: z.string().url().trim().min(1).max(255),
-  description: z.string().trim().min(1).max(255),
+  title: z.string().trim().min(1).max(60),
+  url: z.string().url().trim().min(1).max(1024),
+  description: z.string().trim().min(1).max(160),
   /* DB takes any string, set enum for limited dead DB entries if user fucks with hidden form field */
-  section: z.enum(["resources", "communities", "creators"], { invalid_type_error: "Invalid Section." }),
+  section: z.enum(["resources", "communities", "creators"]),
   slug: z.string().max(1024), // Only for page refresh, no use in DB
   score: z.number(), // Ignore, DB auto
   createdAt: z.date(), // Ignore, DB auto
@@ -175,16 +175,8 @@ export async function createVote(rssId: number, voteType: boolean) {
   const currentUserId = user.userId;
 
   // RETURN FORMAT: { data: {}, message: "", errors: {} }
-  // GET CURRENTUSER VOTE: await db.select({currentUserVote: gameRssVotes.voteType,}).from(gameRssVotes).where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId)));
-  // GET SUBMISSION SCORE: await db.select({ score: gameRssEntries.score }).from(gameRssEntries).where(eq(gameRssEntries.rssId, submissionId));
-  // UPDATE & GET NEW SUBMISSION SCORE: await db.update(gameRssEntries).set({ score: currentScore.score + (voteInput ? 1 : -1) }).where(eq(gameRssEntries.rssId, submissionId)).returning({ scoreResult: gameRssEntries.score });
-  // ADD & GET NEW VOTE: await db.insert(gameRssVotes).values({ rssId: submissionId, voterId: currentUserId, voteType: voteInput }).returning({ voteResult: gameRssVotes.voteType });
-  // DELETE CURRENT VOTE (OLD & NEW SAME): await db.delete(gameRssVotes).where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId)));
-  // MODIFY EXISTING & GET NEW VOTE await db.update(gameRssVotes).set({ voteType: voteInput }).where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId))).returning({ voteResult: gameRssVotes.voteType });
-
   // TRANSACTION ERROR HANDLING: Throwing an error anywhere within transaction will cause a rollback.
   // Alternatively, you can call tx.rollback() manually.
-
   try {
     // GET CURRENTUSER'S CURRENT VOTE ON SUBMISSION IF EXISTS - Returns [], [{currentUserVote: boolean}]
     const currentUserVote = await db

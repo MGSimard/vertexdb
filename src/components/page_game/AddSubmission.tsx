@@ -30,21 +30,21 @@ export function AddSubmission({ gameId, slug, section }: { gameId: number; slug:
             name="title"
             id={`title-${section}`}
             placeholder="/ / TITLE . . ."
-            maxLength={255}
+            maxLength={60}
             required
           />
         </label>
         <label htmlFor={`url-${section}`}>
           URL:
-          <input type="text" name="url" id={`url-${section}`} placeholder="/ / URL . . ." maxLength={255} required />
+          <input type="text" name="url" id={`url-${section}`} placeholder="/ / URL . . ." maxLength={1024} required />
         </label>
         <label htmlFor={`description-${section}`}>
-          Description:<small>{yeet > 0 && ` ${yeet}/255`}</small>
+          Description:<small>{yeet > 0 && ` ${yeet}/160`}</small>
           <textarea
             name="description"
             id={`description-${section}`}
             placeholder="/ / DESCRIPTION . . ."
-            maxLength={255}
+            maxLength={160}
             onChange={handleCount}
             required
           />

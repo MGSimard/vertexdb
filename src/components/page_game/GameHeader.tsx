@@ -13,7 +13,7 @@ export async function GameHeader({ slug }: { slug: string }) {
   //   console.log("WEBSITES:", gameData.websites);
   // }
 
-  const sections = ["Resources", "Communities", "Creators"];
+  const sections = ["resources", "communities", "creators"];
 
   return (
     <>
