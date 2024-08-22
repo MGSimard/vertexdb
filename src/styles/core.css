@@ -7,8 +7,8 @@
 :root {
   --max-content-width: 1440px;
 
-  --clr-primary: hsl(2.41, 88.77%, 62.75%); /*F75049*/
-  --clr-secondary: hsl(183.35, 97.51%, 68.43%); /*5EF6FF*/
+  --clr-primary: hsl(2.41, 88.77%, 62.75%); /*#F75049*/
+  --clr-secondary: hsl(183.35, 97.51%, 68.43%); /*#5EF6FF*/
   --clr-tertiary: hsl(0, 100%, 100%); /*#FFFFFF*/
   --clr-bg: hsl(240, 24.03%, 7.26%); /*#0E0E17*/
 
