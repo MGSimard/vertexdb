@@ -5,6 +5,7 @@ import { gameRssEntries, gameRssVotes } from "@/server/db/schema";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
+import { ratelimit } from "./ratelimit";
 
 /**
  * GRAB ALL SUBMISSIONS FOR A GAME
@@ -104,6 +105,9 @@ export async function createSubmission(currentState: any, formData: FormData) {
     };
   }
 
+  const { success } = await ratelimit.limit(user.userId);
+  if (!success) return { success: false, message: "RATE-LIMITED" };
+
   const validated = CreateSubmission.safeParse({
     gameId: formData.get("gameId"),
     title: formData.get("title"),
@@ -155,6 +159,9 @@ const CreateVote = voteSchema.omit({ voteId: true, voterId: true, createdAt: tru
 export async function createVote(rssId: number, voteType: boolean) {
   const user = auth();
   if (!user.userId) return { message: "INVALID VOTE: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+
+  const { success } = await ratelimit.limit(user.userId);
+  if (!success) return { message: "RATELIMIT ERROR: Too many actions.", errors: { ratelimit: ["Too many actions."] } };
 
   const validated = CreateVote.safeParse({
     rssId,
