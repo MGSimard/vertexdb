@@ -63,10 +63,6 @@ export async function getGameData(query: string) {
     body: `fields name, cover.image_id, first_release_date, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, summary, websites.category, websites.url; where slug = "${query}" & version_parent = null & category = (0,4,8,9,12);`,
   });
 
-  if (!res.ok) {
-    throw new Error(`HTTP ERROR: ${res.status}`);
-  }
-
   const data = await res.json();
 
   return data[0];

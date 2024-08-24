@@ -167,6 +167,7 @@
 }
 .cs-right h3 {
   font-weight: 600;
+  line-height: 1;
 }
 .cs-right:hover h3 {
   color: var(--clr-secondary);

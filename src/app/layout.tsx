@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Rajdhani } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
+import { ThemeProvider } from "next-themes";
 import { dark } from "@clerk/themes";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
@@ -22,14 +23,16 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider appearance={{ baseTheme: dark, variables: { fontSize: "1.6rem" } }}>
-      <html lang="en">
+      <html lang="en" suppressHydrationWarning /*for next-themes*/>
         <body className={`${rajdhani.className} antialiased`}>
-          <header>
-            <Navbar />
-            <GamesIndexed />
-          </header>
-          {children}
-          <Footer />
+          <ThemeProvider>
+            <header>
+              <Navbar />
+              <GamesIndexed />
+            </header>
+            {children}
+            <Footer />
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

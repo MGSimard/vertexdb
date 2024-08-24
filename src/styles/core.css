@@ -1,18 +1,20 @@
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
 /* VARIABLES */
-:root {
-  --max-content-width: 1440px;
-
+:root[data-theme="dark"] {
   --clr-primary: hsl(2.41, 88.77%, 62.75%); /*#F75049*/
   --clr-secondary: hsl(183.35, 97.51%, 68.43%); /*#5EF6FF*/
-  --clr-tertiary: hsl(0, 100%, 100%); /*#FFFFFF*/
+  --clr-trim: hsl(2.41, 88.77%, 62.75%); /*#F75049 (same as primary)*/
   --clr-bg: hsl(240, 24.03%, 7.26%); /*#0E0E17*/
-
   --clr-ui: hsl(356.86, 100%, 61.57%); /*#FF3B45*/
+}
+:root[data-theme="light"] {
+  --clr-primary: hsl(243.61, 64.52%, 29.41%); /*#211B7B*/
+  --clr-secondary: hsl(0, 0%, 0%); /*#000000*/
+  --clr-trim: hsl(0, 0%, 0%); /*#000000 (same as secondary) */
+  --clr-bg: hsl(0, 0%, 88.24%); /*#E1E1E1*/
+  --clr-ui: hsl(243.61, 64.52%, 29.41%); /*#211B7B*/
+}
+:root {
+  --max-content-width: 1440px;
   --clr-ui-overlay-clicked: hsla(from var(--clr-ui) h s l / 0.7);
   --clr-ui-overlay-active: hsla(from var(--clr-ui) h s l / 0.4);
   --clr-ui-overlay-hover: hsla(from var(--clr-ui) h s l / 0.1);
@@ -22,6 +24,11 @@
   --clr-ui-bg-80: hsla(from var(--clr-bg) h s l / 0.8);
 }
 /* Main Core */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 html {
   font-size: 62.5%;
   color: var(--clr-primary);
@@ -42,7 +49,6 @@ body {
   background-repeat: no-repeat;
   overflow: hidden;
 }
-.nav-logo,
 footer,
 .indexed-vertribbon {
   color: hsla(from var(--clr-primary) h s l / 0.3);
@@ -60,7 +66,7 @@ nav {
   height: 8rem;
   gap: 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 2px solid hsla(from var(--clr-primary) h s l / 0.3);
+  border-bottom: 2px solid hsla(from var(--clr-trim) h s l / 0.3);
   text-wrap: nowrap;
 }
 nav h1 {
@@ -79,6 +85,7 @@ nav h1 {
   font-size: 4rem;
   font-weight: 700;
   line-height: 0.8;
+  color: hsla(from var(--clr-primary) h s l / 0.3);
 }
 .nav-logo:hover {
   color: var(--clr-primary);
@@ -166,8 +173,21 @@ section:not(:last-child) {
   margin-bottom: 4rem;
 }
 footer {
-  padding: 1rem;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
   height: 9rem;
+  padding: 1rem;
+}
+.themeToggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 3rem;
+  height: 3rem;
+  padding: 0;
+  color: var(--clr-ui-border-idle);
+  flex-shrink: 0;
 }
 /* MAIN PAGE */
 .not-found {

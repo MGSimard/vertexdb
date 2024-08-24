@@ -1,3 +1,5 @@
+import { Globe, Steam, Discord } from "../icons";
+
 const SkeleCard = () => {
   return (
     <div className="card shimmer">
@@ -41,12 +43,15 @@ export function GameSkeleton() {
           </div>
           <div className="game-officialrss">
             <a aria-disabled="true" className="button-styled-a disabled">
+              <Globe />
               <span>WEBSITE</span>
             </a>
             <a aria-disabled="true" className="button-styled-a disabled">
+              <Steam />
               <span>STEAM</span>
             </a>
             <a aria-disabled="true" className="button-styled-a disabled">
+              <Discord />
               <span>DISCORD</span>
             </a>
           </div>
