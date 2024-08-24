@@ -51,10 +51,11 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [ ] Introduce rate-limiting for both submissions and votes (harder limit on submissions)
 - [ ] Maybe clear form errors if forms are closed with cancel button and then re-opened?
 - [ ] Think about using toasts for errors and other state messages
-- [ ] Error handling
+- [x] Error handling
 - [x] Collapse "add submission" section back into "Add" after successful submit
 - [x] Show top 8 submissions, see all shows all of them
 - [x] Find Steam svg icon outline for steam button
+- [ ] Light mode
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
 - [ ] Give a shit about replacing :any with typeguards for initialRss
@@ -67,10 +68,3 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - export default function() for pages
 - export function() for components
 - const = () => {} for anything "in-house"
-
-- Error handling: { data: {}, message: "", errors: { database: [""] } };
-- Only include fields if they're present, check for field presence for error/data checking on return.
-- IE: { data:{stuff: stuff}, message:"stuff successful"}
-- IE: { message:"stuff unsuccessful", errors: { stuff: ["Specific Error"] } }
-- Capitalize words before the :, not the phrase after.
-- IE: "Database Error: Stuff about error"
