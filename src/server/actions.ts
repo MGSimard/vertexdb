@@ -42,7 +42,7 @@ export async function getInitialRss(currentGameId: number) {
       and(eq(gameRssEntries.rssId, gameRssVotes.rssId), eq(gameRssVotes.voterId, currentUser))
     );
   } catch (err) {
-    return { error: "Database Error: Failed to Fetch Resources." };
+    return { error: "DATABASE ERROR: Failed to Fetch Resources." };
   }
 }
 
@@ -50,27 +50,26 @@ export async function getInitialRss(currentGameId: number) {
  * FETCH DATA FOR CURRENT GAME
  */
 export async function getGameData(query: string) {
-  try {
-    const res = await fetch("https://api.igdb.com/v4/games", {
-      method: "POST",
-      headers: {
-        Accept: "application/json",
-        "Client-ID": process.env.CLIENT_ID,
-        Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
-      } as HeadersInit,
-      body: `fields name, cover.image_id, first_release_date, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, summary, websites.category, websites.url; where slug = "${query}" & version_parent = null & category = (0,4,8,9,12);`,
-    });
+  // Initially had try/catch but realized I really don't need it
+  // because of how I'm handling this specific actions' errors
+  // by having two different UI-wide outputs from the same component using gameData?.xyz
+  const res = await fetch("https://api.igdb.com/v4/games", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Client-ID": process.env.CLIENT_ID,
+      Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
+    } as HeadersInit,
+    body: `fields name, cover.image_id, first_release_date, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, summary, websites.category, websites.url; where slug = "${query}" & version_parent = null & category = (0,4,8,9,12);`,
+  });
 
-    if (!res.ok) {
-      throw new Error(`HTTP Error: ${res.status}`);
-    }
-
-    const data = await res.json();
-
-    return data[0];
-  } catch (err) {
-    console.log(err);
+  if (!res.ok) {
+    throw new Error(`HTTP ERROR: ${res.status}`);
   }
+
+  const data = await res.json();
+
+  return data[0];
 }
 
 /**
@@ -105,7 +104,7 @@ export async function createSubmission(currentState: any, formData: FormData) {
     // Figure out if I want periods at the end of these error messages for UI style purposes
     return {
       success: false,
-      message: "Submission Failed: Unauthorized.",
+      message: "SUBMISSION ERROR: Unauthorized.",
     };
   }
 
@@ -119,7 +118,7 @@ export async function createSubmission(currentState: any, formData: FormData) {
   });
 
   if (!validated.success) {
-    return { success: false, message: "Submission Failed: Invalid Fields." };
+    return { success: false, message: "SUBMISSION ERROR: Invalid Fields." };
   }
 
   const { gameId, title, url, description, section, slug } = validated.data;
@@ -136,12 +135,12 @@ export async function createSubmission(currentState: any, formData: FormData) {
   } catch (err) {
     return {
       success: false,
-      message: "Database Error: Failed to Create Submission.",
+      message: "DATABASE ERROR: Failed to Create Submission.",
     };
   }
 
   revalidatePath(`/game/${slug}`);
-  return { success: true, message: "Success: Submission Added." };
+  return { success: true, message: "SUCCESS: Submission Added." };
 }
 
 /**
@@ -159,8 +158,7 @@ const CreateVote = voteSchema.omit({ voteId: true, voterId: true, createdAt: tru
 
 export async function createVote(rssId: number, voteType: boolean) {
   const user = auth();
-  if (!user.userId)
-    return { data: null, message: "Vote Failed: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+  if (!user.userId) return { message: "INVALID VOTE: Unauthorized", errors: { auth: ["User is not Authorized."] } };
 
   const validated = CreateVote.safeParse({
     rssId,
@@ -168,8 +166,7 @@ export async function createVote(rssId: number, voteType: boolean) {
   });
   if (!validated.success) {
     return {
-      data: null,
-      message: "Invalid Vote. Failed to Create Vote.",
+      message: "INVALID VOTE: Failed to Create Vote.",
       errors: validated.error.flatten().fieldErrors,
     };
   }
@@ -193,7 +190,7 @@ export async function createVote(rssId: number, voteType: boolean) {
 
     if (!currentUserVote || isNaN(currentSubmissionScore!.score)) {
       return {
-        message: "Database Error: Could not retrieve current vote or submission score.",
+        message: "DATABASE ERROR: Could not retrieve current vote or submission score.",
         errors: { database: ["Could not retrieve current vote or submission score."] },
       };
     }
@@ -249,7 +246,7 @@ export async function createVote(rssId: number, voteType: boolean) {
     }
   } catch (err: any) {
     return {
-      message: "Database Error: Vote and score were not modified.",
+      message: "DATABASE ERROR: Vote and score were not modified.",
       errors: { database: ["Vote and score were not modified."] },
     };
   }

@@ -24,7 +24,7 @@ export function Searchbar() {
         const data = await res.json();
         if (!ignore) setGames(data);
       } catch (err) {
-        console.log(err);
+        console.error(err);
       }
     };
 

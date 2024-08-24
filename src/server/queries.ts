@@ -20,7 +20,7 @@ export async function searchGames(query: string) {
 
     const data = await res.json();
     return data;
-  } catch (err) {
-    console.log(err);
+  } catch (err: any) {
+    return { error: err.message };
   }
 }

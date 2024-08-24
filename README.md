@@ -67,3 +67,10 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - export default function() for pages
 - export function() for components
 - const = () => {} for anything "in-house"
+
+- Error handling: { data: {}, message: "", errors: { database: [""] } };
+- Only include fields if they're present, check for field presence for error/data checking on return.
+- IE: { data:{stuff: stuff}, message:"stuff successful"}
+- IE: { message:"stuff unsuccessful", errors: { stuff: ["Specific Error"] } }
+- Capitalize words before the :, not the phrase after.
+- IE: "Database Error: Stuff about error"
