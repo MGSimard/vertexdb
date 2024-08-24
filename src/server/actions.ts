@@ -1,4 +1,4 @@
-"use server";
+import "server-only";
 import { eq, and, desc } from "drizzle-orm";
 import { db } from "@/server/db";
 import { gameRssEntries, gameRssVotes } from "@/server/db/schema";

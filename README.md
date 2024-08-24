@@ -50,7 +50,7 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Fix submission highlighting on hover being larger than the actual click zone
 - [ ] Introduce rate-limiting for both submissions and votes (harder limit on submissions)
 - [ ] Maybe clear form errors if forms are closed with cancel button and then re-opened?
-- [ ] Think about using toasts for errors and other state messages
+- [x] Think about using toasts for errors and other state messages - no
 - [x] Error handling
 - [x] Collapse "add submission" section back into "Add" after successful submit
 - [x] Show top 8 submissions, see all shows all of them
