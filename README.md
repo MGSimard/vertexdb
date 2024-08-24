@@ -55,7 +55,8 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Collapse "add submission" section back into "Add" after successful submit
 - [x] Show top 8 submissions, see all shows all of them
 - [x] Find Steam svg icon outline for steam button
-- [ ] Light mode
+- [x] Light mode
+- [ ] Figure out if I can match clerk theme to current theme
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
 - [ ] Give a shit about replacing :any with typeguards for initialRss

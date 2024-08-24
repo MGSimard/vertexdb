@@ -8,7 +8,7 @@
 }
 :root[data-theme="light"] {
   --clr-primary: hsl(243.61, 64.52%, 29.41%); /*#211B7B*/
-  --clr-secondary: hsl(0, 0%, 0%); /*#000000*/
+  --clr-secondary: hsl(243.61, 64.52%, 29.41%); /*#000000*/
   --clr-trim: hsl(0, 0%, 0%); /*#000000 (same as secondary) */
   --clr-bg: hsl(0, 0%, 88.24%); /*#E1E1E1*/
   --clr-ui: hsl(243.61, 64.52%, 29.41%); /*#211B7B*/
