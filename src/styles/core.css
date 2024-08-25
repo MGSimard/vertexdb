@@ -51,7 +51,7 @@ body {
 }
 footer,
 .indexed-vertribbon {
-  color: hsla(from var(--clr-primary) h s l / 0.3);
+  color: hsla(from var(--clr-trim) h s l / 0.3);
 }
 nav,
 footer,
@@ -206,6 +206,11 @@ footer {
 /* Smaller Core */
 button {
   cursor: pointer;
+}
+.cs-down:focus-visible,
+.cs-up:focus-visible,
+a:focus-visible {
+  outline: 2px solid var(--clr-primary) !important;
 }
 fieldset {
   all: unset;

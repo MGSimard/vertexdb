@@ -110,11 +110,11 @@
   border: 2px solid var(--clr-ui-border-idle);
 }
 .card:hover > .card-content,
-.card:focus > .card-content {
+.card:focus-within > .card-content {
   border: 2px solid var(--clr-ui-border-notidle);
 }
 .card:hover > .card-content::after,
-.card:focus > .card-content::after {
+.card:focus-within > .card-content::after {
   position: absolute;
   inset: 0;
   content: "";
