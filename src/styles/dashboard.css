@@ -5,7 +5,7 @@
   gap: 2rem;
 }
 .card-large {
-  height: 60rem;
+  flex-basis: flex-start;
   clip-path: polygon(
     0 calc(0% + 0.5rem),
     calc(0% + 2rem) calc(0% + 0.5rem),
@@ -57,11 +57,6 @@
   height: 100%;
   background: var(--clr-ui-overlay-hover);
   pointer-events: none;
-}
-.test {
-  background: black;
-  width: 10rem;
-  height: 10rem;
 }
 .card-large-content {
   padding: 2rem;
