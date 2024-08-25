@@ -23,7 +23,7 @@ export function VoteBlock({
       setActiveVote(result.data.voteResult);
       setScore(result.data.scoreResult);
     } else if (result.errors) {
-      // Toast error
+      console.error(result.message);
     }
   };
 

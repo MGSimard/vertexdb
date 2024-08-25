@@ -48,9 +48,8 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - [x] Think about potentially adding current character count above inputs
 - [x] On submission add an upvote from the submitter (somehow avoid triggering trigger - unless I start posts at 0pts)
 - [x] Fix submission highlighting on hover being larger than the actual click zone
-- [ ] Introduce rate-limiting for both submissions and votes (harder limit on submissions)
+- [x] Introduce rate-limiting for both submissions and votes
 - [ ] Maybe clear form errors if forms are closed with cancel button and then re-opened?
-- [ ] Think about using toasts for errors and other state messages - actually maybe for votes
 - [x] Error handling
 - [x] Collapse "add submission" section back into "Add" after successful submit
 - [x] Show top 8 submissions, see all shows all of them
