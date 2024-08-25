@@ -1,19 +1,3 @@
-## https://vertexdb.vercel.app/
-
-## NextJS Project
-
-VertexDB (Vertex Database) is a web app which is intended to have the following features:
-
-- Video game information lookup.
-- User-provided submissions for helpful resources.
-- Democratic voting on resources, show top resources at the top of their respective categories.
-  An example of this would be submitting links for useful tools, or top subreddits and other communities related to a video game.
-
-Playing around with Nextjs to experience fullstack. Currently in FE phase, eventually need to create DB for user submissions and vote tracking.
-
-- Submissions (id, type, gameID, link, text, description, score, author)
-- Votes (Need to somehow keep track of someone's vote on a submission, allow up-down-cancel, can only vote once at a time on a submission)
-
 ## Tasks
 
 - [x] Feature planning
@@ -68,3 +52,51 @@ Playing around with Nextjs to experience fullstack. Currently in FE phase, event
 - export default function() for pages
 - export function() for components
 - const = () => {} for anything "in-house"
+
+<br/>
+<div align="center">
+
+<h3 align="center">VertexDB</h3>
+<p align="center">
+Next.js Application
+<br/>
+<br/>
+<a href="https://vertexdb.vercel.app/">View Live Project</a>
+</p>
+</div>
+
+## About The Project
+
+![Screenshot]()
+
+### Features
+
+- Game Search
+- Game Data Check
+- Resource Submission
+- Submission Voting
+- Theme toggle
+
+### Built With
+
+- [Based on T3 Stack](https://create.t3.gg/)
+- [Next.js 15.0.0-rc.0](https://nextjs.org/)
+- [React 19.0.0-rc-19bd26be-20240815](https://react.dev/)
+- [TypeScript 5.5.3](https://www.typescriptlang.org/)
+- [Drizzle (PostgreSQL)][https://orm.drizzle.team/]
+- [Clerk (Auth)](https://clerk.com)
+- [Upstash (Ratelimit)](https://upstash.com/)
+- [Zod 3.23.8 (Validation)](https://zod.dev/)
+- [Next-themes (Trigger)](https://github.com/pacocoursey/next-themes)
+- [Vercel Hosting](https://vercel.com/)
+
+## Usage
+
+- Go to https://vertexdb.vercel.app/
+
+## Contact
+
+MGSimard - g.marcgs@gmail.com  
+[@MGSimard on X](https://x.com/MGSimard)
+
+For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github.io). Resume attached.
