@@ -9,9 +9,9 @@ export async function GameHeader({ slug }: { slug: string }) {
   const gameData = (await getGameData(slug)) as GamedataResponseTypes;
   const initialRss = (await getInitialRss(gameData?.id)) as any;
 
-  // if (gameData?.websites && gameData.websites.length > 0) {
-  //   console.log("WEBSITES:", gameData.websites);
-  // }
+  if (gameData?.websites && gameData.websites.length > 0) {
+    console.log("WEBSITES:", gameData.websites);
+  }
 
   const sections = ["resources", "communities", "creators"];
 

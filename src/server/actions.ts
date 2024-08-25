@@ -106,7 +106,7 @@ export async function createSubmission(currentState: any, formData: FormData) {
   }
 
   const { success } = await ratelimit.limit(user.userId);
-  if (!success) return { success: false, message: "RATE-LIMITED" };
+  if (!success) return { success: false, message: "RATE-LIMITED: Too many actions." };
 
   const validated = CreateSubmission.safeParse({
     gameId: formData.get("gameId"),
