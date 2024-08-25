@@ -19,10 +19,12 @@
   background: var(--clr-ui-border-idle);
   padding: 1px;
 }
-.card-large:hover {
+.card-large:hover,
+.card-large:focus-within {
   background: var(--clr-ui-border-notidle);
 }
-.card-large:hover .card-large-left::after {
+.card-large:hover .card-large-left::after,
+.card-large:focus-within .card-large-left::after {
   background-color: var(--clr-ui-overlay-active);
 }
 .card-large-inner {
@@ -55,6 +57,11 @@
   height: 100%;
   background: var(--clr-ui-overlay-hover);
   pointer-events: none;
+}
+.test {
+  background: black;
+  width: 10rem;
+  height: 10rem;
 }
 .card-large-content {
   padding: 2rem;

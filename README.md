@@ -46,6 +46,7 @@
 - [x] Implement admin dashboard
 - [ ] Find some stuff to show on admin dashboard
 - [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)
+- [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
 
 ## Few conventions
 
