@@ -83,7 +83,7 @@ Next.js Application
 - [Next.js 15.0.0-rc.0](https://nextjs.org/)
 - [React 19.0.0-rc-19bd26be-20240815](https://react.dev/)
 - [TypeScript 5.5.3](https://www.typescriptlang.org/)
-- [Drizzle (PostgreSQL)][https://orm.drizzle.team/]
+- [Drizzle (PostgreSQL)](https://orm.drizzle.team/)
 - [Clerk (Auth)](https://clerk.com)
 - [Upstash (Ratelimit)](https://upstash.com/)
 - [Zod 3.23.8 (Validation)](https://zod.dev/)
