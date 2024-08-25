@@ -1,0 +1,83 @@
+/*clip-path: polygon(0 8%, 9% 8%, 15% 0, 100% 0, 100% 90%, 91% 100%, 7% 100%, 0 91%);*/
+.grid-3x {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 2rem;
+}
+.card-large {
+  height: 60rem;
+  clip-path: polygon(
+    0 calc(0% + 0.5rem),
+    calc(0% + 2rem) calc(0% + 0.5rem),
+    calc(0% + 2.5rem) 0,
+    100% 0,
+    100% calc(100% - 2rem),
+    calc(100% - 2rem) 100%,
+    calc(0% + 0.8rem) 100%,
+    0 calc(100% - 0.8rem)
+  );
+  background: var(--clr-ui-border-idle);
+  padding: 1px;
+}
+.card-large:hover {
+  background: var(--clr-ui-border-notidle);
+}
+.card-large:hover .card-large-left::after {
+  background-color: var(--clr-ui-overlay-active);
+}
+.card-large-inner {
+  display: flex;
+  gap: 0.2rem;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(
+    0 calc(0% + 0.5rem),
+    calc(0% + 2rem) calc(0% + 0.5rem),
+    calc(0% + 2.5rem) 0,
+    100% 0,
+    100% calc(100% - 2rem),
+    calc(100% - 2rem) 100%,
+    calc(0% + 0.8rem) 100%,
+    0 calc(100% - 0.8rem)
+  );
+}
+.card-large-left {
+  position: relative;
+  width: 3.8rem;
+  flex-shrink: 0;
+  border-right: 1px solid var(--clr-ui-border-idle);
+}
+.card-large-left::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  width: 100%;
+  height: 100%;
+  background: var(--clr-ui-overlay-hover);
+  pointer-events: none;
+}
+.card-large-content {
+  padding: 2rem;
+  flex-grow: 1;
+  border-left: 1px solid var(--clr-ui-border-idle);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  overflow-wrap: anywhere;
+}
+.card-large-left,
+.card-large-inner,
+.card-large-content {
+  background: var(--clr-bg);
+}
+.card-large-content h3 {
+  border-bottom: 1px solid var(--clr-ui-border-idle);
+  margin-bottom: 1rem;
+}
+.card-large-content p {
+  color: var(--clr-secondary);
+}
+@media only screen and (max-width: 968px) {
+  .grid-3x {
+    grid-template-columns: 1fr;
+  }
+}

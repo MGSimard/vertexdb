@@ -43,7 +43,8 @@
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
 - [ ] Give a shit about replacing :any with typeguards for initialRss
-- [ ] Implement admin dashboard (server actions)
+- [x] Implement admin dashboard
+- [ ] Find some stuff to show on admin dashboard
 - [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)
 
 ## Few conventions
