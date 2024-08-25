@@ -8,11 +8,11 @@ export default function Page() {
     notFound();
   }
 
+  console.log(currentUser);
+
   return (
     <main>
-      <section>
-        <h2>Dashboard Page</h2>
-      </section>
+      <section></section>
     </main>
   );
 }

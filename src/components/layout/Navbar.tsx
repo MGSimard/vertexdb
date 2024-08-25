@@ -13,8 +13,8 @@ export function Navbar() {
     case "/":
       navh1 = "CORE";
       break;
-    case "/dashboard":
-      navh1 = "DASHBOARD";
+    case "/admin/dashboard":
+      navh1 = "ADMINISTRATOR DASHBOARD";
       break;
     case "/game/add":
       navh1 = "ADD GAME";
@@ -34,7 +34,7 @@ export function Navbar() {
         <div className="nav-ele">
           <div className="ne-iconbox">
             {navh1 === "CORE" && <Tech />}
-            {navh1 === "DASHBOARD" && <Chip />}
+            {navh1 === "ADMINISTRATOR DASHBOARD" && <Chip />}
             {navh1 === "ADD GAME" && <Add />}
           </div>
           <h1>{navh1}</h1>
