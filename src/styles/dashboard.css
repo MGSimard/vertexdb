@@ -23,10 +23,6 @@
 .card-large:focus-within {
   background: var(--clr-ui-border-notidle);
 }
-.card-large:hover .card-large-left::after,
-.card-large:focus-within .card-large-left::after {
-  background-color: var(--clr-ui-overlay-active);
-}
 .card-large-inner {
   display: flex;
   gap: 0.2rem;
@@ -58,6 +54,10 @@
   background: var(--clr-ui-overlay-hover);
   pointer-events: none;
 }
+.card-large:hover .card-large-left::after,
+.card-large:focus-within .card-large-left::after {
+  background-color: var(--clr-ui-overlay-active);
+}
 .card-large-content {
   padding: 2rem;
   flex-grow: 1;
@@ -78,6 +78,7 @@
 .card-large-content p {
   color: var(--clr-secondary);
 }
+
 @media only screen and (max-width: 968px) {
   .grid-3x {
     grid-template-columns: 1fr;
