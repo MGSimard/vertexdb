@@ -34,7 +34,7 @@
 - [x] Fix submission highlighting on hover being larger than the actual click zone
 - [x] Introduce rate-limiting for both submissions and votes
 - [ ] Maybe clear form errors if forms are closed with cancel button and then re-opened?
-- [ ] Maybe make submissions single cards like equipped gun design
+- [ ] Maybe make submissions single cards like equipped gun design do the notch
 - [ ] Maybe make button styles like gun button design
 - [ ] Add visual link for submissions so users don't have to hover or click to tell if it's a good link
 - [x] Error handling

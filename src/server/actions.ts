@@ -78,7 +78,7 @@ const submissionSchema = z.object({
   author: z.string().max(255), // Ignore, get from auth
   title: z.string().trim().min(1).max(60),
   url: z.string().url().trim().min(1).max(1024),
-  description: z.string().trim().min(1).max(160),
+  description: z.string().trim().min(1).max(120),
   /* DB takes any string, set enum for limited dead DB entries if user fucks with hidden form field */
   section: z.enum(["resources", "communities", "creators"]),
   slug: z.string().max(1024), // Only for page refresh, no use in DB
