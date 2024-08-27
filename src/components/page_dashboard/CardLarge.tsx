@@ -1,6 +1,4 @@
-import { ReactNode } from "react";
-
-export function CardLarge({ title, children }: { title?: string; children?: ReactNode }) {
+export function CardLarge({ title, children }: { title?: string; children?: React.ReactNode }) {
   return (
     <div className="card-large">
       <div className="card-large-inner">

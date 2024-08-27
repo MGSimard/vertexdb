@@ -1,6 +1,6 @@
 import { getInitialRss, getGameData } from "@/server/actions";
 import { LinkButton } from "@/components/page_game/LinkButton";
-import { Card } from "@/components/page_game/Card";
+import { RssList } from "@/components/page_game/RssList";
 import { Globe, Discord, Steam } from "@/components/icons";
 import { convertUnix, coverPath } from "@/utils/helpers";
 import { GamedataResponseTypes } from "@/utils/types";
@@ -9,9 +9,9 @@ export async function GameHeader({ slug }: { slug: string }) {
   const gameData = (await getGameData(slug)) as GamedataResponseTypes;
   const initialRss = (await getInitialRss(gameData?.id)) as any;
 
-  if (gameData?.websites && gameData.websites.length > 0) {
-    console.log("WEBSITES:", gameData.websites);
-  }
+  // if (gameData?.websites && gameData.websites.length > 0) {
+  //   console.log("WEBSITES:", gameData.websites);
+  // }
 
   const sections = ["resources", "communities", "creators"];
 
@@ -81,12 +81,12 @@ export async function GameHeader({ slug }: { slug: string }) {
       {gameData && (
         <section className="game-resources">
           {sections.map((section) => (
-            <div key={section} className="rss-wrapper">
+            <div key={section} className="rss-container">
               <h2>{section}</h2>
               {initialRss.error ? (
                 <div>{initialRss.error}</div>
               ) : (
-                <Card
+                <RssList
                   gameId={gameData?.id}
                   slug={slug}
                   section={section.toLowerCase()}

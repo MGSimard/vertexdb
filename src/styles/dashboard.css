@@ -1,11 +1,9 @@
-/*clip-path: polygon(0 8%, 9% 8%, 15% 0, 100% 0, 100% 90%, 91% 100%, 7% 100%, 0 91%);*/
 .grid-3x {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2rem;
 }
 .card-large {
-  flex-basis: flex-start;
   clip-path: polygon(
     0 calc(0% + 0.5rem),
     calc(0% + 2rem) calc(0% + 0.5rem),
@@ -81,6 +79,6 @@
 
 @media only screen and (max-width: 968px) {
   .grid-3x {
-    grid-template-columns: 1fr;
+    grid-template-columns: minmax(0, 1fr);
   }
 }
