@@ -85,6 +85,12 @@ Next.js Application
 - Resource Submission
 - Submission Voting
 - Theme toggle
+- Admin Dashboard
+
+## In Progress
+
+- Report Feature
+- Stats report in Dashboard
 
 ### Built With
 
