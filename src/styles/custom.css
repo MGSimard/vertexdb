@@ -276,7 +276,7 @@
 }
 .submissionForm input:hover,
 .submissionForm input:focus,
-.submissionForm textarea::placeholder,
+.submissionForm textarea:hover,
 .submissionForm textarea:focus {
   border-color: var(--clr-ui-border-notidle);
 }

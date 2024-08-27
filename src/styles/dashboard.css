@@ -1,6 +1,6 @@
-.grid-3x {
+.grid-113x {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) minmax(0, 3fr);
   gap: 2rem;
 }
 .card-large {
@@ -76,9 +76,29 @@
 .card-large-content p {
   color: var(--clr-secondary);
 }
+.largeNum {
+  display: block;
+  font-size: 5rem;
+}
+.grid-4x {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 1rem;
+}
+.admin h2 {
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--clr-ui-border-idle);
+  font-weight: 600;
+}
 
 @media only screen and (max-width: 968px) {
-  .grid-3x {
+  .grid-113x {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media only screen and (max-width: 580px) {
+  .grid-4x {
     grid-template-columns: minmax(0, 1fr);
   }
 }

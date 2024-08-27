@@ -1,5 +1,5 @@
 "use server";
-import { eq, and, desc } from "drizzle-orm";
+import { eq, and, desc, count } from "drizzle-orm";
 import { db } from "@/server/db";
 import { gameRssEntries, gameRssVotes } from "@/server/db/schema";
 import { z } from "zod";
@@ -212,7 +212,7 @@ export async function createVote(rssId: number, voteType: boolean) {
           .returning({ newScore: gameRssEntries.score });
         return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
       });
-      return { data: voteResult, message: "Vote Successfully Added." };
+      return { data: voteResult, message: "SUCCESS: Vote Successfully Added." };
     } else {
       // ELSE IF EXISTING VOTE
       if (currentUserVote[0]!.currentUserVote !== voteInput) {
@@ -230,7 +230,7 @@ export async function createVote(rssId: number, voteType: boolean) {
             .returning({ newScore: gameRssEntries.score });
           return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
         });
-        return { data: voteResult, message: "Vote Successfully Modified." };
+        return { data: voteResult, message: "SUCCESS: Vote Successfully Modified." };
       } else {
         // ELSE - AND EXISTING VOTE IS SAME AS NEW VOTE: Delete vote from table, update score.
         const voteResult = await db.transaction(async (tx) => {
@@ -244,7 +244,7 @@ export async function createVote(rssId: number, voteType: boolean) {
             .returning({ newScore: gameRssEntries.score });
           return { voteResult: null, scoreResult: newScore!.newScore };
         });
-        return { data: voteResult, message: "Vote Successfully Deleted." };
+        return { data: voteResult, message: "SUCCESS: Vote Successfully Deleted." };
       }
     }
   } catch (err: any) {
@@ -252,5 +252,27 @@ export async function createVote(rssId: number, voteType: boolean) {
       message: "DATABASE ERROR: Vote and score were not modified.",
       errors: { database: ["Vote and score were not modified."] },
     };
+  }
+}
+
+/**
+ * DASHBOARD ACTIONS
+ */
+export async function getTotalSubmissions() {
+  try {
+    const [submissionsAmount] = await db.select({ count: count() }).from(gameRssEntries);
+
+    return { data: submissionsAmount, message: "SUCCESS: Retrieved total submissions." };
+  } catch (err) {
+    return { message: "DATABASE ERROR: Failed retrieving total submissions." };
+  }
+}
+
+export async function getTotalVotes() {
+  try {
+    const [votesAmount] = await db.select({ count: count() }).from(gameRssVotes);
+    return { data: votesAmount, message: "SUCCESS: Retrieved total votes." };
+  } catch (err) {
+    return { message: "DATABASE ERROR: Failed retrieving total submissions." };
   }
 }
