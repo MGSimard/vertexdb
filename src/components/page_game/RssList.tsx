@@ -39,8 +39,8 @@ export function RssList({
         content.map(
           (submission, index) =>
             index < 8 && (
-              <article className="card" key={submission.rssId}>
-                <div className="card-inner">
+              <article className="card notched" key={submission.rssId}>
+                <div className="card-inner notched">
                   <div className="card-left"></div>
                   <div className="card-content">
                     <SubmissionEntry submission={submission} />
@@ -56,8 +56,8 @@ export function RssList({
           {content.map(
             (submission, index) =>
               index >= 8 && (
-                <article className="card" key={submission.rssId}>
-                  <div className="card-inner">
+                <article className="card notched" key={submission.rssId}>
+                  <div className="card-inner notched">
                     <div className="card-left"></div>
                     <div className="card-content">
                       <SubmissionEntry submission={submission} />

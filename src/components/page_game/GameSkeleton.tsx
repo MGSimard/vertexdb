@@ -2,9 +2,11 @@ import { Globe, Steam, Discord } from "../icons";
 
 const SkeleCard = () => {
   return (
-    <div className="card shimmer">
-      <div className="card-left"></div>
-      <div className="card-content">/ / DECODING . . .</div>
+    <div className="card">
+      <div className="card-inner">
+        <div className="card-left"></div>
+        <div className="card-content shimmer">/ / DECODING . . .</div>
+      </div>
     </div>
   );
 };
