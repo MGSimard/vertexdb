@@ -105,9 +105,9 @@
     calc(100% - 2rem) 100%,
     0% 100%,
     0% calc(100% - 1.5rem),
-    calc(0% + 0.4rem) calc(100% - 1.9rem),
-    calc(0% + 0.4rem) calc(100% - 3.9rem),
-    0% calc(100% - 4.3rem)
+    calc(0% + 0.3rem) calc(100% - 1.7rem),
+    calc(0% + 0.3rem) calc(100% - 3.7rem),
+    0% calc(100% - 4rem)
   );
 }
 .card:hover,
@@ -128,10 +128,10 @@
     100% calc(100% - 2rem),
     calc(100% - 2rem) 100%,
     0% 100%,
-    0% calc(100% - 1.4rem),
-    calc(0% + 0.4rem) calc(100% - 1.8rem),
-    calc(0% + 0.4rem) calc(100% - 3.9rem),
-    0% calc(100% - 4.3rem)
+    0% calc(100% - 1.3rem),
+    calc(0% + 0.3rem) calc(100% - 1.6rem),
+    calc(0% + 0.3rem) calc(100% - 3.7rem),
+    0% calc(100% - 4rem)
   );
 }
 .card-left {
