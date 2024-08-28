@@ -15,7 +15,7 @@ export function PendingReportsTable({ pendingReports }: { pendingReports: any })
       </thead>
       <tbody>
         {pendingReports.data.map((report: any) => (
-          <ReportRow reportInfo={report} />
+          <ReportRow key={report.rptId} reportInfo={report} />
         ))}
       </tbody>
     </table>
