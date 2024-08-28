@@ -1,6 +1,7 @@
 import { isoToUTC } from "@/utils/isoToUTC";
 import { getNameCover } from "@/server/actions";
 import { coverPath } from "@/utils/helpers";
+import { ModerateButton } from "./ModerateButton";
 
 interface getNameCoverTypes {
   id: number;
@@ -16,33 +17,32 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
   return (
     <li className="pendingReportRow">
       <img
+        className="prr-left"
         src={nameAndCover?.cover?.image_id ? coverPath("720p", nameAndCover.cover.image_id) : "/missingasset.webp"}
       />
-      <div>Report ID: {rptId}</div>
-      <div>Game ID: {gameId}</div>
-      <div>Game Name: {nameAndCover?.name ?? "ERR"}</div>
+      <div className="prr-center">
+        {/* <div>
+          {nameAndCover?.name ?? "ERR"}
+          <small>(#{gameId})</small>
+        </div> */}
+        <div>
+          <h4>{title}</h4>
+          <span className="prr-url">{url}</span>
+          <p>{description}</p>
+          <div>Submitted By: {authorId}</div>
+        </div>
+        <span className="prr-foot">report by: {reportBy}</span>
+      </div>
+      <div className="prr-right">
+        <ModerateButton approve={false} reportId={rptId} />
+        <ModerateButton approve={true} reportId={rptId} rssId={rssId} />
+      </div>
+      {/* <div>Report ID: {rptId}</div>
       <div>Submission ID: {rssId}</div>
-      <div>Title: {title}</div>
-      <div>URL: {url}</div>
-      <div>Description: {description}</div>
-      <div>Score: {score}</div>
-      <div>Reported By:{reportBy}</div>
+      <div>Score: {score}</div> */}
+      {/* <div>Reported By:{reportBy}</div>
       <div>Submission Author:{authorId}</div>
-      <div>Report Time: {isoToUTC(createdAt)}</div>
-      <button type="button" className="btn-ui">
-        Approve
-      </button>
-      <button type="button" className="btn-ui">
-        Decline
-      </button>
+      <div>Report Time: {isoToUTC(createdAt)}</div> */}
     </li>
   );
-}
-{
-  /* <th>Report ID</th>
-<th>Game ID</th>
-<th>Submission ID</th>
-<th>Report By</th>
-<th>Author</th>
-<th>Created At</th> */
 }

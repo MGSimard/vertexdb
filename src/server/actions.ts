@@ -366,3 +366,19 @@ export async function getNameCover(gameId: number) {
 
   return data[0];
 }
+
+/* APPROVE REPORT, DELETE SUBMISSION, STATUS APPROVED */
+export async function modApproveReport(reportId, rssId) {
+  console.log("Approve Report");
+  // Use transaction
+  // First verify if fitting report is still in pending status
+  // If still pending, delete all votes for matching rssId, delete rssId, then change report status to approved
+}
+
+/* REJECT A REPORT, KEEP SUBMISSION, STATUS DENIED */
+export async function modRejectReport(reportId) {
+  console.log("Reject Report");
+  // Use transaction
+  // First verify if fitting report is still in pending status
+  // If still pending, change report status to denied
+}
