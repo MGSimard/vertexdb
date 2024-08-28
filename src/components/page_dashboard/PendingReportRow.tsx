@@ -21,17 +21,19 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
         src={nameAndCover?.cover?.image_id ? coverPath("720p", nameAndCover.cover.image_id) : "/missingasset.webp"}
       />
       <div className="prr-center">
-        {/* <div>
-          {nameAndCover?.name ?? "ERR"}
-          <small>(#{gameId})</small>
-        </div> */}
         <div>
+          {/* <span className="prr-gameinfo">
+            {`GAME: ${nameAndCover?.name.toUpperCase() ?? "NOT FOUND"}`}
+            <small> (#{gameId})</small>
+          </span> */}
           <h4>{title}</h4>
           <span className="prr-url">{url}</span>
           <p>{description}</p>
-          <div>Submitted By: {authorId}</div>
+          <small className="prr-author">Submitted by {authorId}</small>
         </div>
-        <span className="prr-foot">report by: {reportBy}</span>
+        <span className="prr-foot">
+          report by {reportBy} on {isoToUTC(createdAt)}
+        </span>
       </div>
       <div className="prr-right">
         <ModerateButton approve={false} reportId={rptId} />
@@ -40,9 +42,6 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
       {/* <div>Report ID: {rptId}</div>
       <div>Submission ID: {rssId}</div>
       <div>Score: {score}</div> */}
-      {/* <div>Reported By:{reportBy}</div>
-      <div>Submission Author:{authorId}</div>
-      <div>Report Time: {isoToUTC(createdAt)}</div> */}
     </li>
   );
 }
