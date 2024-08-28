@@ -5,6 +5,7 @@ import { CardLarge } from "@/components/page_dashboard/CardLarge";
 import "@/styles/dashboard.css";
 import { Suspense } from "react";
 import { OtherCountSkeleton, ReportsCardSkeleton } from "@/components/page_dashboard/CardSkeletons";
+import { PendingReportsTable } from "@/components/page_dashboard/PendingReportsTable";
 
 export default async function Page() {
   const currentUser = auth();
@@ -34,9 +35,7 @@ export default async function Page() {
       <section>
         <h2>REPORTS</h2>
         <CardLarge title="REPORT BOARD">
-          {pendingReports.data
-            ? pendingReports.data.map((report) => <PendingReport key={report.rptId} reportInfo={report} />)
-            : "NO PENDING REPORTS."}
+          {pendingReports.data ? <PendingReportsTable pendingReports={pendingReports} /> : "NO PENDING REPORTS."}
         </CardLarge>
       </section>
     </main>
@@ -80,33 +79,5 @@ const ReportsCard = async () => {
         </li>
       </ul>
     </CardLarge>
-  );
-};
-
-const PendingReport = ({ reportInfo }: { reportInfo: any }) => {
-  const { rptId, rssId, reportBy, createdAt, gameId } = reportInfo;
-
-  const userLocale = navigator.language || "en-US";
-
-  const formatter = new Intl.DateTimeFormat(userLocale, {
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-    hour: "numeric",
-    minute: "numeric",
-    second: "numeric",
-    timeZoneName: "short",
-  });
-
-  const formattedDate = formatter.format(createdAt);
-
-  return (
-    <li>
-      <span>Report ID: {rptId}</span>
-      <span>Game ID: {gameId}</span>
-      <span>Submission ID: {rssId}</span>
-      <span>Report By: {reportBy}</span>
-      <span>Created At: {formattedDate}</span>
-    </li>
   );
 };

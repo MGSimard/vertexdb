@@ -334,6 +334,7 @@ export async function getPendingReports() {
         createdAt: rssReports.createdAt,
         updatedAt: rssReports.updatedAt,
         gameId: gameRssEntries.gameId,
+        authorId: gameRssEntries.author,
       })
       .from(rssReports)
       .leftJoin(gameRssEntries, eq(rssReports.rssId, gameRssEntries.rssId))
