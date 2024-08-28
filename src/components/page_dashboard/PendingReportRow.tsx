@@ -40,7 +40,7 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
                 <td>{url}</td>
               </tr>
               <tr>
-                <th>DESCRIPTION:</th>
+                <th>DESC:</th>
                 <td>{description}</td>
               </tr>
               <tr>
