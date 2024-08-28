@@ -90,6 +90,11 @@
   border-bottom: 1px solid var(--clr-ui-border-idle);
   font-weight: 600;
 }
+.pendingReportRow img {
+  width: 10rem;
+  height: 10rem;
+  object-fit: cover;
+}
 
 @media only screen and (max-width: 968px) {
   .grid-113x {
