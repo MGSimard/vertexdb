@@ -26,10 +26,26 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
             {`GAME: ${nameAndCover?.name.toUpperCase() ?? "NOT FOUND"}`}
             <small> (#{gameId})</small>
           </span> */}
-          <h4>{title}</h4>
+          <table className="table-admin">
+            <tbody>
+              <tr>
+                <th>TITLE:</th>
+                <td>{title}</td>
+              </tr>
+              <tr>
+                <th>URL:</th>
+                <td>{url}</td>
+              </tr>
+              <tr>
+                <th>DESCRIPTION:</th>
+                <td>{description}</td>
+              </tr>
+            </tbody>
+          </table>
+          {/* <h4>{title}</h4>
           <span className="prr-url">{url}</span>
           <p>{description}</p>
-          <small className="prr-author">Submitted by {authorId}</small>
+          <small className="prr-author">Submitted by {authorId}</small> */}
         </div>
         <span className="prr-foot">
           report by {reportBy} on {isoToUTC(createdAt)}

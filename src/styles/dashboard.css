@@ -166,6 +166,13 @@
 .prr-right button:focus-visible svg {
   stroke-width: 3;
 }
+.table-admin {
+  text-align: left;
+}
+.table-admin th {
+  padding-right: 1rem;
+  font-weight: 600;
+}
 
 @media only screen and (max-width: 968px) {
   .grid-113x {
