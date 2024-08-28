@@ -51,9 +51,12 @@
 - [x] Total Submissions stat
 - [x] Total Votes stat
 - [x] Total Reports/Accepted/Denied stat
-- [ ] Add the actual report function (button next to each submission)
+- [x] Add the actual report function (button next to each submission)
 - [ ] Show standing reports in reports card under
 - [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)
+- [ ] Think about potentially fragmenting the report button into a context menu on click (Report, Cancel)
+- [ ] If so, think about even just giving in and doing modals so they can also enter a reason
+- [ ] If I do that, I'd also opt for using modal for submissions instead of per-section div
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
 
 ## Few conventions
