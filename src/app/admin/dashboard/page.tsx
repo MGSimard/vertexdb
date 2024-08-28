@@ -33,7 +33,7 @@ export default async function Page() {
         </div>
       </section>
       <section>
-        <h2>REPORTS</h2>
+        <h2>PENDING REPORTS</h2>
         <CardLarge title="REPORT BOARD">
           {pendingReports.data ? (
             <ul>

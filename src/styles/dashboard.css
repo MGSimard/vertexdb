@@ -170,6 +170,7 @@
   text-align: left;
 }
 .table-admin th {
+  width: 7rem;
   padding-right: 1rem;
   font-weight: 600;
 }
