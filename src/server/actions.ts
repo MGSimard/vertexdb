@@ -292,3 +292,12 @@ export async function getReportCounts() {
     return { message: "DATABASE ERROR: Failed retrieving report counts." };
   }
 }
+
+export async function getPendingReports() {
+  try {
+    const test = await db.select().from(rssReports).where(eq(rssReports.status, "pending"));
+    return { data: test, message: "SUCCESS: Retrieved pending reports." };
+  } catch (err) {
+    return { message: "DATABASE ERROR: Failed retrieving pending reports." };
+  }
+}
