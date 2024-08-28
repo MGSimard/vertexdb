@@ -34,9 +34,9 @@
 - [x] Fix submission highlighting on hover being larger than the actual click zone
 - [x] Introduce rate-limiting for both submissions and votes
 - [ ] Maybe clear form errors if forms are closed with cancel button and then re-opened?
-- [ ] Maybe make submissions single cards like equipped gun design do the notch
+- [x] Maybe make submissions single cards like equipped gun design do the notch
 - [ ] Maybe make button styles like gun button design
-- [ ] Add visual link for submissions so users don't have to hover or click to tell if it's a good link
+- [x] Add visual link for submissions so users don't have to hover or click to tell if it's a good link
 - [x] Error handling
 - [x] Collapse "add submission" section back into "Add" after successful submit
 - [x] Show top 8 submissions, see all shows all of them
@@ -48,9 +48,9 @@
 - [ ] Give a shit about replacing :any with typeguards for initialRss
 - [x] Implement admin dashboard
 - [x] Find some stuff to show on admin dashboard
-- [ ] Total Submissions stat
-- [ ] Total Votes stat
-- [ ] Total Reports/Accepted/Denied stat
+- [x] Total Submissions stat
+- [x] Total Votes stat
+- [x] Total Reports/Accepted/Denied stat
 - [ ] Show standing reports in reports card under
 - [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
