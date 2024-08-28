@@ -84,6 +84,29 @@ const ReportsCard = async () => {
 };
 
 const PendingReport = ({ reportInfo }: { reportInfo: any }) => {
-  console.log(reportInfo);
-  return <li>jeff</li>;
+  const { rptId, rssId, reportBy, createdAt, gameId } = reportInfo;
+
+  const userLocale = navigator.language || "en-US";
+
+  const formatter = new Intl.DateTimeFormat(userLocale, {
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+    hour: "numeric",
+    minute: "numeric",
+    second: "numeric",
+    timeZoneName: "short",
+  });
+
+  const formattedDate = formatter.format(createdAt);
+
+  return (
+    <li>
+      <span>Report ID: {rptId}</span>
+      <span>Game ID: {gameId}</span>
+      <span>Submission ID: {rssId}</span>
+      <span>Report By: {reportBy}</span>
+      <span>Created At: {formattedDate}</span>
+    </li>
+  );
 };

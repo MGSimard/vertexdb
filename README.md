@@ -52,7 +52,8 @@
 - [x] Total Votes stat
 - [x] Total Reports/Accepted/Denied stat
 - [x] Add the actual report function (button next to each submission)
-- [ ] Show standing reports in reports card under
+- [x] Show standing reports in reports card under
+- [ ] Style pending report items
 - [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)
 - [ ] Think about potentially fragmenting the report button into a context menu on click (Report, Cancel)
 - [ ] If so, think about even just giving in and doing modals so they can also enter a reason
