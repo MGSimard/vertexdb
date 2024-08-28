@@ -325,7 +325,20 @@ export async function getReportCounts() {
 /* GET REPORTS WITH PENDING STATUS */
 export async function getPendingReports() {
   try {
-    const test = await db.select().from(rssReports).where(eq(rssReports.status, "pending"));
+    const test = await db
+      .select({
+        rptId: rssReports.rptId,
+        rssId: rssReports.rssId,
+        reportBy: rssReports.reportBy,
+        status: rssReports.status,
+        createdAt: rssReports.createdAt,
+        updatedAt: rssReports.updatedAt,
+        gameId: gameRssEntries.gameId,
+      })
+      .from(rssReports)
+      .leftJoin(gameRssEntries, eq(rssReports.rssId, gameRssEntries.rssId))
+      .where(eq(rssReports.status, "pending"))
+      .orderBy(desc(rssReports.createdAt));
     return { data: test, message: "SUCCESS: Retrieved pending reports." };
   } catch (err) {
     return { message: "DATABASE ERROR: Failed retrieving pending reports." };

@@ -34,7 +34,9 @@ export default async function Page() {
       <section>
         <h2>REPORTS</h2>
         <CardLarge title="REPORT BOARD">
-          {pendingReports.data ? pendingReports.data.map((report) => <li key={report.rptId}>jeff</li>) : "NO REPORTS"}
+          {pendingReports.data
+            ? pendingReports.data.map((report) => <PendingReport key={report.rptId} reportInfo={report} />)
+            : "NO PENDING REPORTS."}
         </CardLarge>
       </section>
     </main>
@@ -81,6 +83,7 @@ const ReportsCard = async () => {
   );
 };
 
-const pendingReport = () => {
-  return <li></li>;
+const PendingReport = ({ reportInfo }: { reportInfo: any }) => {
+  console.log(reportInfo);
+  return <li>jeff</li>;
 };
