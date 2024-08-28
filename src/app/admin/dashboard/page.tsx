@@ -35,9 +35,15 @@ export default async function Page() {
       <section>
         <h2>REPORTS</h2>
         <CardLarge title="REPORT BOARD">
-          {pendingReports.data
-            ? pendingReports.data.map((report) => <PendingReportRow key={report.rptId} reportInfo={report} />)
-            : "NO PENDING REPORTS."}
+          {pendingReports.data ? (
+            <ul>
+              {pendingReports.data.map((report) => (
+                <PendingReportRow key={report.rptId} reportInfo={report} />
+              ))}
+            </ul>
+          ) : (
+            "NO PENDING REPORTS."
+          )}
         </CardLarge>
       </section>
     </main>

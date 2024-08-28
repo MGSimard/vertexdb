@@ -14,22 +14,20 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
   const { name: gameName, cover } = await getNameCover(gameId);
 
   return (
-    <div>
-      <img src={cover.image_id ? coverPath("720p", cover.image_id) : "/missingasset.webp"} />
+    <li>
+      <img className="" src={cover.image_id ? coverPath("720p", cover.image_id) : "/missingasset.webp"} />
 
-      <ul>
-        <li>{rptId}</li>
-        <li>{gameId}</li>
-        <li>{rssId}</li>
-        <li>{title}</li>
-        <li>{url}</li>
-        <li>{description}</li>
-        <li>{score}</li>
-        <li>{reportBy}</li>
-        <li>{authorId}</li>
-        <li>{isoToUTC(createdAt)}</li>
-      </ul>
-    </div>
+      <div>{rptId}</div>
+      <div>{gameId}</div>
+      <div>{rssId}</div>
+      <div>{title}</div>
+      <div>{url}</div>
+      <div>{description}</div>
+      <div>{score}</div>
+      <div>{reportBy}</div>
+      <div>{authorId}</div>
+      <div>{isoToUTC(createdAt)}</div>
+    </li>
   );
 }
 {
