@@ -7,6 +7,26 @@ import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
 import { ratelimit } from "./ratelimit";
 
+/* FETCH CURRENTGAME DATA */
+export async function getGameData(query: string) {
+  // Initially had try/catch but realized I really don't need it
+  // because of how I'm handling this specific actions' errors
+  // by having two different UI-wide outputs from the same component using gameData?.xyz
+  const res = await fetch("https://api.igdb.com/v4/games", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Client-ID": process.env.CLIENT_ID,
+      Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
+    } as HeadersInit,
+    body: `fields name, cover.image_id, first_release_date, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, summary, websites.category, websites.url; where slug = "${query}" & version_parent = null & category = (0,4,8,9,12);`,
+  });
+
+  const data = await res.json();
+
+  return data[0];
+}
+
 /* FETCH CURRENTGAME SUBMISSIONS */
 export async function getInitialRss(currentGameId: number) {
   const user = auth();
@@ -42,26 +62,6 @@ export async function getInitialRss(currentGameId: number) {
   } catch (err) {
     return { error: "DATABASE ERROR: Failed to Fetch Resources." };
   }
-}
-
-/* FETCH CURRENTGAME DATA */
-export async function getGameData(query: string) {
-  // Initially had try/catch but realized I really don't need it
-  // because of how I'm handling this specific actions' errors
-  // by having two different UI-wide outputs from the same component using gameData?.xyz
-  const res = await fetch("https://api.igdb.com/v4/games", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Client-ID": process.env.CLIENT_ID,
-      Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
-    } as HeadersInit,
-    body: `fields name, cover.image_id, first_release_date, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, summary, websites.category, websites.url; where slug = "${query}" & version_parent = null & category = (0,4,8,9,12);`,
-  });
-
-  const data = await res.json();
-
-  return data[0];
 }
 
 /* CREATE SUBMISSION */
