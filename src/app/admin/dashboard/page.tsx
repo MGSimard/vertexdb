@@ -1,8 +1,10 @@
 import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
+import { getTotalSubmissions, getTotalVotes, getReportCounts } from "@/server/actions";
 import { CardLarge } from "@/components/page_dashboard/CardLarge";
 import "@/styles/dashboard.css";
-import { getTotalSubmissions, getTotalVotes } from "@/server/actions";
+import { Suspense } from "react";
+import { CardReportCountSkeleton } from "@/components/page_dashboard/CardSkeletons";
 
 export default async function Page() {
   const currentUser = auth();
@@ -20,27 +22,14 @@ export default async function Page() {
         <h2>STATISTICS</h2>
         <div className="grid-113x">
           <CardLarge title="ENTRIES">
-            <output className="largeNum">{totalSubmissions.data?.count ?? "ERR"}</output> TOTAL
+            <output className="largeNum">{totalSubmissions.data?.count ?? "ERR"}</output>TOTAL
           </CardLarge>
           <CardLarge title="VOTES">
-            <output className="largeNum">{totalVotes.data?.count ?? "ERR"}</output> TOTAL
+            <output className="largeNum">{totalVotes.data?.count ?? "ERR"}</output>TOTAL
           </CardLarge>
-          <CardLarge title="REPORTS">
-            <ul className="grid-4x">
-              <li>
-                <output className="largeNum">0</output> PENDING
-              </li>
-              <li>
-                <output className="largeNum">0</output> APPROVED
-              </li>
-              <li>
-                <output className="largeNum">0</output> DENIED
-              </li>
-              <li>
-                <output className="largeNum">0</output> LIFETIME
-              </li>
-            </ul>
-          </CardLarge>
+          <Suspense fallback={<CardReportCountSkeleton />}>
+            <CardReportCount />
+          </Suspense>
         </div>
       </section>
       <section>
@@ -57,3 +46,32 @@ export default async function Page() {
     </main>
   );
 }
+
+const CardReportCount = async () => {
+  const reportCounts = await getReportCounts();
+  await new Promise((resolve) => setTimeout(resolve, 10000));
+  return (
+    <div className="card-large">
+      <div className="card-large-inner">
+        <div className="card-large-left"></div>
+        <div className="card-large-content">
+          <h3>REPORTS</h3>
+          <ul className="grid-4x">
+            <li>
+              <output className="largeNum">{reportCounts.data?.pendingCount ?? "ERR"}</output>PENDING
+            </li>
+            <li>
+              <output className="largeNum">{reportCounts.data?.approvedCount ?? "ERR"}</output>APPROVED
+            </li>
+            <li>
+              <output className="largeNum">{reportCounts.data?.deniedCount ?? "ERR"}</output>DENIED
+            </li>
+            <li>
+              <output className="largeNum">{reportCounts.data?.totalCount ?? "ERR"}</output>LIFETIME
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  );
+};

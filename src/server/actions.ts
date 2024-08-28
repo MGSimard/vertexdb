@@ -1,7 +1,7 @@
 "use server";
-import { eq, and, desc, count } from "drizzle-orm";
+import { eq, and, desc, count, sql } from "drizzle-orm";
 import { db } from "@/server/db";
-import { gameRssEntries, gameRssVotes } from "@/server/db/schema";
+import { gameRssEntries, gameRssVotes, rssReports } from "@/server/db/schema";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
@@ -274,5 +274,21 @@ export async function getTotalVotes() {
     return { data: votesAmount, message: "SUCCESS: Retrieved total votes." };
   } catch (err) {
     return { message: "DATABASE ERROR: Failed retrieving total submissions." };
+  }
+}
+
+export async function getReportCounts() {
+  try {
+    const [counts] = await db
+      .select({
+        pendingCount: sql<number>`COUNT(CASE WHEN status = 'pending' THEN 1 END)::int`,
+        approvedCount: sql<number>`COUNT(CASE WHEN status = 'approved' THEN 1 END)::int`,
+        deniedCount: sql<number>`COUNT(CASE WHEN status = 'denied' THEN 1 END)::int`,
+        totalCount: sql<number>`COUNT(*)::int`,
+      })
+      .from(rssReports);
+    return { data: counts, message: "SUCCESS: Retrieved report counts." };
+  } catch (err) {
+    return { message: "DATABASE ERROR: Failed retrieving report counts." };
   }
 }
