@@ -5,7 +5,7 @@ import { CardLarge } from "@/components/page_dashboard/CardLarge";
 import "@/styles/dashboard.css";
 import { Suspense } from "react";
 import { OtherCountSkeleton, ReportsCardSkeleton } from "@/components/page_dashboard/CardSkeletons";
-import { PendingReportsTable } from "@/components/page_dashboard/PendingReportsTable";
+import { PendingReportRow } from "@/components/page_dashboard/PendingReportRow";
 
 export default async function Page() {
   const currentUser = auth();
@@ -35,7 +35,9 @@ export default async function Page() {
       <section>
         <h2>REPORTS</h2>
         <CardLarge title="REPORT BOARD">
-          {pendingReports.data ? <PendingReportsTable pendingReports={pendingReports} /> : "NO PENDING REPORTS."}
+          {pendingReports.data
+            ? pendingReports.data.map((report) => <PendingReportRow reportInfo={report} />)
+            : "NO PENDING REPORTS."}
         </CardLarge>
       </section>
     </main>

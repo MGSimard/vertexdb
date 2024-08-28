@@ -90,7 +90,6 @@ export async function createSubmission(currentState: any, formData: FormData) {
   const user = auth();
 
   if (!user.userId) {
-    // Figure out if I want periods at the end of these error messages for UI style purposes
     return {
       success: false,
       message: "SUBMISSION ERROR: Unauthorized.",
@@ -333,11 +332,8 @@ export async function getPendingReports() {
         status: rssReports.status,
         createdAt: rssReports.createdAt,
         updatedAt: rssReports.updatedAt,
-        gameId: gameRssEntries.gameId,
-        authorId: gameRssEntries.author,
       })
       .from(rssReports)
-      .leftJoin(gameRssEntries, eq(rssReports.rssId, gameRssEntries.rssId))
       .where(eq(rssReports.status, "pending"))
       .orderBy(desc(rssReports.createdAt));
     return { data: test, message: "SUCCESS: Retrieved pending reports." };

@@ -90,6 +90,13 @@
   border-bottom: 1px solid var(--clr-ui-border-idle);
   font-weight: 600;
 }
+.pendingReportsTable {
+  width: 100%;
+}
+.pendingReportsTable th,
+.pendingReportsTable td {
+  border: 1px solid yellow;
+}
 
 @media only screen and (max-width: 968px) {
   .grid-113x {
