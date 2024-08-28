@@ -11,14 +11,16 @@ interface getNameCoverTypes {
 export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
   const { rptId, rssId, reportBy, authorId, createdAt, gameId, title, url, description, score } = reportInfo;
 
-  const { name: gameName, cover } = await getNameCover(gameId);
+  const nameAndCover = await getNameCover(gameId);
 
   return (
     <li className="pendingReportRow">
-      <img src={cover?.image_id ? coverPath("720p", cover.image_id) : "/missingasset.webp"} />
-
+      <img
+        src={nameAndCover?.cover?.image_id ? coverPath("720p", nameAndCover.cover.image_id) : "/missingasset.webp"}
+      />
       <div>Report ID: {rptId}</div>
       <div>Game ID: {gameId}</div>
+      <div>Game Name: {nameAndCover?.name ?? "ERR"}</div>
       <div>Submission ID: {rssId}</div>
       <div>Title: {title}</div>
       <div>URL: {url}</div>
@@ -27,6 +29,12 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
       <div>Reported By:{reportBy}</div>
       <div>Submission Author:{authorId}</div>
       <div>Report Time: {isoToUTC(createdAt)}</div>
+      <button type="button" className="btn-ui">
+        Approve
+      </button>
+      <button type="button" className="btn-ui">
+        Decline
+      </button>
     </li>
   );
 }

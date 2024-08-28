@@ -94,6 +94,7 @@
   width: 10rem;
   height: 10rem;
   object-fit: cover;
+  border: 1px solid var(--clr-ui-border-idle);
 }
 
 @media only screen and (max-width: 968px) {

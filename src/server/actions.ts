@@ -351,6 +351,7 @@ export async function getPendingReports() {
 
 /* GET GAME NAME & COVER IMAGE FOR REPORTS IN ADMIN DASHBOARD */
 export async function getNameCover(gameId: number) {
+  // Same as last time, handle errors as alt missing data in component
   const res = await fetch("https://api.igdb.com/v4/games", {
     method: "POST",
     headers: {
