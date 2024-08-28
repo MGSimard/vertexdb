@@ -348,3 +348,20 @@ export async function getPendingReports() {
     return { message: "DATABASE ERROR: Failed retrieving pending reports." };
   }
 }
+
+/* GET GAME NAME & COVER IMAGE FOR REPORTS IN ADMIN DASHBOARD */
+export async function getNameCover(gameId: number) {
+  const res = await fetch("https://api.igdb.com/v4/games", {
+    method: "POST",
+    headers: {
+      Accept: "application/json",
+      "Client-ID": process.env.CLIENT_ID,
+      Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
+    } as HeadersInit,
+    body: `fields name, cover.image_id; where id = ${gameId};`,
+  });
+
+  const data = await res.json();
+
+  return data[0];
+}
