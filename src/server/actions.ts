@@ -332,8 +332,14 @@ export async function getPendingReports() {
         status: rssReports.status,
         createdAt: rssReports.createdAt,
         updatedAt: rssReports.updatedAt,
+        gameId: gameRssEntries.gameId,
+        authorId: gameRssEntries.author,
+        title: gameRssEntries.title,
+        url: gameRssEntries.url,
+        description: gameRssEntries.description,
       })
       .from(rssReports)
+      .leftJoin(gameRssEntries, eq(rssReports.rssId, gameRssEntries.rssId))
       .where(eq(rssReports.status, "pending"))
       .orderBy(desc(rssReports.createdAt));
     return { data: test, message: "SUCCESS: Retrieved pending reports." };
