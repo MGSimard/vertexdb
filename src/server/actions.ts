@@ -368,17 +368,64 @@ export async function getNameCover(gameId: number) {
 }
 
 /* APPROVE REPORT, DELETE SUBMISSION, STATUS APPROVED */
-export async function modApproveReport(reportId, rssId) {
+const approveSchema = z.object({
+  reportId: z.coerce.number().int().positive().lte(2147483647),
+  rssId: z.coerce.number().int().positive().lte(2147483647),
+});
+export async function modApproveReport(reportId: number, rssId: number) {
   console.log("Approve Report");
-  // Use transaction
-  // First verify if fitting report is still in pending status
-  // If still pending, delete all votes for matching rssId, delete rssId, then change report status to approved
+  const currentUser = auth();
+
+  if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
+    return { message: "INVALID REPORT: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+  }
+
+  const { success } = await ratelimit.limit(currentUser.userId);
+  if (!success) return { message: "RATELIMIT ERROR: Too many actions.", errors: { ratelimit: ["Too many actions."] } };
+
+  const validated = approveSchema.safeParse({ reportId, rssId });
+  if (!validated.success) {
+    return {
+      message: "INVALID REPORT: Failed to Create Report.",
+      errors: validated.error.flatten().fieldErrors,
+    };
+  }
+  console.log("Validation Passed.");
+
+  try {
+    // Use transaction
+    // First verify if fitting report is still in pending status
+    // If still pending, delete all votes for matching rssId, delete rssId, then change report status to approved
+  } catch (err) {}
 }
 
 /* REJECT A REPORT, KEEP SUBMISSION, STATUS DENIED */
-export async function modRejectReport(reportId) {
+const rejectSchema = z.object({
+  reportId: z.coerce.number().int().positive().lte(2147483647),
+});
+export async function modRejectReport(reportId: number) {
   console.log("Reject Report");
-  // Use transaction
-  // First verify if fitting report is still in pending status
-  // If still pending, change report status to denied
+  const currentUser = auth();
+
+  if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
+    return { message: "INVALID REPORT: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+  }
+
+  const { success } = await ratelimit.limit(currentUser.userId);
+  if (!success) return { message: "RATELIMIT ERROR: Too many actions.", errors: { ratelimit: ["Too many actions."] } };
+
+  const validated = rejectSchema.safeParse({ reportId });
+  if (!validated.success) {
+    return {
+      message: "INVALID REPORT: Failed to Create Report.",
+      errors: validated.error.flatten().fieldErrors,
+    };
+  }
+  console.log("Validation Passed.");
+
+  try {
+    // Use transaction
+    // First verify if fitting report is still in pending status
+    // If still pending, change report status to denied
+  } catch (err) {}
 }

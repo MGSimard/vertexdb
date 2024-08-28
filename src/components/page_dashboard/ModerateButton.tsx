@@ -13,7 +13,7 @@ export function ModerateButton({ approve, reportId, rssId }: { approve: boolean;
       )
     ) {
       // If press OK run fitting action
-      approve ? modApproveReport(reportId, rssId) : modRejectReport(reportId);
+      approve ? modApproveReport(reportId, rssId!) : modRejectReport(reportId);
     }
     // If cancel do nothing
   };
