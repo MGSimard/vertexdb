@@ -1,13 +1,25 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
 import { sql } from "drizzle-orm";
-import { pgTableCreator, serial, timestamp, varchar, integer, boolean, index, pgEnum } from "drizzle-orm/pg-core";
+import {
+  pgTableCreator,
+  serial,
+  timestamp,
+  varchar,
+  integer,
+  boolean,
+  index,
+  pgEnum,
+  unique,
+} from "drizzle-orm/pg-core";
 
 /**
  * Multi-project schema (vertexdb_)
  * @see https://orm.drizzle.team/docs/goodies#multi-project-schema
  */
 export const createTable = pgTableCreator((name) => `vertexdb_${name}`);
+
+export const sectionEnum = pgEnum("section", ["resources", "communities", "creators"]);
 
 export const gameRssEntries = createTable(
   "gameRssEntries",
@@ -18,7 +30,7 @@ export const gameRssEntries = createTable(
     title: varchar("title", { length: 60 }).notNull(),
     url: varchar("url", { length: 1024 }).notNull(),
     description: varchar("description", { length: 120 }).notNull(),
-    section: varchar("section", { length: 60 }).notNull(),
+    section: sectionEnum("section").notNull(),
     score: integer("score").default(1).notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
@@ -60,8 +72,9 @@ export const rssReports = createTable(
       .notNull()
       .references(() => gameRssEntries.rssId),
     reportBy: varchar("report_by", { length: 255 }).notNull(),
-    reason: varchar("reason", { length: 255 }).notNull(),
-    status: reportStatusEnum("status").notNull(),
+    // put this back later
+    // reason: varchar("reason", { length: 255 }).notNull(),
+    status: reportStatusEnum("status").default("pending").notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
@@ -69,5 +82,6 @@ export const rssReports = createTable(
   },
   (table) => ({
     statusIdx: index("idx_rssReports_status").on(table.status),
+    unq: unique().on(table.rssId, table.reportBy),
   })
 );
