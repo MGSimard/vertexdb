@@ -294,17 +294,17 @@ button:not(:disabled) {
   opacity: 0.2;
 }
 .btn-ui:hover,
-.btn-ui:focus,
+.btn-ui:focus-visible,
 .button-styled-a:hover,
-.button-styled-a:focus {
+.button-styled-a:focus-visible {
   border: 2px solid var(--clr-ui-border-notidle);
 }
 .btn-ui:hover::after,
-.btn-ui:focus::after,
+.btn-ui:focus-visible::after,
 .button-styled-a:hover::after,
-.button-styled-a:focus::after,
+.button-styled-a:focus-visible::after,
 .search-result:hover::after,
-.search-result:focus::after {
+.search-result:focus-visible::after {
   position: absolute;
   inset: 0;
   content: "";

@@ -4,13 +4,10 @@ import { db } from "@/server/db";
 import { gameRssEntries, gameRssVotes, rssReports } from "@/server/db/schema";
 import { z } from "zod";
 import { revalidatePath } from "next/cache";
-import { auth } from "@clerk/nextjs/server";
+import { auth, currentUser } from "@clerk/nextjs/server";
 import { ratelimit } from "./ratelimit";
 
-/**
- * GRAB ALL SUBMISSIONS FOR A GAME
- * PLUS THE CURRENT USER'S VOTE FOR INITIAL RENDER STATE OF ARROWS
- */
+/* FETCH CURRENTGAME SUBMISSIONS */
 export async function getInitialRss(currentGameId: number) {
   const user = auth();
   const currentUser = user.userId;
@@ -47,9 +44,7 @@ export async function getInitialRss(currentGameId: number) {
   }
 }
 
-/**
- * FETCH DATA FOR CURRENT GAME
- */
+/* FETCH CURRENTGAME DATA */
 export async function getGameData(query: string) {
   // Initially had try/catch but realized I really don't need it
   // because of how I'm handling this specific actions' errors
@@ -69,9 +64,7 @@ export async function getGameData(query: string) {
   return data[0];
 }
 
-/**
- * USERS ADDING SUBMISSIONS
- */
+/* CREATE SUBMISSION */
 const submissionSchema = z.object({
   rssId: z.number().int().positive().lte(2147483647), // Ignore, DB auto
   gameId: z.coerce.number().int().positive().lte(2147483647),
@@ -143,9 +136,7 @@ export async function createSubmission(currentState: any, formData: FormData) {
   return { success: true, message: "SUCCESS: Submission Added." };
 }
 
-/**
- * USERS VOTING
- */
+/* CREATE VOTE */
 const voteSchema = z.object({
   voteId: z.number().int().positive().lte(2147483647), // Ignore, DB auto
   rssId: z.coerce.number().int().positive().lte(2147483647),
@@ -255,9 +246,46 @@ export async function createVote(rssId: number, voteType: boolean) {
   }
 }
 
+/* CREATE REPORT */
+const reportSchema = z.object({
+  rssId: z.coerce.number().int().positive().lte(2147483647),
+  reportBy: z.string().max(255), // Auto from auth
+});
+const CreateReport = reportSchema.omit({ reportBy: true });
+
+export async function createReport(rssId: number) {
+  const user = auth();
+  if (!user.userId) return { message: "INVALID REPORT: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+
+  const { success } = await ratelimit.limit(user.userId);
+  if (!success) return { message: "RATELIMIT ERROR: Too many actions.", errors: { ratelimit: ["Too many actions."] } };
+
+  const validated = CreateReport.safeParse({ rssId });
+  if (!validated.success) {
+    return {
+      message: "INVALID REPORT: Failed to Create Report.",
+      errors: validated.error.flatten().fieldErrors,
+    };
+  }
+
+  const { rssId: reportedEntry } = validated.data;
+  const currentUserId = user.userId;
+
+  try {
+    console.log("REPORTED ENTRY:", reportedEntry);
+    console.log("REPORTED BY:", currentUserId);
+  } catch (err: any) {
+    return {
+      message: "DATABASE ERROR: Vote and score were not modified.",
+      errors: { database: ["Vote and score were not modified."] },
+    };
+  }
+}
+
 /**
  * DASHBOARD ACTIONS
  */
+/* GET TOTAL AMOUNT OF SUBMISSIONS */
 export async function getTotalSubmissions() {
   try {
     const [submissionsAmount] = await db.select({ count: count() }).from(gameRssEntries);
@@ -267,7 +295,7 @@ export async function getTotalSubmissions() {
     return { message: "DATABASE ERROR: Failed retrieving total submissions." };
   }
 }
-
+/* GET TOTAL AMOUNT OF VOTES */
 export async function getTotalVotes() {
   try {
     const [votesAmount] = await db.select({ count: count() }).from(gameRssVotes);
@@ -277,6 +305,7 @@ export async function getTotalVotes() {
   }
 }
 
+/* GET COUNT OF ALL REPORT STATUS TYPES */
 export async function getReportCounts() {
   try {
     const [counts] = await db
@@ -293,6 +322,7 @@ export async function getReportCounts() {
   }
 }
 
+/* GET REPORTS WITH PENDING STATUS */
 export async function getPendingReports() {
   try {
     const test = await db.select().from(rssReports).where(eq(rssReports.status, "pending"));

@@ -155,7 +155,7 @@
   stroke: var(--clr-ui-border-notidle);
 }
 .report-btn:hover svg,
-.report-btn:focus svg {
+.report-btn:focus-visible svg {
   stroke: #fded0e !important;
   stroke-width: 2;
 }

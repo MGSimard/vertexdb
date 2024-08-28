@@ -2,7 +2,7 @@ import { SubmissionTypes } from "@/utils/types";
 import { SignedOut, SignedIn } from "@clerk/nextjs";
 import { AddSubmission } from "./AddSubmission";
 import { VoteBlock } from "./VoteBlock";
-import { Warning } from "../icons";
+import { ReportButton } from "./ReportButton";
 
 const SubmissionEntry = ({ submission }: { submission: SubmissionTypes }) => {
   return (
@@ -43,9 +43,9 @@ export function RssList({
               <article className="card notched" key={submission.rssId}>
                 <div className="card-inner notched">
                   <div className="card-left">
-                    <button className="report-btn" title="Report Submission">
-                      <Warning />
-                    </button>
+                    <SignedIn>
+                      <ReportButton info={submission} />
+                    </SignedIn>
                   </div>
                   <div className="card-content">
                     <SubmissionEntry submission={submission} />
