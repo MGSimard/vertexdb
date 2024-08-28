@@ -51,6 +51,7 @@
 - [x] Total Submissions stat
 - [x] Total Votes stat
 - [x] Total Reports/Accepted/Denied stat
+- [ ] Add the actual report function (button next to each submission)
 - [ ] Show standing reports in reports card under
 - [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc

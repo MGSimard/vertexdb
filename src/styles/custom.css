@@ -136,9 +136,28 @@
 }
 .card-left {
   position: relative;
-  width: 2rem;
+  display: flex;
+  align-items: flex-end;
   flex-shrink: 0;
+  width: 2rem;
   border-right: 1px solid var(--clr-ui-border-idle);
+}
+.report-btn {
+  width: 100%;
+  z-index: 1;
+}
+.report-btn svg {
+  display: block;
+  stroke: var(--clr-ui-border-idle);
+}
+.card:hover .report-btn svg,
+.card:focus-within .report-btn svg {
+  stroke: var(--clr-ui-border-notidle);
+}
+.report-btn:hover svg,
+.report-btn:focus svg {
+  stroke: #fded0e !important;
+  stroke-width: 2;
 }
 .card-left::after {
   position: absolute;
