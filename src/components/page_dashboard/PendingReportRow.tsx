@@ -22,12 +22,15 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
       />
       <div className="prr-center">
         <div>
-          {/* <span className="prr-gameinfo">
-            {`GAME: ${nameAndCover?.name.toUpperCase() ?? "NOT FOUND"}`}
-            <small> (#{gameId})</small>
-          </span> */}
           <table className="table-admin">
             <tbody>
+              <tr>
+                <th>GAME:</th>
+                <td>
+                  {nameAndCover?.name.toUpperCase() ?? "NOT FOUND"}
+                  <small> (#{gameId})</small>
+                </td>
+              </tr>
               <tr>
                 <th>TITLE:</th>
                 <td>{title}</td>
@@ -40,24 +43,24 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
                 <th>DESCRIPTION:</th>
                 <td>{description}</td>
               </tr>
+              <tr>
+                <th>SCORE:</th>
+                <td>{score}</td>
+              </tr>
             </tbody>
           </table>
-          {/* <h4>{title}</h4>
-          <span className="prr-url">{url}</span>
-          <p>{description}</p>
-          <small className="prr-author">Submitted by {authorId}</small> */}
+          <small className="prr-author">
+            Submission ID #{rssId} by {authorId}
+          </small>
         </div>
         <span className="prr-foot">
-          report by {reportBy} on {isoToUTC(createdAt)}
+          report by {reportBy} on {isoToUTC(createdAt)} (ID #{rptId})
         </span>
       </div>
       <div className="prr-right">
         <ModerateButton approve={false} reportId={rptId} />
         <ModerateButton approve={true} reportId={rptId} rssId={rssId} />
       </div>
-      {/* <div>Report ID: {rptId}</div>
-      <div>Submission ID: {rssId}</div>
-      <div>Score: {score}</div> */}
     </li>
   );
 }
