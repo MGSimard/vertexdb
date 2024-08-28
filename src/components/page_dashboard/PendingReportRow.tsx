@@ -1,17 +1,23 @@
 import { isoToUTC } from "@/utils/isoToUTC";
 
 export function PendingReportRow({ reportInfo }: { reportInfo: any }) {
-  const { rptId, rssId, reportBy, authorId, createdAt, gameId } = reportInfo;
+  const { rptId, rssId, reportBy, authorId, createdAt, gameId, title, url, description, score } = reportInfo;
 
   return (
-    <tr>
-      <td>{rptId}</td>
-      <td>{gameId}</td>
-      <td>{rssId}</td>
-      <td>{reportBy}</td>
-      <td>{authorId}</td>
-      <td>{isoToUTC(createdAt)}</td>
-    </tr>
+    <div>
+      <ul>
+        <li>{rptId}</li>
+        <li>{gameId}</li>
+        <li>{rssId}</li>
+        <li>{title}</li>
+        <li>{url}</li>
+        <li>{description}</li>
+        <li>{score}</li>
+        <li>{reportBy}</li>
+        <li>{authorId}</li>
+        <li>{isoToUTC(createdAt)}</li>
+      </ul>
+    </div>
   );
 }
 {
