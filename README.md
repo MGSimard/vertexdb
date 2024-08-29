@@ -54,12 +54,12 @@
 - [x] Total Reports/Accepted/Denied stat
 - [x] Add the actual report function (button next to each submission)
 - [x] Show standing reports in reports card under
-- [ ] CREATE MODAL.
-- [ ] AFTER MODAL, ALLOW REASON DROPDOWN ON REPORTS AND OPTIONAL COMMENT
+
 - [x] Edit initialRss to only include null deletedAt
 - [x] Edit voting to only allow voting on null deletedAt
 - [x] Edit report to utilize formData action
 - [x] Build report form
+- [ ] CREATE MODAL FOR REPORT FORM
 - [ ] Edit report to only allow voting on null deletedAt
 - [ ] Style pending report items
 - [ ] Look into using optimistic updates for visuals when voting
