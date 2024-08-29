@@ -6,15 +6,13 @@ import { Modal } from "../layout/Modal";
 
 export function ReportButton({ info }: { info: any }) {
   const beingReported = info.rssId;
+  console.log(info);
 
   const [modalOpen, setModalOpen] = useState(false);
 
-  //() =>
-
   const handleModalOpen = () => {
     if (!modalOpen) setModalOpen(true);
-    console.log("jeff");
-
+    console.log("Report button pressed");
     /* we'll open a form and the submission will be form action, use same conventions as my other form with useActionState */
   };
 
