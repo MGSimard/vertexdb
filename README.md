@@ -53,6 +53,10 @@
 - [x] Total Reports/Accepted/Denied stat
 - [x] Add the actual report function (button next to each submission)
 - [x] Show standing reports in reports card under
+- [ ] CREATE MODAL.
+- [ ] AFTER MODAL, ALLOW REASON DROPDOWN ON REPORTS
+- [ ] Edit initialRss to only include null createdAt
+- [ ] Edit voting to only allow voting on null createdAt
 - [ ] You can't delete submissions if reports reference them with foreign key (rssId)
 - [ ] Think about potentially soft-deleting, or moving entries into a deleted table and updating foreign key?
 - [ ] Style pending report items

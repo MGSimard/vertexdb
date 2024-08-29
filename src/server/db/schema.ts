@@ -68,6 +68,7 @@ export const gameRssVotes = createTable(
 );
 
 export const reportStatusEnum = pgEnum("status", ["pending", "approved", "denied"]);
+export const reportReasonEnum = pgEnum("reason", ["reason1", "reason2", "reason3", "other"]);
 
 export const rssReports = createTable(
   "rssReports",
@@ -77,6 +78,8 @@ export const rssReports = createTable(
       .notNull()
       .references(() => gameRssEntries.rssId),
     reportBy: varchar("report_by", { length: 255 }).notNull(),
+    reportReason: reportReasonEnum("report_reason").default("other").notNull(),
+    optionalComment: varchar("optional_comment", { length: 120 }),
     status: reportStatusEnum("status").default("pending").notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)
