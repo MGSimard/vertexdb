@@ -262,7 +262,6 @@ const reportSchema = z.object({
 const CreateReport = reportSchema.omit({ reportBy: true });
 
 export async function createReport(currentState: any, formData: FormData) {
-  //rssId: number, reportReason: string, optionalComment?: string
   const user = auth();
   if (!user.userId) return { message: "INVALID REPORT: Unauthorized", errors: { auth: ["User is not Authorized."] } };
 

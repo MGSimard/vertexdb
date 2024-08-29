@@ -14,6 +14,8 @@ export function ReportForm({ rssId }: { rssId: number }) {
   return (
     <form className="submissionForm" action={formAction}>
       <h3>/ / REPORT SUBMISSION [#{rssId}]</h3>
+      {/* SHOW INFORMATION ABOUT THE SUBMISSION BEING REPORTED */}
+      {/* SO THAT USER DOESNT HAVE TO QUIT MODAL TO REFRESH THEIR MIND */}
       <label htmlFor="report-reportReason">
         Report Reason:
         <input type="option" name="" id="" required />
@@ -26,7 +28,6 @@ export function ReportForm({ rssId }: { rssId: number }) {
           placeholder="/ / ADDITIONAL INFORMATION . . ."
           maxLength={120}
           onChange={handleCharCount}
-          required
         />
       </label>
       <input type="hidden" name="report-rssId" value={rssId} />

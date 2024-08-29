@@ -59,7 +59,7 @@
 - [x] Edit initialRss to only include null deletedAt
 - [x] Edit voting to only allow voting on null deletedAt
 - [x] Edit report to utilize formData action
-- [ ] Build report form
+- [x] Build report form
 - [ ] Edit report to only allow voting on null deletedAt
 - [ ] Style pending report items
 - [ ] Look into using optimistic updates for visuals when voting
