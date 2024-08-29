@@ -48,23 +48,19 @@
 - [ ] Give a shit about replacing :any with typeguards for initialRss
 - [x] Implement admin dashboard
 - [x] Find some stuff to show on admin dashboard
+- [x] Implement Moderation (Report abuse, receive reports in admin dashboard)
 - [x] Total Submissions stat
 - [x] Total Votes stat
 - [x] Total Reports/Accepted/Denied stat
 - [x] Add the actual report function (button next to each submission)
 - [x] Show standing reports in reports card under
 - [ ] CREATE MODAL.
-- [ ] AFTER MODAL, ALLOW REASON DROPDOWN ON REPORTS
-- [ ] Edit initialRss to only include null deletedAt
-- [ ] Edit voting to only allow voting on null deletedAt
-- [ ] You can't delete submissions if reports reference them with foreign key (rssId)
-- [ ] Think about potentially soft-deleting, or moving entries into a deleted table and updating foreign key?
+- [ ] AFTER MODAL, ALLOW REASON DROPDOWN ON REPORTS AND OPTIONAL COMMENT
+- [x] Edit initialRss to only include null deletedAt
+- [x] Edit voting to only allow voting on null deletedAt
 - [ ] Style pending report items
 - [ ] Remove "any" once done
-- [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)
-- [ ] Think about potentially fragmenting the report button into a context menu on click (Report, Cancel)
-- [ ] If so, think about even just giving in and doing modals so they can also enter a reason
-- [ ] If I do that, I'd also opt for using modal for submissions instead of per-section div
+- [x] If I do that, I'd also opt for using modal for submissions instead of per-section div - NO, I LIKE THE LOOK
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
 
 ## Few conventions

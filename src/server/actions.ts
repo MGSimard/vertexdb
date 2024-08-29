@@ -176,12 +176,19 @@ export async function createVote(rssId: number, voteType: boolean) {
       .select({ currentUserVote: gameRssVotes.voteType })
       .from(gameRssVotes)
       .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId)));
-    const [currentSubmissionScore] = await db
-      .select({ score: gameRssEntries.score })
+    const [currentSubmission] = await db
+      .select({ score: gameRssEntries.score, deletedAt: gameRssEntries.deletedAt })
       .from(gameRssEntries)
       .where(eq(gameRssEntries.rssId, submissionId));
 
-    if (!currentUserVote || isNaN(currentSubmissionScore!.score)) {
+    if (currentSubmission?.deletedAt !== null) {
+      return {
+        message: "DATABASE ERROR: This submission no longer exists.",
+        errors: { database: ["This submission no longer exists."] },
+      };
+    }
+
+    if (!currentUserVote || isNaN(currentSubmission!.score)) {
       return {
         message: "DATABASE ERROR: Could not retrieve current vote or submission score.",
         errors: { database: ["Could not retrieve current vote or submission score."] },
@@ -197,7 +204,7 @@ export async function createVote(rssId: number, voteType: boolean) {
           .returning({ newVote: gameRssVotes.voteType });
         const [newScore] = await tx
           .update(gameRssEntries)
-          .set({ score: currentSubmissionScore!.score + (voteInput ? 1 : -1) })
+          .set({ score: currentSubmission!.score + (voteInput ? 1 : -1) })
           .where(eq(gameRssEntries.rssId, submissionId))
           .returning({ newScore: gameRssEntries.score });
         return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
@@ -215,7 +222,7 @@ export async function createVote(rssId: number, voteType: boolean) {
             .returning({ newVote: gameRssVotes.voteType });
           const [newScore] = await tx
             .update(gameRssEntries)
-            .set({ score: currentSubmissionScore!.score + (voteInput ? 2 : -2) })
+            .set({ score: currentSubmission!.score + (voteInput ? 2 : -2) })
             .where(eq(gameRssEntries.rssId, submissionId))
             .returning({ newScore: gameRssEntries.score });
           return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
@@ -229,7 +236,7 @@ export async function createVote(rssId: number, voteType: boolean) {
             .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId)));
           const [newScore] = await tx
             .update(gameRssEntries)
-            .set({ score: currentSubmissionScore!.score + (voteInput ? -1 : 1) })
+            .set({ score: currentSubmission!.score + (voteInput ? -1 : 1) })
             .where(eq(gameRssEntries.rssId, submissionId))
             .returning({ newScore: gameRssEntries.score });
           return { voteResult: null, scoreResult: newScore!.newScore };
