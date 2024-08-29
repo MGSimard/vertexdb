@@ -58,6 +58,7 @@
 - [ ] AFTER MODAL, ALLOW REASON DROPDOWN ON REPORTS AND OPTIONAL COMMENT
 - [x] Edit initialRss to only include null deletedAt
 - [x] Edit voting to only allow voting on null deletedAt
+- [x] Edit report to only allow voting on null deletedAt
 - [ ] Style pending report items
 - [ ] Remove "any" once done
 - [x] If I do that, I'd also opt for using modal for submissions instead of per-section div - NO, I LIKE THE LOOK
