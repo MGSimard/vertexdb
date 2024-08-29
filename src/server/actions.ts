@@ -44,7 +44,7 @@ export async function getInitialRss(currentGameId: number) {
       ...(currentUser ? { currentUserVote: gameRssVotes.voteType } : {}),
     })
     .from(gameRssEntries)
-    .where(eq(gameRssEntries.gameId, currentGameId))
+    .where(and(eq(gameRssEntries.gameId, currentGameId)))
     .orderBy(desc(gameRssEntries.score));
 
   const dynamicQuery = query.$dynamic();

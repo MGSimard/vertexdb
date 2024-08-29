@@ -39,7 +39,11 @@ export const gameRssEntries = createTable(
     deletedAt: timestamp("deleted_at"),
   },
   (table) => ({
-    gameIdIdx: index("idx_gameRssEntries_gameId_deletedAt").on(table.gameId, table.deletedAt),
+    gameIdIdx: index("idx_gameRssEntries_gameId_deletedAt_score").on(
+      table.gameId,
+      table.deletedAt.nullsFirst(),
+      table.score.desc()
+    ),
   })
 );
 
