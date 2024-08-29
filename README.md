@@ -58,7 +58,8 @@
 - [ ] AFTER MODAL, ALLOW REASON DROPDOWN ON REPORTS AND OPTIONAL COMMENT
 - [x] Edit initialRss to only include null deletedAt
 - [x] Edit voting to only allow voting on null deletedAt
-- [x] Edit report to only allow voting on null deletedAt
+- [ ] Edit report to only allow voting on null deletedAt
+- [ ] Edit report to utilize formData action
 - [ ] Style pending report items
 - [ ] Look into using optimistic updates for visuals when voting
 - [ ] Remove "any" once done

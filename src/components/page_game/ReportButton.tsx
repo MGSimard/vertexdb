@@ -9,11 +9,13 @@ export function ReportButton({ info }: { info: any }) {
 
   const [modalOpen, setModalOpen] = useState(false);
 
-  //() => createReport(beingReported)
+  //() =>
 
   const handleModalOpen = () => {
     if (!modalOpen) setModalOpen(true);
     console.log("jeff");
+
+    /* we'll open a form and the submission will be form action, use same conventions as my other form with useActionState */
   };
 
   return (
