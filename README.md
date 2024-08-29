@@ -53,6 +53,8 @@
 - [x] Total Reports/Accepted/Denied stat
 - [x] Add the actual report function (button next to each submission)
 - [x] Show standing reports in reports card under
+- [ ] You can't delete submissions if reports reference them with foreign key (rssId)
+- [ ] Think about potentially soft-deleting, or moving entries into a deleted table and updating foreign key?
 - [ ] Style pending report items
 - [ ] Remove "any" once done
 - [ ] Implement Moderation (Report abuse, receive reports in admin dashboard)

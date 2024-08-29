@@ -501,6 +501,11 @@ nav .search-container:focus-within::before {
   backdrop-filter: blur(0.2rem);
   z-index: -10;
 }
+/* MODAL */
+.modal {
+  position: absolute;
+  z-index: 2000;
+}
 
 @media only screen and (max-width: 968px) {
   body {
