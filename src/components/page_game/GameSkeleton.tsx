@@ -1,4 +1,7 @@
+import { sectionEnums } from "@/utils/enums";
 import { Globe, Steam, Discord } from "../icons";
+
+const sections = sectionEnums;
 
 const SkeleCard = () => {
   return (
@@ -60,18 +63,12 @@ export function GameSkeleton() {
         </div>
       </section>
       <section className="game-resources">
-        <div>
-          <h2>Resources</h2>
-          <SkeleCard />
-        </div>
-        <div>
-          <h2>Communities</h2>
-          <SkeleCard />
-        </div>
-        <div>
-          <h2>Top Content Creators</h2>
-          <SkeleCard />
-        </div>
+        {sections.map((section) => (
+          <div>
+            <h2>{section}</h2>
+            <SkeleCard />
+          </div>
+        ))}
       </section>
     </>
   );

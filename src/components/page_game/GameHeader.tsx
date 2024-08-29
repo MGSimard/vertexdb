@@ -4,6 +4,7 @@ import { RssList } from "@/components/page_game/RssList";
 import { Globe, Discord, Steam } from "@/components/icons";
 import { convertUnix, coverPath } from "@/utils/helpers";
 import { GamedataResponseTypes } from "@/utils/types";
+import { sectionEnums } from "@/utils/enums";
 
 export async function GameHeader({ slug }: { slug: string }) {
   const gameData = (await getGameData(slug)) as GamedataResponseTypes;
@@ -13,7 +14,7 @@ export async function GameHeader({ slug }: { slug: string }) {
   //   console.log("WEBSITES:", gameData.websites);
   // }
 
-  const sections = ["resources", "communities", "creators"];
+  const sections = sectionEnums;
 
   return (
     <>

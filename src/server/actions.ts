@@ -6,6 +6,7 @@ import { z } from "zod";
 import { revalidatePath } from "next/cache";
 import { auth } from "@clerk/nextjs/server";
 import { ratelimit } from "./ratelimit";
+import { reportReasonEnums, sectionEnums } from "@/utils/enums";
 
 /* FETCH CURRENTGAME DATA */
 export async function getGameData(query: string) {
@@ -72,7 +73,7 @@ const submissionSchema = z.object({
   title: z.string().trim().min(1).max(60),
   url: z.string().url().trim().min(1).max(1024),
   description: z.string().trim().min(1).max(120),
-  section: z.enum(["resources", "communities", "creators"]),
+  section: z.enum(sectionEnums),
   slug: z.string().max(1024), // Only for page refresh, no use in DB
   score: z.number(), // Ignore, DB auto
   createdAt: z.date(), // Ignore, DB auto
@@ -245,13 +246,16 @@ export async function createVote(rssId: number, voteType: boolean) {
 }
 
 /* CREATE REPORT */
+
 const reportSchema = z.object({
   rssId: z.coerce.number().int().positive().lte(2147483647),
   reportBy: z.string().max(255), // Auto from auth
+  reportReason: z.enum(reportReasonEnums),
+  optionalComment: z.string().max(120),
 });
 const CreateReport = reportSchema.omit({ reportBy: true });
 
-export async function createReport(rssId: number) {
+export async function createReport(rssId: number, reportReason: string, optionalComment?: string) {
   const user = auth();
   if (!user.userId) return { message: "INVALID REPORT: Unauthorized", errors: { auth: ["User is not Authorized."] } };
 

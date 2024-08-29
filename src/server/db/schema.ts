@@ -1,5 +1,6 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
+import { reportReasonEnums, reportStatusEnums, sectionEnums } from "@/utils/enums";
 import { sql } from "drizzle-orm";
 import {
   pgTableCreator,
@@ -19,7 +20,7 @@ import {
  */
 export const createTable = pgTableCreator((name) => `vertexdb_${name}`);
 
-export const sectionEnum = pgEnum("section", ["resources", "communities", "creators"]);
+export const sectionEnum = pgEnum("section", sectionEnums);
 
 export const gameRssEntries = createTable(
   "gameRssEntries",
@@ -67,8 +68,8 @@ export const gameRssVotes = createTable(
   })
 );
 
-export const reportStatusEnum = pgEnum("status", ["pending", "approved", "denied"]);
-export const reportReasonEnum = pgEnum("reason", ["reason1", "reason2", "reason3", "other"]);
+export const reportStatusEnum = pgEnum("status", reportStatusEnums);
+export const reportReasonEnum = pgEnum("reason", reportReasonEnums);
 
 export const rssReports = createTable(
   "rssReports",
