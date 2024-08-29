@@ -36,9 +36,10 @@ export const gameRssEntries = createTable(
       .default(sql`CURRENT_TIMESTAMP`)
       .notNull(),
     updatedAt: timestamp("updated_at").$onUpdate(() => new Date()),
+    deletedAt: timestamp("deleted_at"),
   },
   (table) => ({
-    gameIdIdx: index("idx_gameRssEntries_gameId").on(table.gameId),
+    gameIdIdx: index("idx_gameRssEntries_gameId_deletedAt").on(table.gameId, table.deletedAt),
   })
 );
 
