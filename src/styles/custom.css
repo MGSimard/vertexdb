@@ -317,7 +317,7 @@
   flex-direction: column;
   gap: 1rem;
 }
-.table-vertical tr:not(.noskip) {
+.table-vertical tr {
   display: flex;
   flex-direction: column;
 }

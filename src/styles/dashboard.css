@@ -187,38 +187,27 @@
     align-items: flex-start;
   }
   .prr-left {
-    flex-shrink: 0;
     width: auto;
     height: 10rem;
-  }
-  .prr-right {
-    display: flex;
-    gap: 0.5rem;
-    flex-shrink: 0;
-    width: 4rem;
   }
   .prr-foot {
     text-align: start;
   }
-  .prr-right button {
-    text-align: center;
-    width: 50%;
-    aspect-ratio: 1/1;
+  .table-admin th {
+    width: auto;
     padding: 0;
-    line-height: 0.2;
-    object-fit: contain;
-    border-width: 1px;
   }
-  .prr-right button:hover,
-  .prr-right button:focus-visible {
-    border-width: 1px;
+  .table-admin tbody {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
   }
-  .prr-right button svg {
-    opacity: 1;
+  .table-admin tr {
+    display: flex;
+    flex-direction: column;
   }
-  .prr-right button:hover svg,
-  .prr-right button:focus-visible svg {
-    stroke-width: 3;
+  .table-admin th {
+    font-weight: 600;
   }
 }
 
