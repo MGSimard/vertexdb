@@ -1,6 +1,5 @@
 // Example model schema from the Drizzle docs
 // https://orm.drizzle.team/docs/sql-schema-declaration
-import { reportReasonEnums, reportStatusEnums, sectionEnums } from "@/utils/enums";
 import { sql } from "drizzle-orm";
 import {
   pgTableCreator,
@@ -13,6 +12,7 @@ import {
   pgEnum,
   unique,
 } from "drizzle-orm/pg-core";
+import { reportReasonEnums, reportStatusEnums, sectionEnums } from "@/utils/enums";
 
 /**
  * Multi-project schema (vertexdb_)
