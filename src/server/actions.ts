@@ -1,5 +1,5 @@
 "use server";
-import { eq, and, desc, count, sql } from "drizzle-orm";
+import { eq, and, desc, count, sql, isNull } from "drizzle-orm";
 import { db } from "@/server/db";
 import { gameRssEntries, gameRssVotes, rssReports } from "@/server/db/schema";
 import { z } from "zod";
@@ -45,7 +45,7 @@ export async function getInitialRss(currentGameId: number) {
       ...(currentUser ? { currentUserVote: gameRssVotes.voteType } : {}),
     })
     .from(gameRssEntries)
-    .where(and(eq(gameRssEntries.gameId, currentGameId)))
+    .where(and(eq(gameRssEntries.gameId, currentGameId), isNull(gameRssEntries.deletedAt)))
     .orderBy(desc(gameRssEntries.score));
 
   const dynamicQuery = query.$dynamic();
