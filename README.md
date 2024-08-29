@@ -60,6 +60,7 @@
 - [x] Edit voting to only allow voting on null deletedAt
 - [x] Edit report to only allow voting on null deletedAt
 - [ ] Style pending report items
+- [ ] Look into using optimistic updates for visuals when voting
 - [ ] Remove "any" once done
 - [x] If I do that, I'd also opt for using modal for submissions instead of per-section div - NO, I LIKE THE LOOK
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
