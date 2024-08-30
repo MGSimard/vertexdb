@@ -401,24 +401,49 @@
 }
 
 /* REPORT FORM */
+.card-large:has(form) h3 {
+  font-weight: 600;
+  color: var(--clr-secondary);
+}
+.report-content {
+  display: flex;
+  gap: 4rem;
+}
+.reported-content {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex-grow: 1;
+  max-width: 40rem;
+}
+.reported-content p {
+  color: inherit;
+}
+.reported-content span {
+  display: block;
+  filter: saturate(0);
+  opacity: 0.7;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
 .reportForm {
   display: flex;
   flex-direction: column;
   gap: 1rem;
-  max-width: 30rem;
-  width: 100%;
+  width: 30rem;
+  flex-shrink: 0;
 }
 .reportForm textarea,
 .reportForm select {
   display: block;
   width: 100%;
   padding: 0.5rem;
-  border: 2px solid var(--clr-ui-border-idle);
-  outline: none;
   font-family: inherit;
   font-size: 2rem;
   font-weight: 500;
   color: var(--clr-secondary);
+  border: 2px solid var(--clr-ui-border-idle);
+  outline: none;
   background: var(--clr-bg);
 }
 .reportForm textarea::placeholder {
@@ -440,19 +465,19 @@
   gap: 0.5rem;
   text-align: center;
 }
-.report-content {
-  display: flex;
-  gap: 2rem;
-}
-.card-large:has(form) {
-  max-width: 60rem;
-}
-.reported-content {
-}
 
 @media only screen and (max-width: 968px) {
   .game-resources {
     grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media only screen and (max-width: 578px) {
+  .report-content {
+    flex-direction: column;
+  }
+  .reportForm {
+    width: 100%;
   }
 }
 

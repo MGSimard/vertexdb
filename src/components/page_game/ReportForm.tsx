@@ -6,7 +6,7 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: any }
   const [formState, formAction, pending] = useActionState(createReport, null);
   const [descCharCount, setDescCharCount] = useState(0);
 
-  const { rssId } = info;
+  const { rssId, title, description, url } = info;
 
   console.log(info);
 
@@ -20,13 +20,10 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: any }
       <div className="report-content">
         <div className="reported-content">
           <div>
-            <h4>Submission Title</h4>
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam lacinia id elit sit amet convallis. Nunc et
-              ipsum in est.
-            </p>
+            <h4>{title}</h4>
+            <p>{description}</p>
           </div>
-          <span>url of the post</span>
+          <span title={url}>{url}</span>
         </div>
         <form className="reportForm" action={formAction}>
           <label htmlFor="report-reportReason">

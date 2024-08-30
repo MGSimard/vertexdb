@@ -205,6 +205,10 @@ footer {
   margin-bottom: 2rem;
 }
 /* Smaller Core */
+fieldset,
+button {
+  all: unset;
+}
 button {
   cursor: pointer;
 }
@@ -213,17 +217,18 @@ button {
 a:focus-visible {
   outline: 2px solid var(--clr-primary) !important;
 }
-fieldset {
-  all: unset;
-}
 h1,
 h2,
 h3,
 h4,
 h5,
 h6,
-button {
+button,
+label {
   text-transform: uppercase;
+}
+label {
+  font-weight: 600;
 }
 h1 {
   color: var(--clr-secondary);
@@ -259,9 +264,7 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
-button {
-  all: unset;
-}
+
 button:not(:disabled) {
   cursor: pointer;
 }
@@ -511,7 +514,7 @@ nav .search-container:focus-within::before {
   padding: 2rem;
   background: var(--clr-ui-bg-80);
   overflow: hidden;
-  z-index: 999;
+  z-index: 9999;
 }
 
 @media only screen and (max-width: 968px) {

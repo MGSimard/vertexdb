@@ -61,11 +61,10 @@
 - [x] Spend time ordering all my imports by hierarchy
 - [x] Touch up my types into interfaces to avoid the annoying linebreaks
 - [x] Style form
-- [ ] Maybe display info on what they're reporting so they don't have to refresh their mind after clicking report
+- [x] Maybe display info on what they're reporting so they don't have to refresh their mind after clicking report
+- [x] Make report form action send data properly to server action
 - [ ] Close modal on ESC or clicking backdrop?
-
 - [ ] Make up mind regarding list of report reasons
-- [ ] Make report form action send data properly to server action
 - [ ] Edit report to only allow voting on null deletedAt
 - [ ] Style pending report items
 - [ ] Look into using optimistic updates for visuals when voting
