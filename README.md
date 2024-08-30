@@ -69,7 +69,7 @@
 
 ## Few conventions
 
-- Import order: React Core > Other core > Types > Components > functions > styles
+- Import order: React Core > Next Core > Other core > Types > Components > functions > styles
 - export default function() for pages
 - export function() for components
 - const = () => {} for anything "in-house"
