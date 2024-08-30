@@ -345,6 +345,8 @@ export async function getPendingReports() {
         rssId: rssReports.rssId,
         reportBy: rssReports.reportBy,
         status: rssReports.status,
+        reportReason: rssReports.reportReason,
+        optionalComment: rssReports.optionalComment,
         createdAt: rssReports.createdAt,
         updatedAt: rssReports.updatedAt,
         gameId: gameRssEntries.gameId,

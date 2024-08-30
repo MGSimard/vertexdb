@@ -3,7 +3,20 @@ import { ModerateButton } from "@/components/page_dashboard/ModerateButton";
 import { coverPath, isoToUTC } from "@/utils/helpers";
 
 export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
-  const { rptId, rssId, reportBy, authorId, createdAt, gameId, title, url, description, score } = reportInfo;
+  const {
+    rptId,
+    rssId,
+    reportBy,
+    reportReason,
+    optionalComment,
+    createdAt,
+    gameId,
+    authorId,
+    title,
+    url,
+    description,
+    score,
+  } = reportInfo;
 
   const nameAndCover = await getNameCover(gameId);
 
@@ -39,6 +52,14 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
               <tr>
                 <th>SCORE:</th>
                 <td>{score}</td>
+              </tr>
+              <tr>
+                <th>REPORT REASON:</th>
+                <td>{reportReason}</td>
+              </tr>
+              <tr>
+                <th>COMMENT:</th>
+                <td>{optionalComment ?? "N/A"}</td>
               </tr>
             </tbody>
           </table>

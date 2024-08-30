@@ -97,7 +97,7 @@
   text-align: left;
 }
 .table-admin th {
-  width: 7rem;
+  width: fit-content;
   padding-right: 1rem;
   font-weight: 600;
 }
