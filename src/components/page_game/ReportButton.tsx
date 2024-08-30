@@ -18,7 +18,7 @@ export function ReportButton({ info }: { info: any }) {
       <button className="report-btn" title="Report Submission" onClick={handleModalOpen}>
         <Warning />
       </button>
-      <Modal isOpen={isModalOpen}>
+      <Modal isOpen={isModalOpen} onClose={() => setIsModalOpen(false)}>
         <ReportForm info={info} onClose={() => setIsModalOpen(false)} />
       </Modal>
     </>
