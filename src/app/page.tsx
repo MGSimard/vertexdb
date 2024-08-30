@@ -4,9 +4,7 @@ export default function Page() {
   return (
     <main className="index-main">
       <Searchbar />
-      <div>
-        <h2>THIS APP IS IN ACTIVE DEVELOPMENT MODE.</h2>
-      </div>
+      <h2 className="notice">THIS APP IS IN ACTIVE DEVELOPMENT MODE.</h2>
     </main>
   );
 }
