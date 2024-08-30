@@ -287,6 +287,10 @@ export async function createReport(currentState: any, formData: FormData) {
     // Existing entry conflict already handled by schema unique combo for rssId + currentUserId
     await db.insert(rssReports).values({ rssId, reportBy: currentUserId, reportReason, optionalComment });
   } catch (err: any) {
+    if (err.code && Number(err.code) === 23505) {
+      return { success: false, message: "REPORT ERROR: User has already submitted a report." };
+    }
+
     return { success: false, message: "REPORT ERROR: Failed to create report." };
   }
 }

@@ -8,8 +8,6 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: any }
 
   const { rssId, title, description, url } = info;
 
-  console.log(info);
-
   const handleCharCount = (e: any) => {
     setDescCharCount(e.target.value.length);
   };
@@ -19,10 +17,8 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: any }
       <h3>/ / REPORT SUBMISSION [#{info.rssId}]</h3>
       <div className="report-content">
         <div className="reported-content">
-          <div>
-            <h4>{title}</h4>
-            <p>{description}</p>
-          </div>
+          <h4>{title}</h4>
+          <p>{description}</p>
           <span title={url}>{url}</span>
         </div>
         <form className="reportForm" action={formAction}>
