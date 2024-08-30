@@ -286,6 +286,7 @@ export async function createReport(currentState: any, formData: FormData) {
   try {
     // Existing entry conflict already handled by schema unique combo for rssId + currentUserId
     await db.insert(rssReports).values({ rssId, reportBy: currentUserId, reportReason, optionalComment });
+    revalidatePath("/admin/dashboard");
     return { success: true, message: "SUCCESS: Report successfully sent." };
   } catch (err: any) {
     if (err.code && Number(err.code) === 23505) {
