@@ -208,7 +208,7 @@ export async function createVote(rssId: number, voteType: boolean) {
           .returning({ newScore: gameRssEntries.score });
         return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
       });
-      return { data: voteResult, message: "SUCCESS: Vote Successfully Added." };
+      return { data: voteResult, message: "SUCCESS: Vote successfully added." };
     } else {
       // ELSE IF EXISTING VOTE
       if (currentUserVote[0]!.currentUserVote !== voteInput) {
@@ -226,7 +226,7 @@ export async function createVote(rssId: number, voteType: boolean) {
             .returning({ newScore: gameRssEntries.score });
           return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
         });
-        return { data: voteResult, message: "SUCCESS: Vote Successfully Modified." };
+        return { data: voteResult, message: "SUCCESS: Vote successfully modified." };
       } else {
         // ELSE - AND EXISTING VOTE IS SAME AS NEW VOTE: Delete vote from table, update score.
         const voteResult = await db.transaction(async (tx) => {
@@ -240,7 +240,7 @@ export async function createVote(rssId: number, voteType: boolean) {
             .returning({ newScore: gameRssEntries.score });
           return { voteResult: null, scoreResult: newScore!.newScore };
         });
-        return { data: voteResult, message: "SUCCESS: Vote Successfully Deleted." };
+        return { data: voteResult, message: "SUCCESS: Vote Successfully deleted." };
       }
     }
   } catch (err: any) {
@@ -286,6 +286,7 @@ export async function createReport(currentState: any, formData: FormData) {
   try {
     // Existing entry conflict already handled by schema unique combo for rssId + currentUserId
     await db.insert(rssReports).values({ rssId, reportBy: currentUserId, reportReason, optionalComment });
+    return { success: true, message: "SUCCESS: Report successfully sent." };
   } catch (err: any) {
     if (err.code && Number(err.code) === 23505) {
       return { success: false, message: "REPORT ERROR: User has already submitted a report." };

@@ -1,5 +1,5 @@
 "use client";
-import { useState, useActionState } from "react";
+import { useState, useEffect, useActionState } from "react";
 import { createReport } from "@/server/actions";
 
 export function ReportForm({ onClose, info }: { onClose: () => void; info: any }) {
@@ -11,6 +11,12 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: any }
   const handleCharCount = (e: any) => {
     setDescCharCount(e.target.value.length);
   };
+
+  useEffect(() => {
+    if (formState?.success === true) {
+      onClose();
+    }
+  }, [formState]);
 
   return (
     <>

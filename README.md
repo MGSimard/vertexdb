@@ -64,6 +64,7 @@
 - [x] Maybe display info on what they're reporting so they don't have to refresh their mind after clicking report
 - [x] Make report form action send data properly to server action
 - [ ] Look into submissions clearing the text field, but the charcount above not getting affected by onChange (guess deletion on submission doesn't trigger onChange)
+- [ ] Fix column order in db for report table
 - [ ] Close modal on ESC or clicking backdrop?
 - [ ] Make up mind regarding list of report reasons
 - [ ] Edit report to only allow voting on null deletedAt
