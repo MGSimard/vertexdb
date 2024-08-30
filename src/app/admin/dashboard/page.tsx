@@ -15,8 +15,6 @@ export default async function Page() {
   }
 
   const pendingReports = await getPendingReports();
-  console.log(pendingReports);
-  console.log(pendingReports.data);
 
   return (
     <main className="admin">
