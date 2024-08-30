@@ -284,8 +284,9 @@ export async function createReport(currentState: any, formData: FormData) {
   const currentUserId = user.userId;
 
   try {
+    console.log("FORM SUBMITTED AND ALL VALIDATIONS PASSED");
     // Existing entry conflict already handled by schema unique combo for rssId + currentUserId
-    await db.insert(rssReports).values({ rssId: reportedEntry, reportBy: currentUserId });
+    // await db.insert(rssReports).values({ rssId: reportedEntry, reportBy: currentUserId });
   } catch (err: any) {
     return {
       message: "DATABASE ERROR: Failed to create report.",
