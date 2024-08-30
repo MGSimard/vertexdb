@@ -36,7 +36,6 @@ export async function getInitialRss(currentGameId: number) {
   const query = db
     .select({
       rssId: gameRssEntries.rssId,
-      author: gameRssEntries.author,
       title: gameRssEntries.title,
       url: gameRssEntries.url,
       description: gameRssEntries.description,
@@ -263,10 +262,14 @@ const CreateReport = reportSchema.omit({ reportBy: true });
 
 export async function createReport(currentState: any, formData: FormData) {
   const user = auth();
-  if (!user.userId) return { message: "INVALID REPORT: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+  if (!user.userId)
+    return {
+      success: false,
+      message: "REPORT ERROR: Unauthorized.",
+    };
 
   const { success } = await ratelimit.limit(user.userId);
-  if (!success) return { message: "RATELIMIT ERROR: Too many actions.", errors: { ratelimit: ["Too many actions."] } };
+  if (!success) return { success: false, message: "RATE-LIMITED: Too many actions." };
 
   const validated = CreateReport.safeParse({
     rssId: formData.get("report-rssId"),
@@ -274,24 +277,17 @@ export async function createReport(currentState: any, formData: FormData) {
     optionalComment: formData.get("report-optionalComment"),
   });
   if (!validated.success) {
-    return {
-      message: "INVALID REPORT: Failed to Create Report.",
-      errors: validated.error.flatten().fieldErrors,
-    };
+    return { success: false, message: "REPORT ERROR: Invalid Fields." };
   }
 
-  const { rssId: reportedEntry } = validated.data;
+  const { rssId, reportReason, optionalComment } = validated.data;
   const currentUserId = user.userId;
 
   try {
-    console.log("FORM SUBMITTED AND ALL VALIDATIONS PASSED");
     // Existing entry conflict already handled by schema unique combo for rssId + currentUserId
-    // await db.insert(rssReports).values({ rssId: reportedEntry, reportBy: currentUserId });
+    await db.insert(rssReports).values({ rssId, reportBy: currentUserId, reportReason, optionalComment });
   } catch (err: any) {
-    return {
-      message: "DATABASE ERROR: Failed to create report.",
-      errors: { database: ["Failed to create report."] },
-    };
+    return { success: false, message: "REPORT ERROR: Failed to create report." };
   }
 }
 

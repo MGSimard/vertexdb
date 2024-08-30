@@ -7,14 +7,8 @@ import { Warning } from "@/components/icons";
 export function ReportButton({ info }: { info: any }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const beingReported = info.rssId;
-
   const handleModalOpen = () => {
-    console.log("Report button pressed");
-    console.log(info);
-
     if (!isModalOpen) {
-      console.log("Modal Triggered");
       setIsModalOpen(true);
     }
   };
@@ -25,7 +19,7 @@ export function ReportButton({ info }: { info: any }) {
         <Warning />
       </button>
       <Modal isOpen={isModalOpen}>
-        <ReportForm rssId={beingReported} onClose={() => setIsModalOpen(false)} />
+        <ReportForm info={info} onClose={() => setIsModalOpen(false)} />
       </Modal>
     </>
   );
