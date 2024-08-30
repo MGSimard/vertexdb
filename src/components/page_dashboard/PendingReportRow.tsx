@@ -1,7 +1,6 @@
-import { isoToUTC } from "@/utils/isoToUTC";
 import { getNameCover } from "@/server/actions";
-import { coverPath } from "@/utils/helpers";
-import { ModerateButton } from "./ModerateButton";
+import { ModerateButton } from "@/components/page_dashboard/ModerateButton";
+import { coverPath, isoToUTC } from "@/utils/helpers";
 
 interface getNameCoverTypes {
   id: number;

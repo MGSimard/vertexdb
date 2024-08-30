@@ -1,10 +1,10 @@
 import { getInitialRss, getGameData } from "@/server/actions";
-import { LinkButton } from "@/components/page_game/LinkButton";
-import { RssList } from "@/components/page_game/RssList";
-import { Globe, Discord, Steam } from "@/components/icons";
+import { GamedataResponseTypes } from "@/types/types";
 import { convertUnix, coverPath } from "@/utils/helpers";
-import { GamedataResponseTypes } from "@/utils/types";
 import { sectionEnums } from "@/utils/enums";
+import { RssList } from "@/components/page_game/RssList";
+import { LinkButton } from "@/components/page_game/LinkButton";
+import { Globe, Discord, Steam } from "@/components/icons";
 
 export async function GameHeader({ slug }: { slug: string }) {
   const gameData = (await getGameData(slug)) as GamedataResponseTypes;

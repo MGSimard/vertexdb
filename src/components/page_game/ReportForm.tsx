@@ -1,7 +1,6 @@
 "use client";
-import { useState } from "react";
+import { useState, useActionState } from "react";
 import { createReport } from "@/server/actions";
-import { useActionState } from "react";
 
 export function ReportForm({ onClose, rssId }: { onClose: () => void; rssId: number }) {
   const [formState, formAction, pending] = useActionState(createReport, null);

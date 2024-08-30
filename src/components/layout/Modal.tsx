@@ -1,6 +1,6 @@
 "use client";
 
-import { Portal } from "./Portal";
+import { Portal } from "@/components/layout/Portal";
 import { CardLarge } from "@/components/CardLarge";
 
 interface ModalProps {

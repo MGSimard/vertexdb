@@ -1,5 +1,5 @@
+import { Globe, Steam, Discord } from "@/components/icons";
 import { sectionEnums } from "@/utils/enums";
-import { Globe, Steam, Discord } from "../icons";
 
 const sections = sectionEnums;
 

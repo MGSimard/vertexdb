@@ -1,4 +1,4 @@
-import { ThemeToggle } from "./ThemeToggle";
+import { ThemeToggle } from "@/components/layout/ThemeToggle";
 
 export function Footer() {
   const startYear = 2024;

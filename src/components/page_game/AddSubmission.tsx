@@ -1,7 +1,6 @@
 "use client";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useActionState } from "react";
 import { createSubmission } from "@/server/actions";
-import { useActionState } from "react";
 
 export function AddSubmission({ gameId, slug, section }: { gameId: number; slug: string; section: string }) {
   const [formOpen, setFormOpen] = useState(false);

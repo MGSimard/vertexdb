@@ -1,8 +1,8 @@
-import { SubmissionTypes } from "@/utils/types";
 import { SignedOut, SignedIn } from "@clerk/nextjs";
-import { AddSubmission } from "./AddSubmission";
-import { VoteBlock } from "./VoteBlock";
-import { ReportButton } from "./ReportButton";
+import { SubmissionTypes } from "@/types/types";
+import { ReportButton } from "@/components/page_game/ReportButton";
+import { VoteBlock } from "@/components/page_game/VoteBlock";
+import { AddSubmission } from "@/components/page_game/AddSubmission";
 
 const SubmissionEntry = ({ submission }: { submission: SubmissionTypes }) => {
   return (

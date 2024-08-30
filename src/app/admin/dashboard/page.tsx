@@ -1,11 +1,11 @@
-import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
+import { Suspense } from "react";
+import { auth } from "@clerk/nextjs/server";
 import { getTotalSubmissions, getTotalVotes, getReportCounts, getPendingReports } from "@/server/actions";
 import { CardLarge } from "@/components/CardLarge";
-import "@/styles/dashboard.css";
-import { Suspense } from "react";
-import { OtherCountSkeleton, ReportsCardSkeleton } from "@/components/page_dashboard/CardSkeletons";
 import { PendingReportRow } from "@/components/page_dashboard/PendingReportRow";
+import { OtherCountSkeleton, ReportsCardSkeleton } from "@/components/page_dashboard/CardSkeletons";
+import "@/styles/dashboard.css";
 
 export default async function Page() {
   const currentUser = auth();
