@@ -1,7 +1,7 @@
 import { auth } from "@clerk/nextjs/server";
 import { notFound } from "next/navigation";
 import { getTotalSubmissions, getTotalVotes, getReportCounts, getPendingReports } from "@/server/actions";
-import { CardLarge } from "@/components/page_dashboard/CardLarge";
+import { CardLarge } from "@/components/CardLarge";
 import "@/styles/dashboard.css";
 import { Suspense } from "react";
 import { OtherCountSkeleton, ReportsCardSkeleton } from "@/components/page_dashboard/CardSkeletons";

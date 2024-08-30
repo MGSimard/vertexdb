@@ -45,7 +45,6 @@
 - [ ] Figure out if I can match clerk theme to current theme
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
-- [ ] Give a shit about replacing :any with typeguards for initialRss
 - [x] Implement admin dashboard
 - [x] Find some stuff to show on admin dashboard
 - [x] Implement Moderation (Report abuse, receive reports in admin dashboard)
@@ -54,12 +53,13 @@
 - [x] Total Reports/Accepted/Denied stat
 - [x] Add the actual report function (button next to each submission)
 - [x] Show standing reports in reports card under
-
 - [x] Edit initialRss to only include null deletedAt
 - [x] Edit voting to only allow voting on null deletedAt
 - [x] Edit report to utilize formData action
 - [x] Build report form
-- [ ] CREATE MODAL FOR REPORT FORM
+- [x] CREATE MODAL FOR REPORT FORM
+- [ ] Spend time ordering all my imports by hierarchy
+- [ ] Touch up my types into interfaces to avoid the annoying linebreaks
 - [ ] Edit report to only allow voting on null deletedAt
 - [ ] Style pending report items
 - [ ] Look into using optimistic updates for visuals when voting

@@ -8,6 +8,7 @@ import { Footer } from "@/components/layout/Footer";
 import { GamesIndexed } from "@/components/layout/GamesIndexed";
 import "@/styles/core.css";
 import "@/styles/custom.css";
+import { Portal } from "@/components/layout/Portal";
 
 const rajdhani = Rajdhani({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
 
@@ -32,6 +33,7 @@ export default function RootLayout({
             </header>
             {children}
             <Footer />
+            <div id="portal" />
           </ThemeProvider>
         </body>
       </html>

@@ -1,27 +1,32 @@
 "use client";
-import { Warning } from "../icons";
-import { createReport } from "@/server/actions";
-import { useState } from "react";
 import { Modal } from "../layout/Modal";
+import { Warning } from "../icons";
+import { ReportForm } from "./ReportForm";
+import { useState } from "react";
 
 export function ReportButton({ info }: { info: any }) {
-  const beingReported = info.rssId;
-  console.log(info);
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const [modalOpen, setModalOpen] = useState(false);
+  const beingReported = info.rssId;
 
   const handleModalOpen = () => {
-    if (!modalOpen) setModalOpen(true);
     console.log("Report button pressed");
-    /* we'll open a form and the submission will be form action, use same conventions as my other form with useActionState */
+    console.log(info);
+
+    if (!isModalOpen) {
+      console.log("Modal Triggered");
+      setIsModalOpen(true);
+    }
   };
 
   return (
     <>
-      {modalOpen && <Modal />}
       <button className="report-btn" title="Report Submission" onClick={handleModalOpen}>
         <Warning />
       </button>
+      <Modal isOpen={isModalOpen}>
+        <ReportForm rssId={beingReported} onClose={() => setIsModalOpen(false)} />
+      </Modal>
     </>
   );
 }

@@ -3,7 +3,7 @@ import { useState } from "react";
 import { createReport } from "@/server/actions";
 import { useActionState } from "react";
 
-export function ReportForm({ rssId }: { rssId: number }) {
+export function ReportForm({ onClose, rssId }: { onClose: () => void; rssId: number }) {
   const [formState, formAction, pending] = useActionState(createReport, null);
   const [descCharCount, setDescCharCount] = useState(0);
 
@@ -18,7 +18,12 @@ export function ReportForm({ rssId }: { rssId: number }) {
       {/* SO THAT USER DOESNT HAVE TO QUIT MODAL TO REFRESH THEIR MIND */}
       <label htmlFor="report-reportReason">
         Report Reason:
-        <input type="option" name="" id="" required />
+        <select name="report-reportReason" id="report-reportReason" required>
+          <option value="reason1">Reason 1</option>
+          <option value="reason2">Reason 2</option>
+          <option value="reason3">Reason 3</option>
+          <option value="other">Other</option>
+        </select>
       </label>
       <label htmlFor="report-optionalComment">
         Additional Information:<small>{descCharCount > 0 && ` ${descCharCount}/120`}</small>
@@ -32,14 +37,14 @@ export function ReportForm({ rssId }: { rssId: number }) {
       </label>
       <input type="hidden" name="report-rssId" value={rssId} />
       <fieldset className="buttonSet">
-        <button className="btn-ui" type="button">
+        <button className="btn-ui" type="button" onClick={onClose}>
           Cancel {/* CLOSE MODAL FORM */}
         </button>
         <button className="btn-ui" type="submit" aria-disabled={pending}>
           {pending ? "Submitting . . ." : "Submit"}
         </button>
       </fieldset>
-      {formState?.success === false && formState.message}
+      {/* {formState?.success === false && formState.message} */}
     </form>
   );
 }

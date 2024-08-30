@@ -546,6 +546,22 @@ nav .search-container:focus-within::before {
   }
 }
 
+#portal {
+  z-index: 9999;
+}
+
+.modal {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 2rem;
+  overflow: hidden;
+  z-index: 999;
+  background: var(--clr-ui-bg-80);
+}
+
 @media only screen and (max-width: 354px) {
   .nav-logo {
     font-size: 11vw;
