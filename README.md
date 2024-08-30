@@ -58,8 +58,8 @@
 - [x] Edit report to utilize formData action
 - [x] Build report form
 - [x] CREATE MODAL FOR REPORT FORM
-- [ ] Spend time ordering all my imports by hierarchy
-- [ ] Touch up my types into interfaces to avoid the annoying linebreaks
+- [x] Spend time ordering all my imports by hierarchy
+- [x] Touch up my types into interfaces to avoid the annoying linebreaks
 - [ ] Edit report to only allow voting on null deletedAt
 - [ ] Style pending report items
 - [ ] Look into using optimistic updates for visuals when voting

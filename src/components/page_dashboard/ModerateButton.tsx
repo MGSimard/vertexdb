@@ -3,7 +3,13 @@
 import { modApproveReport, modRejectReport } from "@/server/actions";
 import { Checkmark, Clear } from "@/components/icons";
 
-export function ModerateButton({ approve, reportId, rssId }: { approve: boolean; reportId: number; rssId?: number }) {
+interface ModerateButtonTypes {
+  approve: boolean;
+  reportId: number;
+  rssId?: number;
+}
+
+export function ModerateButton({ approve, reportId, rssId }: ModerateButtonTypes) {
   const handleAction = (approve: boolean, reportId: number) => {
     if (
       window.confirm(

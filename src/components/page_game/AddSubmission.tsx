@@ -2,7 +2,13 @@
 import { useState, useEffect, useActionState } from "react";
 import { createSubmission } from "@/server/actions";
 
-export function AddSubmission({ gameId, slug, section }: { gameId: number; slug: string; section: string }) {
+interface AddSubmissionTypes {
+  gameId: number;
+  slug: string;
+  section: string;
+}
+
+export function AddSubmission({ gameId, slug, section }: AddSubmissionTypes) {
   const [formOpen, setFormOpen] = useState(false);
   const [formState, formAction, pending] = useActionState(createSubmission, null);
   const [descCharCount, setDescCharCount] = useState(0);

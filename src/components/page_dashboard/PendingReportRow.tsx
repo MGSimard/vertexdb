@@ -2,12 +2,6 @@ import { getNameCover } from "@/server/actions";
 import { ModerateButton } from "@/components/page_dashboard/ModerateButton";
 import { coverPath, isoToUTC } from "@/utils/helpers";
 
-interface getNameCoverTypes {
-  id: number;
-  cover: { id: number; image_id: string };
-  name: string;
-}
-
 export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
   const { rptId, rssId, reportBy, authorId, createdAt, gameId, title, url, description, score } = reportInfo;
 
