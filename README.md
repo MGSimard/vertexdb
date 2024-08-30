@@ -60,7 +60,8 @@
 - [x] CREATE MODAL FOR REPORT FORM
 - [x] Spend time ordering all my imports by hierarchy
 - [x] Touch up my types into interfaces to avoid the annoying linebreaks
-- [ ] Style form
+- [x] Style form
+- [ ] Close modal on ESC or clicking backdrop?
 - [ ] Make up mind regarding list of report reasons
 - [ ] Make report form action send data properly to server action
 - [ ] Edit report to only allow voting on null deletedAt

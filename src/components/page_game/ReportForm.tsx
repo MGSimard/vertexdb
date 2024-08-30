@@ -11,7 +11,7 @@ export function ReportForm({ onClose, rssId }: { onClose: () => void; rssId: num
   };
 
   return (
-    <form className="submissionForm" action={formAction}>
+    <form className="reportForm" action={formAction}>
       <h3>/ / REPORT SUBMISSION [#{rssId}]</h3>
       {/* SHOW INFORMATION ABOUT THE SUBMISSION BEING REPORTED */}
       {/* SO THAT USER DOESNT HAVE TO QUIT MODAL TO REFRESH THEIR MIND */}
