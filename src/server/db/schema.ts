@@ -21,7 +21,6 @@ import { reportReasonEnums, reportStatusEnums, sectionEnums } from "@/utils/enum
 export const createTable = pgTableCreator((name) => `vertexdb_${name}`);
 
 export const sectionEnum = pgEnum("section", sectionEnums);
-
 export const gameRssEntries = createTable(
   "gameRssEntries",
   {
@@ -70,7 +69,6 @@ export const gameRssVotes = createTable(
 
 export const reportStatusEnum = pgEnum("status", reportStatusEnums);
 export const reportReasonEnum = pgEnum("reason", reportReasonEnums);
-
 export const rssReports = createTable(
   "rssReports",
   {

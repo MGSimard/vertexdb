@@ -360,7 +360,10 @@ export async function getPendingReports() {
       .orderBy(desc(rssReports.createdAt));
     return { data: pendingReports, message: "SUCCESS: Retrieved pending reports." };
   } catch (err) {
-    return { message: "DATABASE ERROR: Failed retrieving pending reports." };
+    return {
+      message: "DATABASE ERROR: Failed retrieving pending reports.",
+      errors: { database: ["Failed retrieving pending reports."] },
+    };
   }
 }
 

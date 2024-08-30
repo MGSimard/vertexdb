@@ -15,6 +15,8 @@ export default async function Page() {
   }
 
   const pendingReports = await getPendingReports();
+  console.log(pendingReports);
+  console.log(pendingReports.data);
 
   return (
     <main className="admin">
@@ -35,15 +37,17 @@ export default async function Page() {
       <section>
         <h2>PENDING REPORTS</h2>
         <CardLarge title="REPORT BOARD">
-          {pendingReports.data ? (
-            <ul>
-              {pendingReports.data.map((report) => (
-                <PendingReportRow key={report.rptId} reportInfo={report} />
-              ))}
-            </ul>
-          ) : (
-            "NO PENDING REPORTS."
-          )}
+          {pendingReports.errors && pendingReports.message}
+          {pendingReports.data &&
+            (pendingReports.data.length ? (
+              <ul>
+                {pendingReports.data.map((report) => (
+                  <PendingReportRow key={report.rptId} reportInfo={report} />
+                ))}
+              </ul>
+            ) : (
+              "NO PENDING REPORTS."
+            ))}
         </CardLarge>
       </section>
     </main>
