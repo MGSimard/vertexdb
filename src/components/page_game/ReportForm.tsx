@@ -1,6 +1,7 @@
 "use client";
 import { useState, useEffect, useActionState } from "react";
 import { createReport } from "@/server/actions";
+import { reportReasonEnums } from "@/utils/enums";
 
 export function ReportForm({ onClose, info }: { onClose: () => void; info: any }) {
   const [formState, formAction, pending] = useActionState(createReport, null);
@@ -31,10 +32,9 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: any }
           <label htmlFor="report-reportReason">
             Report Reason:
             <select name="report-reportReason" id="report-reportReason" required>
-              <option value="reason1">Reason 1</option>
-              <option value="reason2">Reason 2</option>
-              <option value="reason3">Reason 3</option>
-              <option value="other">Other</option>
+              {reportReasonEnums.map((reason) => (
+                <option value={reason}>{reason}</option>
+              ))}
             </select>
           </label>
           <label htmlFor="report-optionalComment">

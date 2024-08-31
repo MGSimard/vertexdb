@@ -209,7 +209,9 @@ fieldset,
 button {
   all: unset;
 }
-button {
+button,
+select,
+option {
   cursor: pointer;
 }
 .cs-down:focus-visible,
