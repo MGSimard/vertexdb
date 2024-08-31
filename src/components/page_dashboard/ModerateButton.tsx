@@ -14,7 +14,7 @@ export function ModerateButton({ approve, reportId, rssId }: ModerateButtonTypes
     if (
       window.confirm(
         approve
-          ? "Are you sure you want to approve this report? This action will soft-delete the submission - it and its votes will still be kept on the database. Report status will be set to 'Approved'."
+          ? "Are you sure you want to approve this report? This action will soft-delete the submission, it and its votes will still be kept on the database. Report status will be set to 'Approved'."
           : "Are you sure you want to reject this report? This action will keep the reported submission. Report status will be set to 'Denied'."
       )
     ) {
