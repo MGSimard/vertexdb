@@ -66,7 +66,7 @@
 - [ ] Look into submissions clearing the text field, but the charcount above not getting affected by onChange (guess deletion on submission doesn't trigger onChange)
 - [x] Fix column order in db for report table
 - [x] Close modal on ESC or clicking backdrop?
-- [ ] Make up mind regarding list of report reasons
+- [x] Make up mind regarding list of report reasons
 - [ ] Edit report to only allow voting on null deletedAt
 - [ ] Style pending report items
 - [ ] Look into using optimistic updates for visuals when voting

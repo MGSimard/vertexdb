@@ -407,16 +407,55 @@ export async function modApproveReport(reportId: number, rssId: number) {
   const validated = approveSchema.safeParse({ reportId, rssId });
   if (!validated.success) {
     return {
-      message: "INVALID REPORT: Failed to Create Report.",
+      message: "INVALID ACTION: Failed to approve report.",
       errors: validated.error.flatten().fieldErrors,
     };
   }
   console.log("Validation Passed.");
 
   try {
+    const actionResult = await db.transaction(async (tx) => {
+      const [currentStatus] = await tx
+        .select({ status: rssReports.status })
+        .from(rssReports)
+        .where(eq(rssReports.rptId, reportId));
+
+      if (currentStatus!.status !== "pending") {
+        /** Throw some error (or tx.rollback())
+         * basically saying that the report
+         * was modified between UI rendering
+         * and person moderating the report
+         * (like someone else modding it)
+         */
+      }
+
+      await tx
+        .update(gameRssEntries)
+        .set({ deletedAt: sql`now()` })
+        .where(eq(gameRssEntries.rssId, rssId));
+      await tx.update(rssReports).set({ status: "approved" }).where(eq(rssReports.rptId, reportId));
+      // if accept all reports, even though the main one makes sense
+      // it may cause confusion if a batch-accepted report that doesn't make sense gets looked at
+      // when someone wants to know why something was removed
+
+      // denying all other reports is bad too, could look like good reports got rejected
+      // even if the submission did get removed
+
+      // 3rd option is to delete all other pending reports for that specific rssId
+      // but then I lose the "true" stat tracking of report rate
+
+      // alternatively, introduce a fourth status state with "pending", "approved", "denied" called "collateral"
+      // when approving a report that causes a submission to be soft-deleted,
+      // every other pending report against that submission are set to status "collateral"
+      // to indicate that they were technically batch-approved due to one good report being approved and the
+      // tied submission was soft-deleted
+
+      console.log("TEST");
+    });
+
     // Use transaction
     // First verify if fitting report is still in pending status
-    // If still pending, add current date to submission's deleted_at and change report statuys to "Approved"
+    // If still pending, add current date to submission's deleted_at and change report status to "Approved"
     // Take any other "pending" report on the same submission ID and approve them too?
     // revalidatePath();
     // redirect();?maybe
