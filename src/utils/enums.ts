@@ -3,13 +3,13 @@ export const sectionEnums = ["resources", "communities", "creators"] as const;
 
 // Report form input choices, reportReason enum db schema, validate reportReason input in server action
 export const reportReasonEnums = [
-  "Spam & Malicious Content",
+  "Spam or Malicious Content",
+  "Offensive or Hate Speech",
+  "NSFW/NSFL Content",
   "Unrelated Content",
   "Duplicate Submission",
-  "Broken/Dead Link",
+  "Broken or Dead Link",
   "Outdated Resource",
-  "Offensive/Hate Speech",
-  "NSFW/NSFL Content",
   "Other",
 ] as const;
 
