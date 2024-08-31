@@ -416,11 +416,10 @@ export async function modApproveReport(reportId: number, rssId: number) {
   try {
     // Use transaction
     // First verify if fitting report is still in pending status
-    // If still pending, delete all votes for matching rssId, delete rssId, then change report status to approved
-    // Ideally, set up the schema with ON DELETE SET NULL on the report's rssId foreign key
-    // As for the votes, maybe ON DELETE DELETE if that's possible
-    // This way you can delete a submission without foreign key constraint blocking the deletion
-    // And the votes get automatically deleted + reports tied to it set to rssId = null.
+    // If still pending, add current date to submission's deleted_at and change report statuys to "Approved"
+    // Take any other "pending" report on the same submission ID and approve them too?
+    // revalidatePath();
+    // redirect();?maybe
   } catch (err) {}
 }
 
@@ -452,5 +451,7 @@ export async function modRejectReport(reportId: number) {
     // Use transaction
     // First verify if fitting report is still in pending status
     // If still pending, change report status to denied
+    // revalidatePath();
+    // redirect();?maybe
   } catch (err) {}
 }
