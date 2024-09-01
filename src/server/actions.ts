@@ -7,6 +7,7 @@ import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 import { ratelimit } from "@/server/ratelimit";
 import { reportReasonEnums, sectionEnums } from "@/utils/enums";
+import { redirect } from "next/navigation";
 
 /* FETCH CURRENTGAME DATA */
 export async function getGameData(query: string) {
@@ -285,7 +286,9 @@ export async function createReport(currentState: any, formData: FormData) {
 
   try {
     // Existing entry conflict already handled by schema unique combo for rssId + currentUserId
-    await db.insert(rssReports).values({ rssId, reportBy: currentUserId, reportReason, optionalComment });
+    await db
+      .insert(rssReports)
+      .values({ rssId, reportBy: currentUserId, reportReason, optionalComment, status: "pending" });
     revalidatePath("/admin/dashboard");
     return { success: true, message: "SUCCESS: Report successfully sent." };
   } catch (err: any) {
@@ -414,52 +417,40 @@ export async function modApproveReport(reportId: number, rssId: number) {
   console.log("Validation Passed.");
 
   try {
+    console.log("test start");
     const actionResult = await db.transaction(async (tx) => {
       const [currentStatus] = await tx
         .select({ status: rssReports.status })
         .from(rssReports)
         .where(eq(rssReports.rptId, reportId));
 
+      if (!currentStatus) throw new Error("MODERATION ERROR: This report no longer exists.");
+
+      // If report status was modified
       if (currentStatus!.status !== "pending") {
-        /** Throw some error (or tx.rollback())
-         * basically saying that the report
-         * was modified between UI rendering
-         * and person moderating the report
-         * (like someone else modding it)
-         */
+        throw new Error('This report is no longer in "Pending" status.');
       }
 
+      // Soft-delete submission by adding deleted_at time now()
       await tx
         .update(gameRssEntries)
         .set({ deletedAt: sql`now()` })
         .where(eq(gameRssEntries.rssId, rssId));
+
+      // Update report status to approved
       await tx.update(rssReports).set({ status: "approved" }).where(eq(rssReports.rptId, reportId));
-      // if accept all reports, even though the main one makes sense
-      // it may cause confusion if a batch-accepted report that doesn't make sense gets looked at
-      // when someone wants to know why something was removed
 
-      // denying all other reports is bad too, could look like good reports got rejected
-      // even if the submission did get removed
-
-      // 3rd option is to delete all other pending reports for that specific rssId
-      // but then I lose the "true" stat tracking of report rate
-
-      // alternatively, introduce a fourth status state with "pending", "approved", "denied" called "collateral"
-      // when approving a report that causes a submission to be soft-deleted,
-      // every other pending report against that submission are set to status "collateral"
-      // to indicate that they were technically batch-approved due to one good report being approved and the
-      // tied submission was soft-deleted
-
-      console.log("TEST");
+      // Set all other reports against that submission as status "collateral"
+      // Gives context they were batch-accepted but not responsible while keeping stats
+      await tx
+        .update(rssReports)
+        .set({ status: "collateral" })
+        .where(and(eq(rssReports.rssId, rssId), eq(rssReports.status, "pending")));
     });
-
-    // Use transaction
-    // First verify if fitting report is still in pending status
-    // If still pending, add current date to submission's deleted_at and change report status to "Approved"
-    // Take any other "pending" report on the same submission ID and approve them too?
-    // revalidatePath();
-    // redirect();?maybe
   } catch (err) {}
+
+  revalidatePath("/admin/dashboard");
+  redirect("/admin/dashboard");
 }
 
 /* REJECT A REPORT, KEEP SUBMISSION, STATUS DENIED */

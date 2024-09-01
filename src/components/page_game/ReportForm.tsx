@@ -33,7 +33,9 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: any }
             Report Reason:
             <select name="report-reportReason" id="report-reportReason" required>
               {reportReasonEnums.map((reason) => (
-                <option value={reason}>{reason}</option>
+                <option value={reason} key={reason}>
+                  {reason}
+                </option>
               ))}
             </select>
           </label>

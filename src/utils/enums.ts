@@ -14,4 +14,4 @@ export const reportReasonEnums = [
 ] as const;
 
 // reportStatus enum db schema (default to pending), validate moderation report status update in server action
-export const reportStatusEnums = ["pending", "approved", "denied"] as const;
+export const reportStatusEnums = ["pending", "approved", "denied", "collateral"] as const;
