@@ -69,8 +69,9 @@
 - [x] Fix column order in db for report table
 - [x] Close modal on ESC or clicking backdrop?
 - [x] Make up mind regarding list of report reasons
-- [ ] Edit report to only allow voting on null deletedAt
+- [x] Edit report to only allow voting on null deletedAt
 - [ ] Style pending report items
+- [ ] Replace error returns for error throws into error toasts() for VOTING and MODERATION
 - [ ] Look into using optimistic updates for visuals when voting
 - [ ] Remove "any" once done
 - [x] If I do that, I'd also opt for using modal for submissions instead of per-section div - NO, I LIKE THE LOOK

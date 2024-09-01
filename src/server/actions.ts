@@ -181,11 +181,8 @@ export async function createVote(rssId: number, voteType: boolean) {
       .from(gameRssEntries)
       .where(eq(gameRssEntries.rssId, submissionId));
 
-    if (currentSubmission?.deletedAt !== null) {
-      return {
-        message: "DATABASE ERROR: This submission no longer exists.",
-        errors: { database: ["This submission no longer exists."] },
-      };
+    if (!currentSubmission || currentSubmission?.deletedAt !== null) {
+      throw new Error("DATABASE ERROR: This submission no longer exists.");
     }
 
     if (!currentUserVote || isNaN(currentSubmission!.score)) {
