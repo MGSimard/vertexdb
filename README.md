@@ -137,17 +137,17 @@ MGSimard - g.marcgs@gmail.com
 
 For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github.io). Resume attached.
 
-### Logic (Bonus)
+## Logic (Bonus)
 
-## Resource Submission
+### Resource Submission
 
-## Resource Reporting
+### Resource Reporting
 
-## Moderation
+### Moderation
 
 Pending reports are displayed in the administrator dashboard along with all necessary information. Administrators can choose to "Approve" or "Deny" these reports.
 
-# Approving a Report
+#### Approving a Report
 
 Upon approving a report, the following occurs as a transaction:
 
@@ -162,7 +162,7 @@ Upon approving a report, the following occurs as a transaction:
   - As such, the best option I found was to introduce a new status type called "collateral".
 - To wrap up, revalidatePath() and redirect() to refresh from the server action.
 
-# Denying a Report
+#### Denying a Report
 
 - Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
 - If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
