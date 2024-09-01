@@ -397,7 +397,6 @@ const approveSchema = z.object({
   rssId: z.coerce.number().int().positive().lte(2147483647),
 });
 export async function modApproveReport(reportId: number, rssId: number) {
-  console.log("Approve Report");
   const currentUser = auth();
 
   if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
@@ -414,11 +413,9 @@ export async function modApproveReport(reportId: number, rssId: number) {
       errors: validated.error.flatten().fieldErrors,
     };
   }
-  console.log("Validation Passed.");
 
   try {
-    console.log("test start");
-    const actionResult = await db.transaction(async (tx) => {
+    await db.transaction(async (tx) => {
       const [currentStatus] = await tx
         .select({ status: rssReports.status })
         .from(rssReports)
@@ -427,7 +424,7 @@ export async function modApproveReport(reportId: number, rssId: number) {
       if (!currentStatus) throw new Error("MODERATION ERROR: This report no longer exists.");
 
       // If report status was modified
-      if (currentStatus!.status !== "pending") {
+      if (currentStatus.status !== "pending") {
         throw new Error('This report is no longer in "Pending" status.');
       }
 
@@ -447,7 +444,9 @@ export async function modApproveReport(reportId: number, rssId: number) {
         .set({ status: "collateral" })
         .where(and(eq(rssReports.rssId, rssId), eq(rssReports.status, "pending")));
     });
-  } catch (err) {}
+  } catch (err) {
+    // Probably end up using toasts for errors I don't want to show directly in the core UI
+  }
 
   revalidatePath("/admin/dashboard");
   redirect("/admin/dashboard");
@@ -458,7 +457,6 @@ const rejectSchema = z.object({
   reportId: z.coerce.number().int().positive().lte(2147483647),
 });
 export async function modRejectReport(reportId: number) {
-  console.log("Reject Report");
   const currentUser = auth();
 
   if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
@@ -475,13 +473,28 @@ export async function modRejectReport(reportId: number) {
       errors: validated.error.flatten().fieldErrors,
     };
   }
-  console.log("Validation Passed.");
 
   try {
-    // Use transaction
-    // First verify if fitting report is still in pending status
-    // If still pending, change report status to denied
-    // revalidatePath();
-    // redirect();?maybe
-  } catch (err) {}
+    await db.transaction(async (tx) => {
+      const [currentStatus] = await tx
+        .select({ status: rssReports.status })
+        .from(rssReports)
+        .where(eq(rssReports.rptId, reportId));
+
+      if (!currentStatus) throw new Error("MODERATION ERROR: This report no longer exists.");
+
+      // If report status was modified
+      if (currentStatus.status !== "pending") {
+        throw new Error('This report is no longer in "Pending" status.');
+      }
+
+      // Update report status to denied
+      await tx.update(rssReports).set({ status: "denied" }).where(eq(rssReports.rptId, reportId));
+    });
+  } catch (err) {
+    // Probably end up using toasts for errors I don't want to show directly in the core UI
+  }
+
+  revalidatePath("/admin/dashboard");
+  redirect("/admin/dashboard");
 }

@@ -63,6 +63,8 @@
 - [x] Style form
 - [x] Maybe display info on what they're reporting so they don't have to refresh their mind after clicking report
 - [x] Make report form action send data properly to server action
+- [ ] Approve report done, do deny report next
+- [ ] Maybe look into toasts for refreshed type alerts like admin moderation or error on ratelimit
 - [ ] Look into submissions clearing the text field, but the charcount above not getting affected by onChange (guess deletion on submission doesn't trigger onChange)
 - [x] Fix column order in db for report table
 - [x] Close modal on ESC or clicking backdrop?
