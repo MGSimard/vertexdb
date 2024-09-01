@@ -175,7 +175,7 @@ Upon approval (and passing Auth+RBAC & validation checks), the following occurs 
 
 <h3>Denying a Report</h3>
 
-Upon denying a report (and passing Auth+RBAC & validation checks), the following occurs as a transaction:
+Upon denial (and passing Auth+RBAC & validation checks), the following occurs as a transaction:
 
 1. Verification that the report still exists, and still in "pending" status.
 2. On success, update the current report's status to "denied".
