@@ -145,7 +145,21 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 
 ## Application Flow: Resource Reporting
 
-## Application Flow: Moderation
+<details>
+<summary><h2>Application Flow: Resource Reporting</h2></summary>
+<p>Users can submit reports against submissions they believe break the platform's rules.</p>
+
+1. Clicking the caution button will open a report form modal.
+2. Information on the submission to be reported is displayed along with the form.
+3. The user can select a report reason option, along with the ability to fill in an optional "Additional Information" field.
+4. Upon confirmation, the report will be added to the database if it passes the following checks:
+   - User is authorized
+   - User is not rate limited
+   - Form input passes validation
+
+<p>From there, the report will be marked as "pending" and visible on the administrator dashboard.</p>
+
+</detail>
 
 <details>
 <summary><h2>Application Flow: Moderation</h2></summary>
