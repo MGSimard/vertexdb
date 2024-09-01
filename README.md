@@ -161,26 +161,23 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 
 <h3>Approving a Report</h3>
 
-Upon approving a report (and passing Auth+RBAC & validation checks), the following occurs as a transaction:
+Upon approval (and passing Auth+RBAC & validation checks), the following occurs as a transaction:
 
-1. Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
-2. If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
-3. If checks pass, soft-delete the submission by adding sql`now()` to its deleted_at column.
-4. Then, update the current report's status to "Approved".
-5. Finally, update all other reports against this submission to status "collateral" - this indicates that these reports were batch-accepted due to the acceptance of another report. This avoids possible confusion if:
-   - They were all to be accepted, you would lose context as to which one was truly responsible, and non-sensical reports could be marked as accepted.
-   - They were all to be denied, reports that make sense but weren't responsible would be marked as denied - which could be confusing.
-   - They were all deleted, you would lose historical stat tracking for reports submitted.
+1. Verification that the report still exists, and still in "pending" status.
+2. On success, soft-delete the submission with sql`now()` at deleted_at.
+3. Update the current report's status to "approved".
+4. Finally, set all other reports' status against the submission to "collateral". This indicates that these reports were batch-accepted due to the acceptance of another repord, which avoids possible confusion if:
+   - All accepted: You lose context on responsible report - non-sensical reports would also get accepted.
+   - All denied: Sensical reports marked as denied.
+   - All deleted: You lose historical statistical tracking for reports submitted.
    - As such, the best option I found was to introduce a new status type called "collateral".
-6. To wrap up, revalidatePath() and redirect() to refresh from the server action.
+5. To wrap up, revalidatePath() and redirect() to refresh from the server action.
 
 <h3>Denying a Report</h3>
 
 Upon denying a report (and passing Auth+RBAC & validation checks), the following occurs as a transaction:
 
-1. Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
-2. If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
-3. If checks pass, update the current report's status to "Denied".
-4. revalidatePath(), redirect() to refresh from server action.
-
+1. Verification that the report still exists, and still in "pending" status.
+2. On success, update the current report's status to "denied".
+3. revalidatePath(), redirect() to refresh from server action.
 </details>
