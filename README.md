@@ -171,10 +171,12 @@ Upon approving a report, the following occurs as a transaction:
 - If checks pass, update the current report's status to "Denied".
 - revalidatePath(), redirect() to refresh from server action.
 
-```mermaid
-graph TD;
-    A-->B;
-    A-->C;
-    B-->D;
-    C-->D;
-```
+###<details>
+<summary>Toggle List Example</summary>
+
+        ### Heading
+        1. ABC
+        2. DEF
+           * Hello
+
+</details>
