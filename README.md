@@ -151,28 +151,30 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 <summary><h2>Application Flow: Moderation</h2></summary>
 <p>Pending reports are displayed in the administrator dashboard along with all necessary information. Administrators can choose to "Approve" or "Deny" these reports.</p>
 
-<h3>1. Approving a Report</h3>
+<h3>Approving a Report</h3>
 
 Upon approving a report, the following occurs as a transaction:
 
-- Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
-- If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
-- If checks pass, soft-delete the submission by adding sql`now()` to its deleted_at column.
-- Then, update the current report's status to "Approved".
-- Finally, update all other reports against this submission to status "collateral" - this indicates that these reports were batch-accepted due to the acceptance of another report. This avoids possible confusion if:
-  - They were all to be accepted, you would lose context as to which one was truly responsible, and non-sensical reports could be marked as accepted.
-  - They were all to be denied, reports that make sense but weren't responsible would be marked as denied - which could be confusing.
-  - They were all deleted, you would lose historical stat tracking for reports submitted.
-  - As such, the best option I found was to introduce a new status type called "collateral".
-- To wrap up, revalidatePath() and redirect() to refresh from the server action.
+1. Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
+2. If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
+3. If checks pass, soft-delete the submission by adding sql`now()` to its deleted_at column.
+4. Then, update the current report's status to "Approved".
+5. Finally, update all other reports against this submission to status "collateral" - this indicates that these reports were batch-accepted due to the acceptance of another report. This avoids possible confusion if:
 
-<h3>2. Denying a Report</h3>
+- They were all to be accepted, you would lose context as to which one was truly responsible, and non-sensical reports could be marked as accepted.
+- They were all to be denied, reports that make sense but weren't responsible would be marked as denied - which could be confusing.
+- They were all deleted, you would lose historical stat tracking for reports submitted.
+- As such, the best option I found was to introduce a new status type called "collateral".
+
+6. To wrap up, revalidatePath() and redirect() to refresh from the server action.
+
+<h3>Denying a Report</h3>
 
 Upon denying a report, the following occurs as a transaction:
 
-- Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
-- If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
-- If checks pass, update the current report's status to "Denied".
-- revalidatePath(), redirect() to refresh from server action.
+1. Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
+2. If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
+3. If checks pass, update the current report's status to "Denied".
+4. revalidatePath(), redirect() to refresh from server action.
 
 </details>
