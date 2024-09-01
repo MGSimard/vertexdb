@@ -107,6 +107,7 @@ Next.js Application
 - Submission Voting
 - Submission Reporting
 - Admin Dashboard
+- Auth & RBAC
 - Theme toggle
 
 ### Built With
@@ -160,7 +161,7 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 
 <h3>Approving a Report</h3>
 
-Upon approving a report, the following occurs as a transaction:
+Upon approving a report (and passing Auth+RBAC & validation checks), the following occurs as a transaction:
 
 1. Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
 2. If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
@@ -175,7 +176,7 @@ Upon approving a report, the following occurs as a transaction:
 
 <h3>Denying a Report</h3>
 
-Upon denying a report, the following occurs as a transaction:
+Upon denying a report (and passing Auth+RBAC & validation checks), the following occurs as a transaction:
 
 1. Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
 2. If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
