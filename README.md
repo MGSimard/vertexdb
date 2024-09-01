@@ -137,11 +137,13 @@ MGSimard - g.marcgs@gmail.com
 
 For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github.io). Resume attached.
 
-## Application Flow (Bonus)
+## Application Flow: Searching Games
 
-### Resource Submission
+## Application Flow: Resource Submission
 
-### Resource Reporting
+## Application Flow: Resource Voting
+
+## Application Flow: Resource Reporting
 
 ## Application Flow: Moderation
 
