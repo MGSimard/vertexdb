@@ -172,10 +172,6 @@ Upon approving a report, the following occurs as a transaction:
 - revalidatePath(), redirect() to refresh from server action.
 
 <details>
-  <summary>Toggle List Example</summary>
-    ### Heading
-    1. ABC
-    2. DEF
-        * Hello
-
+<summary><h2>Toggle List Example</h2></summary>
+Maybe larger
 </details>
