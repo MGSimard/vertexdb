@@ -26,17 +26,15 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
         className="prr-left"
         src={nameAndCover?.cover?.image_id ? coverPath("720p", nameAndCover.cover.image_id) : "/missingasset.webp"}
       />
-      <div className="prr-center">
+      <div className="prr-right">
         <div>
+          <h3>GAME</h3>
+          <p className="prr-game">{nameAndCover?.name.toUpperCase() ?? "NOT FOUND"}</p>
+        </div>
+        <div>
+          <h3>SUBMISSION DATA</h3>
           <table className="table-admin">
             <tbody>
-              <tr>
-                <th>GAME:</th>
-                <td>
-                  {nameAndCover?.name.toUpperCase() ?? "NOT FOUND"}
-                  <small> (#{gameId})</small>
-                </td>
-              </tr>
               <tr>
                 <th>TITLE:</th>
                 <td>{title}</td>
@@ -54,7 +52,23 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
                 <td>{score}</td>
               </tr>
               <tr>
-                <th>REPORT REASON:</th>
+                <th>RSS ID:</th>
+                <td>{rssId}</td>
+              </tr>
+              <tr>
+                <th>AUTHOR:</th>
+                <td>{authorId}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div>
+          <h3>REPORT DATA</h3>
+          <table className="table-admin">
+            <tbody>
+              <tr>
+                <th>REASON:</th>
                 <td>{reportReason}</td>
               </tr>
               <tr>
@@ -63,17 +77,17 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
               </tr>
             </tbody>
           </table>
-          <small className="prr-author">
-            Submission ID #{rssId} by {authorId}
-          </small>
         </div>
-        <span className="prr-foot">
-          report by {reportBy} on {isoToUTC(createdAt)} (ID #{rptId})
-        </span>
-      </div>
-      <div className="prr-right">
-        <ModerateButton approve={false} reportId={rptId} />
-        <ModerateButton approve={true} reportId={rptId} rssId={rssId} />
+
+        <div className="prr-foot">
+          <span className="prr-note">
+            report by {reportBy} on {isoToUTC(createdAt)} (ID #{rptId})
+          </span>
+          <div className="modbuttons">
+            <ModerateButton approve={false} reportId={rptId} />
+            <ModerateButton approve={true} reportId={rptId} rssId={rssId} />
+          </div>
+        </div>
       </div>
     </li>
   );

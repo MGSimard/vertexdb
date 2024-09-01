@@ -1,6 +1,6 @@
 "use client";
 
-import { modApproveReport, modRejectReport } from "@/server/actions";
+import { modApproveReport, modDenyReport } from "@/server/actions";
 import { Checkmark, Clear } from "@/components/icons";
 
 interface ModerateButtonTypes {
@@ -10,27 +10,25 @@ interface ModerateButtonTypes {
 }
 
 export function ModerateButton({ approve, reportId, rssId }: ModerateButtonTypes) {
-  const handleAction = (approve: boolean, reportId: number) => {
-    if (
-      window.confirm(
-        approve
-          ? "Are you sure you want to approve this report? This action will soft-delete the submission, it and its votes will still be kept on the database. Report status will be set to 'Approved' and all other reports against the submission will be set to 'collateral'."
-          : "Are you sure you want to reject this report? This action will keep the reported submission. Report status will be set to 'Denied'."
-      )
-    ) {
-      // If press OK run fitting action
-      approve ? modApproveReport(reportId, rssId!) : modRejectReport(reportId);
-    }
-    // If cancel do nothing
+  const approveMessage =
+    "Are you sure you want to approve this report?\n\n- This action will soft-delete the submission, it and its votes will still be kept within the database.\n- Report status will be set to 'APPROVED'.\n- All other reports against the submission will be set to 'COLLATERAL'.";
+  const denyMessage =
+    "Are you sure you want to deny this report?\n\n- This action will keep the reported submission.\n- Report status will be set to 'DENIED'.";
+
+  const handleApprove = (reportId: number) => {
+    if (window.confirm(approveMessage)) modApproveReport(reportId, rssId!);
+  };
+  const handleDeny = (reportId: number) => {
+    if (window.confirm(denyMessage)) modDenyReport(reportId);
   };
 
-  return (
-    <button
-      type="button"
-      className="btn-ui"
-      onClick={() => handleAction(approve, reportId)}
-      title={approve ? "Approve" : "Reject"}>
-      {approve ? <Checkmark /> : <Clear />}
+  return approve ? (
+    <button type="button" className="btn-mod" onClick={() => handleApprove(reportId)}>
+      <Checkmark /> <span>APPROVE</span>
+    </button>
+  ) : (
+    <button type="button" className="btn-mod" onClick={() => handleDeny(reportId)}>
+      <Clear /> <span>DENY</span>
     </button>
   );
 }

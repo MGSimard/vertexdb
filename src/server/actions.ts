@@ -449,11 +449,11 @@ export async function modApproveReport(reportId: number, rssId: number) {
   redirect("/admin/dashboard");
 }
 
-/* REJECT A REPORT, KEEP SUBMISSION, STATUS DENIED */
-const rejectSchema = z.object({
+/* DENY A REPORT, KEEP SUBMISSION, STATUS DENIED */
+const denySchema = z.object({
   reportId: z.coerce.number().int().positive().lte(2147483647),
 });
-export async function modRejectReport(reportId: number) {
+export async function modDenyReport(reportId: number) {
   const currentUser = auth();
 
   if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
@@ -463,7 +463,7 @@ export async function modRejectReport(reportId: number) {
   const { success } = await ratelimit.limit(currentUser.userId);
   if (!success) return { message: "RATELIMIT ERROR: Too many actions.", errors: { ratelimit: ["Too many actions."] } };
 
-  const validated = rejectSchema.safeParse({ reportId });
+  const validated = denySchema.safeParse({ reportId });
   if (!validated.success) {
     return {
       message: "INVALID REPORT: Failed to Create Report.",
