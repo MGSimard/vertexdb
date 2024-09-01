@@ -172,6 +172,20 @@ Upon approving a report, the following occurs as a transaction:
 - revalidatePath(), redirect() to refresh from server action.
 
 <details>
-<summary><h2>Toggle List Example</h2></summary>
-Maybe larger
+<summary><h2>Application Flow: Moderation</h2></summary>
+### 1. Approving a Report
+
+Upon approving a report, the following occurs as a transaction:
+
+- Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
+- If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
+- If checks pass, soft-delete the submission by adding sql`now()` to its deleted_at column.
+- Then, update the current report's status to "Approved".
+- Finally, update all other reports against this submission to status "collateral" - this indicates that these reports were batch-accepted due to the acceptance of another report. This avoids possible confusion if:
+  - They were all to be accepted, you would lose context as to which one was truly responsible, and non-sensical reports could be marked as accepted.
+  - They were all to be denied, reports that make sense but weren't responsible would be marked as denied - which could be confusing.
+  - They were all deleted, you would lose historical stat tracking for reports submitted.
+  - As such, the best option I found was to introduce a new status type called "collateral".
+- To wrap up, revalidatePath() and redirect() to refresh from the server action.
+
 </details>
