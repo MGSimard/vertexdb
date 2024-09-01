@@ -63,7 +63,7 @@
 - [x] Style form
 - [x] Maybe display info on what they're reporting so they don't have to refresh their mind after clicking report
 - [x] Make report form action send data properly to server action
-- [ ] Approve report done, do deny report next
+- [x] Approve report done, do deny report next
 - [ ] Maybe look into toasts for refreshed type alerts like admin moderation or error on ratelimit
 - [ ] Look into submissions clearing the text field, but the charcount above not getting affected by onChange (guess deletion on submission doesn't trigger onChange)
 - [x] Fix column order in db for report table
@@ -154,7 +154,7 @@ Upon approving a report, the following occurs as a transaction:
 - Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
 - If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
 - If checks pass, soft-delete the submission by adding sql`now()` to its deleted_at column.
-- Then, update the current report's status to "Approved"
+- Then, update the current report's status to "Approved".
 - Finally, update all other reports against this submission to status "collateral" - this indicates that these reports were batch-accepted due to the acceptance of another report. This avoids possible confusion if:
   - They were all to be accepted, you would lose context as to which one was truly responsible, and non-sensical reports could be marked as accepted.
   - They were all to be denied, reports that make sense but weren't responsible would be marked as denied - which could be confusing.
@@ -163,3 +163,8 @@ Upon approving a report, the following occurs as a transaction:
 - To wrap up, revalidatePath() and redirect() to refresh from the server action.
 
 # Denying a Report
+
+- Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
+- If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
+- If checks pass, update the current report's status to "Denied".
+- revalidatePath(), redirect() to refresh from server action.
