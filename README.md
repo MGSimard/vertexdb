@@ -143,8 +143,6 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 
 ## Application Flow: Resource Voting
 
-## Application Flow: Resource Reporting
-
 <details>
 <summary><h2>Application Flow: Resource Reporting</h2></summary>
 <p>Users can submit reports against submissions they believe break the platform's rules.</p>
@@ -158,8 +156,7 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
    - Form input passes validation
 
 <p>From there, the report will be marked as "pending" and visible on the administrator dashboard.</p>
-
-</detail>
+</details>
 
 <details>
 <summary><h2>Application Flow: Moderation</h2></summary>
