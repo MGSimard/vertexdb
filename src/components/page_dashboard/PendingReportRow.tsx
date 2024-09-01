@@ -20,6 +20,8 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
 
   const nameAndCover = await getNameCover(gameId);
 
+  console.log("OPTIONAL COMMENT:", optionalComment.length);
+
   return (
     <li className="pendingReportRow">
       <img
@@ -73,7 +75,7 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
               </tr>
               <tr>
                 <th>COMMENT:</th>
-                <td>{optionalComment ?? "N/A"}</td>
+                <td>{optionalComment.length ? optionalComment : "N/A"}</td>
               </tr>
             </tbody>
           </table>
