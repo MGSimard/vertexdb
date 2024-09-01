@@ -149,7 +149,7 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 
 1. Clicking the caution button will open a report form modal.
 2. Information on the submission to be reported is displayed along with the form.
-3. The user can select a report reason option, along with the ability to fill in an optional "Additional Information" field.
+3. The user can select a report reason option, along with an optional "Additional Information" field.
 4. Upon confirmation, the report will be added to the database if it passes the following checks:
    - User is authorized
    - User is not rate limited
