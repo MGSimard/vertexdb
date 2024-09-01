@@ -175,7 +175,8 @@ Upon approving a report, the following occurs as a transaction:
 <summary><h2>Application Flow: Moderation</h2></summary>
 <h3>1. Approving a Report</h3>
 
-<p>Upon approving a report, the following occurs as a transaction:
+Upon approving a report, the following occurs as a transaction:
+
 - Verification that the report still exists, and that it is still in a "pending" state (Could've changed since last page refresh).
 - If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
 - If checks pass, soft-delete the submission by adding sql`now()` to its deleted_at column.
@@ -186,5 +187,5 @@ Upon approving a report, the following occurs as a transaction:
   - They were all deleted, you would lose historical stat tracking for reports submitted.
   - As such, the best option I found was to introduce a new status type called "collateral".
 - To wrap up, revalidatePath() and redirect() to refresh from the server action.
-</p>
+
 </details>
