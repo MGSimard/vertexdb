@@ -102,16 +102,12 @@ Next.js Application
 ### Features
 
 - Game Search
-- Game Data Check
+- Game Information
 - Resource Submission
 - Submission Voting
-- Theme toggle
+- Submission Reporting
 - Admin Dashboard
-
-## In Progress
-
-- Report Feature
-- Stats report in Dashboard
+- Theme toggle
 
 ### Built With
 
