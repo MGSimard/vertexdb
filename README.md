@@ -160,12 +160,10 @@ Upon approving a report, the following occurs as a transaction:
 3. If checks pass, soft-delete the submission by adding sql`now()` to its deleted_at column.
 4. Then, update the current report's status to "Approved".
 5. Finally, update all other reports against this submission to status "collateral" - this indicates that these reports were batch-accepted due to the acceptance of another report. This avoids possible confusion if:
-
-- They were all to be accepted, you would lose context as to which one was truly responsible, and non-sensical reports could be marked as accepted.
-- They were all to be denied, reports that make sense but weren't responsible would be marked as denied - which could be confusing.
-- They were all deleted, you would lose historical stat tracking for reports submitted.
-- As such, the best option I found was to introduce a new status type called "collateral".
-
+   - They were all to be accepted, you would lose context as to which one was truly responsible, and non-sensical reports could be marked as accepted.
+   - They were all to be denied, reports that make sense but weren't responsible would be marked as denied - which could be confusing.
+   - They were all deleted, you would lose historical stat tracking for reports submitted.
+   - As such, the best option I found was to introduce a new status type called "collateral".
 6. To wrap up, revalidatePath() and redirect() to refresh from the server action.
 
 <h3>Denying a Report</h3>
