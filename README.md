@@ -170,3 +170,11 @@ Upon approving a report, the following occurs as a transaction:
 - If no longer exists, throw an error indicating as such - if still exists but no longer "pending", throw an error indicating as such.
 - If checks pass, update the current report's status to "Denied".
 - revalidatePath(), redirect() to refresh from server action.
+
+```mermaid
+graph TD;
+    A-->B;
+    A-->C;
+    B-->D;
+    C-->D;
+```
