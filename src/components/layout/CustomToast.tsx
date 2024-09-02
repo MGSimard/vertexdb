@@ -1,7 +1,17 @@
-export function CustomToast({ message = "SYSTEM MALFUNCTION" }: { message?: string }) {
+import { ToastIconWarning, Checkmark } from "@/components/icons";
+
+type IconOptions = "success" | "warning";
+
+const iconMap: Record<IconOptions, JSX.Element> = {
+  warning: <ToastIconWarning />,
+  success: <Checkmark />,
+};
+
+export function CustomToast({ icon, message = "SYSTEM MALFUNCTION" }: { icon: IconOptions; message: string }) {
+  // DONT FORGET TO PUT {message} BACK IN TOAST-CONTENT
   return (
-    <div className="custom-toast">
-      <div className="toast-icon">ICON</div>
+    <div className={`custom-toast${" " + icon}`}>
+      <div className="toast-icon">{iconMap[icon]}</div>
       <div className="toast-frame">
         <div className="toast-inner">
           <div className="toast-trim"></div>

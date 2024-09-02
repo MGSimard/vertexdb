@@ -528,38 +528,72 @@ ol[data-sonner-toaster] {
   font-size: 2rem;
 }
 ol[data-sonner-toaster] li {
-  /* border: 1px solid green; */
   width: 100%;
 }
 .custom-toast {
   display: flex;
+  align-items: center;
   gap: 1rem;
   width: 100%;
+  transition: opacity 0.2s ease;
+}
+ol[data-sonner-toaster] li[data-expanded="false"]:not(:first-child)[data-index="1"] .custom-toast {
+  opacity: 0.5;
+}
+ol[data-sonner-toaster] li[data-expanded="false"]:not(:first-child)[data-index="2"] .custom-toast {
+  opacity: 0.2;
 }
 .toast-icon {
   display: flex;
   justify-content: center;
   align-items: center;
   width: 8rem;
+  height: 8rem;
   flex-shrink: 0;
+}
+.toast-icon svg {
+  opacity: 1;
+  transition: opacity 0.2s ease;
+}
+.custom-toast.warning .toast-icon svg {
+  stroke: hsl(2.41, 88.77%, 62.75%);
+}
+.custom-toast.success .toast-icon {
+  padding: 1rem;
+}
+.custom-toast.success .toast-icon svg {
+  border: 0.4rem solid #3fd277;
+  border-radius: 999rem;
+  padding: 0.5rem;
+  stroke: #3fd277;
+  stroke-width: 2;
+}
+ol[data-sonner-toaster] li[data-expanded="false"]:not(:first-child) .toast-icon svg {
+  opacity: 0;
 }
 .toast-frame {
   flex-grow: 1;
-  background: var(--clr-ui-border-notidle);
+  background: var(--clr-primary);
   clip-path: polygon(
     0% calc(0% + 0.4rem),
     calc(0% + 1.4rem) calc(0% + 0.4rem),
     calc(0% + 1.8rem) 0%,
-    calc(100% - 0.8rem) 0%,
-    calc(100% - 0.8rem) calc(0% + 1rem),
-    100% calc(0% + 1.8rem),
-    100% calc(0% + 4.2rem),
-    calc(100% - 0.8rem) calc(0% + 5rem),
-    calc(100% - 0.8rem) calc(100% - 1rem),
+    calc(100% - 0.6rem) 0%,
+    calc(100% - 0.6rem) calc(0% + 1rem),
+    100% calc(0% + 1.6rem),
+    100% calc(0% + 3.4rem),
+    calc(100% - 0.6rem) calc(0% + 4rem),
+    calc(100% - 0.6rem) calc(100% - 1rem),
     calc(100% - 1.8rem) 100%,
     calc(0% + 0.6rem) 100%,
     0% calc(100% - 0.6rem)
   );
+}
+.custom-toast.warning .toast-frame {
+  background: hsl(2.41, 88.77%, 62.75%);
+}
+.custom-toast.success .toast-frame {
+  background: #3fd277;
 }
 .toast-inner {
   display: flex;
@@ -568,12 +602,12 @@ ol[data-sonner-toaster] li {
     0% calc(0% + 0.4rem),
     calc(0% + 1.4rem) calc(0% + 0.4rem),
     calc(0% + 1.8rem) 0%,
-    calc(100% - 0.8rem) 0%,
-    calc(100% - 0.8rem) calc(0% + 1rem),
+    calc(100% - 0.6rem) 0%,
+    calc(100% - 0.6rem) calc(0% + 1rem),
     100% calc(0% + 1.8rem),
     100% calc(0% + 4.2rem),
-    calc(100% - 0.8rem) calc(0% + 5rem),
-    calc(100% - 0.8rem) calc(100% - 1.2rem),
+    calc(100% - 0.6rem) calc(0% + 5rem),
+    calc(100% - 0.6rem) calc(100% - 1.2rem),
     calc(100% - 2rem) 100%,
     calc(0% + 0.6rem) 100%,
     0% calc(100% - 0.6rem)
@@ -581,13 +615,19 @@ ol[data-sonner-toaster] li {
 }
 .toast-trim {
   flex-shrink: 0;
-  background: var(--clr-ui-border-notidle);
+  background: var(--clr-primary);
+}
+.custom-toast.warning .toast-trim {
+  background: hsl(2.41, 88.77%, 62.75%);
+}
+.custom-toast.success .toast-trim {
+  background: #3fd277;
 }
 .toast-trim:first-child {
   width: 2rem;
 }
 .toast-trim:last-child {
-  width: 0.8rem;
+  width: 0.6rem;
 }
 .toast-content {
   display: flex;
@@ -595,10 +635,10 @@ ol[data-sonner-toaster] li {
   align-items: center;
   flex-grow: 1;
   min-height: 8rem;
-  padding: 1rem;
+  padding: 2rem 1rem;
   color: var(--clr-secondary);
   background: var(--clr-bg);
-  /* background: var(--clr-bg); */
+  text-align: center;
 }
 @media only screen and (max-width: 968px) {
   body {

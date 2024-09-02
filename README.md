@@ -10,7 +10,7 @@
 
 <h3 align="center">VertexDB</h3>
 <p align="center">
-Next.js Application
+Full Cycle Next.js App
 <br/>
 <br/>
 <a href="https://vertexdb.vercel.app/">View Live Project</a>
