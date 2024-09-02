@@ -17,7 +17,7 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: any }
 
   useEffect(() => {
     if (formState) {
-      toast.custom((t) => <CustomToast message={formState?.message} />);
+      toast.custom((t) => <CustomToast icon={formState.error ? "warning" : "success"} message={formState.message} />);
       setDescCharCount(0);
       if (!formState.error) onClose();
     }

@@ -643,6 +643,10 @@ ol[data-sonner-toaster] li[data-expanded="false"]:not(:first-child) .toast-icon 
   background: var(--clr-bg);
   text-align: center;
 }
+.custom-toast.success .toast-content {
+  background: #3fd277;
+  color: hsl(240, 24.03%, 7.26%);
+}
 @media only screen and (max-width: 968px) {
   body {
     background-image: radial-gradient(

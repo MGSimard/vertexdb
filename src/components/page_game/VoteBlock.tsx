@@ -25,7 +25,7 @@ export function VoteBlock({
       setActiveVote(result.data.voteResult);
       setScore(result.data.scoreResult);
     } else if (result.error) {
-      toast.custom((t) => <CustomToast message={result.message} />);
+      toast.custom((t) => <CustomToast icon="warning" message={result.message} />);
       console.error(result.message);
     }
   };

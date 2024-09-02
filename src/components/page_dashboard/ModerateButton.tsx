@@ -21,7 +21,7 @@ export function ModerateButton({ approve, reportId, rssId }: ModerateButtonTypes
     if (window.confirm(approveMessage)) {
       const result = await modApproveReport(reportId, rssId!);
 
-      toast.custom((t) => <CustomToast message={result.message} />);
+      toast.custom((t) => <CustomToast icon={result.error ? "warning" : "success"} message={result.message} />);
       if (result.error) console.error(result.message);
     }
   };
@@ -29,7 +29,7 @@ export function ModerateButton({ approve, reportId, rssId }: ModerateButtonTypes
     if (window.confirm(denyMessage)) {
       const result = await modDenyReport(reportId);
 
-      toast.custom((t) => <CustomToast message={result.message} />);
+      toast.custom((t) => <CustomToast icon={result.error ? "warning" : "success"} message={result.message} />);
       if (result.error) console.error(result.message);
     }
   };

@@ -8,7 +8,6 @@ const iconMap: Record<IconOptions, JSX.Element> = {
 };
 
 export function CustomToast({ icon, message = "SYSTEM MALFUNCTION" }: { icon: IconOptions; message: string }) {
-  // DONT FORGET TO PUT {message} BACK IN TOAST-CONTENT
   return (
     <div className={`custom-toast${" " + icon}`}>
       <div className="toast-icon">{iconMap[icon]}</div>
