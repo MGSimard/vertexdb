@@ -14,6 +14,7 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: any }
   };
 
   useEffect(() => {
+    if (formState) setDescCharCount(0);
     if (formState?.success === true) {
       onClose();
     }

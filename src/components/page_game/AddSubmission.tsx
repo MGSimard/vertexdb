@@ -14,6 +14,7 @@ export function AddSubmission({ gameId, slug, section }: AddSubmissionTypes) {
   const [descCharCount, setDescCharCount] = useState(0);
 
   useEffect(() => {
+    if (formState) setDescCharCount(0);
     if (formState?.success === true) {
       setFormOpen(false);
     }
