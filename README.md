@@ -93,7 +93,7 @@ Upon approval (and passing Auth+RBAC & validation checks), the following occurs 
    - All denied: Sensical reports marked as denied.
    - All deleted: You lose historical statistical tracking for reports submitted.
    - As such, the best option I found was to introduce a new status type called "collateral".
-5. To wrap up, revalidatePath() and redirect() to refresh from the server action.
+5. RevalidatePath() to refresh from the server action.
 
 <h3>Denying a Report</h3>
 
@@ -101,11 +101,10 @@ Upon denial (and passing Auth+RBAC & validation checks), the following occurs as
 
 1. Verification that the report still exists, and still in "pending" status.
 2. On success, update the current report's status to "denied".
-3. revalidatePath(), redirect() to refresh from server action.
+3. revalidatePath() to refresh from server action.
 </details>
 
-<details>
-<summary>Secret Sauce<summary>
+## Task List
 
 - [x] Feature planning
 - [x] Establish design guidelines
@@ -184,5 +183,3 @@ Upon denial (and passing Auth+RBAC & validation checks), the following occurs as
 - [ ] Remove "any" once done
 - [ ] Consider my own ratelimit service, I feel like someone could top me out with an autoclicker
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
-
-</details>
