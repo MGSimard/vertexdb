@@ -33,9 +33,7 @@
 - [x] On submission add an upvote from the submitter (somehow avoid triggering trigger - unless I start posts at 0pts)
 - [x] Fix submission highlighting on hover being larger than the actual click zone
 - [x] Introduce rate-limiting for both submissions and votes
-- [ ] Maybe clear form errors if forms are closed with cancel button and then re-opened?
 - [x] Maybe make submissions single cards like equipped gun design do the notch
-- [ ] Maybe make button styles like gun button design
 - [x] Add visual link for submissions so users don't have to hover or click to tell if it's a good link
 - [x] Error handling
 - [x] Collapse "add submission" section back into "Add" after successful submit
@@ -71,6 +69,7 @@
 - [x] Replace error returns for error throws into error toasts() for VOTING and MODERATION
 - [x] Rework errors overall across the board with one specific return format
 - [ ] Finish styling the custom toast component
+- [ ] Maybe make button styles like gun button design
 - [ ] Figure out if I can match clerk theme to current theme
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
