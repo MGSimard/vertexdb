@@ -520,7 +520,86 @@ nav .search-container:focus-within::before {
   z-index: 9999;
 }
 /* TOAST STUFF */
-
+ol[data-sonner-toaster] {
+  max-width: 60rem;
+  width: 100%;
+  font-family: inherit;
+  font-weight: 600;
+  font-size: 2rem;
+}
+ol[data-sonner-toaster] li {
+  /* border: 1px solid green; */
+  width: 100%;
+}
+.custom-toast {
+  display: flex;
+  gap: 1rem;
+  width: 100%;
+}
+.toast-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 8rem;
+  flex-shrink: 0;
+}
+.toast-frame {
+  flex-grow: 1;
+  background: var(--clr-ui-border-notidle);
+  clip-path: polygon(
+    0% calc(0% + 0.4rem),
+    calc(0% + 1.4rem) calc(0% + 0.4rem),
+    calc(0% + 1.8rem) 0%,
+    calc(100% - 0.8rem) 0%,
+    calc(100% - 0.8rem) calc(0% + 1rem),
+    100% calc(0% + 1.8rem),
+    100% calc(0% + 4.2rem),
+    calc(100% - 0.8rem) calc(0% + 5rem),
+    calc(100% - 0.8rem) calc(100% - 1rem),
+    calc(100% - 1.8rem) 100%,
+    calc(0% + 0.6rem) 100%,
+    0% calc(100% - 0.6rem)
+  );
+}
+.toast-inner {
+  display: flex;
+  padding: 0.1rem;
+  clip-path: polygon(
+    0% calc(0% + 0.4rem),
+    calc(0% + 1.4rem) calc(0% + 0.4rem),
+    calc(0% + 1.8rem) 0%,
+    calc(100% - 0.8rem) 0%,
+    calc(100% - 0.8rem) calc(0% + 1rem),
+    100% calc(0% + 1.8rem),
+    100% calc(0% + 4.2rem),
+    calc(100% - 0.8rem) calc(0% + 5rem),
+    calc(100% - 0.8rem) calc(100% - 1.2rem),
+    calc(100% - 2rem) 100%,
+    calc(0% + 0.6rem) 100%,
+    0% calc(100% - 0.6rem)
+  );
+}
+.toast-trim {
+  flex-shrink: 0;
+  background: var(--clr-ui-border-notidle);
+}
+.toast-trim:first-child {
+  width: 2rem;
+}
+.toast-trim:last-child {
+  width: 0.8rem;
+}
+.toast-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+  min-height: 8rem;
+  padding: 1rem;
+  color: var(--clr-secondary);
+  background: var(--clr-bg);
+  /* background: var(--clr-bg); */
+}
 @media only screen and (max-width: 968px) {
   body {
     background-image: radial-gradient(

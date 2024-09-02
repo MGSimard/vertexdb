@@ -11,7 +11,7 @@ export default function Page() {
       <button type="button" onClick={() => toast.error("Jeff")}>
         EEEEEEEA SPORTS
       </button>
-      <button type="button" onClick={() => toast.custom((t) => <CustomToast />)}>
+      <button type="button" onClick={() => toast.custom((t) => <CustomToast />, { duration: Infinity })}>
         EEEEEEEA SPORTS
       </button>
     </main>
