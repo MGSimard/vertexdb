@@ -60,7 +60,20 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 
 ## Application Flow: Resource Submission
 
-## Application Flow: Resource Voting
+<details>
+<summary><h2>Resource Voting</h2></summary>
+<p>Users can vote on submissions: Upvote, downvote, cancel vote.</p>
+
+1. If the user is logged in, their current vote for each submission is loaded and displayed.
+2. The user can add a new vote, change their vote or cancel their vote by clicking the arrows.
+3. Votes are checked against auth, ratelimit and validation.
+4. After passing those checks, the following occurs:
+   - Check for existence of submission and current vote.
+   - Add vote if there is no prior vote.
+   - If existing vote is the same, delete the vote.
+   - If existing vote is different, modify the vote.
+   - Adjust the submission's score as a transaction to reflect vote.
+   </details>
 
 <details>
 <summary><h2>Application Flow: Resource Reporting</h2></summary>
