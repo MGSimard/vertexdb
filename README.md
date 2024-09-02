@@ -70,6 +70,7 @@
 - [x] Maybe look into toasts for refreshed type alerts like admin moderation or error on ratelimit
 - [x] Replace error returns for error throws into error toasts() for VOTING and MODERATION
 - [x] Rework errors overall across the board with one specific return format
+- [ ] Finish styling the custom toast component
 - [ ] Figure out if I can match clerk theme to current theme
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
