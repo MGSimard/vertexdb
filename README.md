@@ -66,7 +66,7 @@
 - [x] Make up mind regarding list of report reasons
 - [x] Edit report to only allow voting on null deletedAt
 - [x] Style pending report items
-- [ ] Look into submissions clearing the text field, but the charcount above not getting affected by onChange (guess deletion on submission doesn't trigger onChange)
+- [x] Look into submissions clearing the text field, but the charcount above not getting affected by onChange (guess deletion on submission doesn't trigger onChange)
 - [ ] Maybe look into toasts for refreshed type alerts like admin moderation or error on ratelimit
 - [ ] Replace error returns for error throws into error toasts() for VOTING and MODERATION
 - [ ] Figure out if I can match clerk theme to current theme

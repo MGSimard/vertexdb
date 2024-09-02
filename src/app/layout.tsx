@@ -6,6 +6,7 @@ import { dark } from "@clerk/themes";
 import { Navbar } from "@/components/layout/Navbar";
 import { Footer } from "@/components/layout/Footer";
 import { GamesIndexed } from "@/components/layout/GamesIndexed";
+import { Toaster } from "sonner";
 import "@/styles/core.css";
 import "@/styles/custom.css";
 
@@ -23,9 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider appearance={{ baseTheme: dark, variables: { fontSize: "1.6rem" } }}>
-      <html lang="en" suppressHydrationWarning /*for next-themes*/>
-        <body className={`${rajdhani.className} antialiased`}>
-          <ThemeProvider disableTransitionOnChange>
+      <ThemeProvider disableTransitionOnChange>
+        <html lang="en" suppressHydrationWarning /*for next-themes*/>
+          <body className={`${rajdhani.className} antialiased`}>
             <header>
               <Navbar />
               <GamesIndexed />
@@ -33,9 +34,10 @@ export default function RootLayout({
             {children}
             <Footer />
             <div id="portal" />
-          </ThemeProvider>
-        </body>
-      </html>
+            <Toaster />
+          </body>
+        </html>
+      </ThemeProvider>
     </ClerkProvider>
   );
 }
