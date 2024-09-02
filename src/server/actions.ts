@@ -7,7 +7,6 @@ import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 import { ratelimit } from "@/server/ratelimit";
 import { reportReasonEnums, sectionEnums } from "@/utils/enums";
-import { redirect } from "next/navigation";
 
 /* FETCH CURRENTGAME DATA */
 export async function getGameData(query: string) {
@@ -34,23 +33,22 @@ export async function getInitialRss(currentGameId: number) {
   const user = auth();
   const currentUser = user.userId;
 
-  const query = db
-    .select({
-      rssId: gameRssEntries.rssId,
-      title: gameRssEntries.title,
-      url: gameRssEntries.url,
-      description: gameRssEntries.description,
-      section: gameRssEntries.section,
-      score: gameRssEntries.score,
-      ...(currentUser ? { currentUserVote: gameRssVotes.voteType } : {}),
-    })
-    .from(gameRssEntries)
-    .where(and(eq(gameRssEntries.gameId, currentGameId), isNull(gameRssEntries.deletedAt)))
-    .orderBy(desc(gameRssEntries.score));
-
-  const dynamicQuery = query.$dynamic();
-
   try {
+    const query = db
+      .select({
+        rssId: gameRssEntries.rssId,
+        title: gameRssEntries.title,
+        url: gameRssEntries.url,
+        description: gameRssEntries.description,
+        section: gameRssEntries.section,
+        score: gameRssEntries.score,
+        ...(currentUser ? { currentUserVote: gameRssVotes.voteType } : {}),
+      })
+      .from(gameRssEntries)
+      .where(and(eq(gameRssEntries.gameId, currentGameId), isNull(gameRssEntries.deletedAt)))
+      .orderBy(desc(gameRssEntries.score));
+
+    const dynamicQuery = query.$dynamic();
     // If user isn't logged in ignore leftJoin() and currentUserVote field check
     if (!currentUser) {
       return await query;
@@ -91,14 +89,13 @@ export async function createSubmission(currentState: any, formData: FormData) {
   const user = auth();
 
   if (!user.userId) {
-    return {
-      success: false,
-      message: "SUBMISSION ERROR: Unauthorized.",
-    };
+    return { error: true, message: "AUTH ERROR: Unauthorized." };
   }
 
   const { success } = await ratelimit.limit(user.userId);
-  if (!success) return { success: false, message: "RATE-LIMITED: Too many actions." };
+  if (!success) {
+    return { error: true, message: "RATELIMIT: Too many actions." };
+  }
 
   const validated = CreateSubmission.safeParse({
     gameId: formData.get("gameId"),
@@ -110,7 +107,7 @@ export async function createSubmission(currentState: any, formData: FormData) {
   });
 
   if (!validated.success) {
-    return { success: false, message: "SUBMISSION ERROR: Invalid Fields." };
+    return { error: true, message: "VALIDATION ERROR: Invalid Fields." };
   }
 
   const { gameId, title, url, description, section, slug } = validated.data;
@@ -125,14 +122,11 @@ export async function createSubmission(currentState: any, formData: FormData) {
       await tx.insert(gameRssVotes).values({ rssId: insertedRssId!.id, voterId: author, voteType: true });
     });
   } catch (err) {
-    return {
-      success: false,
-      message: "DATABASE ERROR: Failed to Create Submission.",
-    };
+    return { error: true, message: "DATABASE ERROR: Failed to create submission." };
   }
 
   revalidatePath(`/game/${slug}`);
-  return { success: true, message: "SUCCESS: Submission Added." };
+  return { message: "SUCCESS: Submission added." };
 }
 
 /* CREATE VOTE */
@@ -145,29 +139,28 @@ const voteSchema = z.object({
   updatedAt: z.date(), // Ignore, DB auto
 });
 const CreateVote = voteSchema.omit({ voteId: true, voterId: true, createdAt: true, updatedAt: true });
-
 export async function createVote(rssId: number, voteType: boolean) {
   const user = auth();
-  if (!user.userId) return { message: "INVALID VOTE: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+  if (!user.userId) {
+    return { error: true, message: "AUTH ERROR: Unauthorized" };
+  }
 
   const { success } = await ratelimit.limit(user.userId);
-  if (!success) return { message: "RATELIMIT ERROR: Too many actions.", errors: { ratelimit: ["Too many actions."] } };
+  if (!success) {
+    return { error: true, message: "RATELIMIT ERROR: Too many actions." };
+  }
 
   const validated = CreateVote.safeParse({
     rssId,
     voteType,
   });
   if (!validated.success) {
-    return {
-      message: "INVALID VOTE: Failed to Create Vote.",
-      errors: validated.error.flatten().fieldErrors,
-    };
+    return { error: true, message: "VALIDATION ERROR: Failed to create vote." };
   }
 
   const { rssId: submissionId, voteType: voteInput } = validated.data;
   const currentUserId = user.userId;
 
-  // RETURN FORMAT: { data: {}, message: "", errors: {} }
   // TRANSACTION ERROR HANDLING: Throwing an error anywhere within transaction will cause a rollback.
   // Alternatively, you can call tx.rollback() manually.
   try {
@@ -186,10 +179,7 @@ export async function createVote(rssId: number, voteType: boolean) {
     }
 
     if (!currentUserVote || isNaN(currentSubmission!.score)) {
-      return {
-        message: "DATABASE ERROR: Could not retrieve current vote or submission score.",
-        errors: { database: ["Could not retrieve current vote or submission score."] },
-      };
+      throw new Error("DATABASE ERROR: Could not retrieve current vote or submission score.");
     }
 
     if (!currentUserVote.length) {
@@ -241,11 +231,8 @@ export async function createVote(rssId: number, voteType: boolean) {
         return { data: voteResult, message: "SUCCESS: Vote Successfully deleted." };
       }
     }
-  } catch (err: any) {
-    return {
-      message: "DATABASE ERROR: Vote and score were not modified.",
-      errors: { database: ["Vote and score were not modified."] },
-    };
+  } catch (err: unknown) {
+    return { error: true, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 }
 
@@ -257,17 +244,16 @@ const reportSchema = z.object({
   optionalComment: z.string().max(120).trim(),
 });
 const CreateReport = reportSchema.omit({ reportBy: true });
-
 export async function createReport(currentState: any, formData: FormData) {
   const user = auth();
-  if (!user.userId)
-    return {
-      success: false,
-      message: "REPORT ERROR: Unauthorized.",
-    };
+  if (!user.userId) {
+    return { success: false, message: "AUTH ERROR: Unauthorized." };
+  }
 
   const { success } = await ratelimit.limit(user.userId);
-  if (!success) return { success: false, message: "RATE-LIMITED: Too many actions." };
+  if (!success) {
+    return { error: true, message: "RATELIMIT ERROR: Too many actions." };
+  }
 
   const validated = CreateReport.safeParse({
     rssId: formData.get("report-rssId"),
@@ -275,26 +261,35 @@ export async function createReport(currentState: any, formData: FormData) {
     optionalComment: formData.get("report-optionalComment"),
   });
   if (!validated.success) {
-    return { success: false, message: "REPORT ERROR: Invalid Fields." };
+    return { error: true, message: "VALIDATION ERROR: Invalid fields." };
   }
 
   const { rssId, reportReason, optionalComment } = validated.data;
   const currentUserId = user.userId;
 
   try {
+    const [currentSubmission] = await db
+      .select({ deletedAt: gameRssEntries.deletedAt })
+      .from(gameRssEntries)
+      .where(eq(gameRssEntries.rssId, rssId));
+
+    if (!currentSubmission || currentSubmission?.deletedAt !== null) {
+      throw new Error("DATABASE ERROR: This submission no longer exists.");
+    }
+
     // Existing entry conflict already handled by schema unique combo for rssId + currentUserId
     await db
       .insert(rssReports)
       .values({ rssId, reportBy: currentUserId, reportReason, optionalComment, status: "pending" });
-    revalidatePath("/admin/dashboard");
-    return { success: true, message: "SUCCESS: Report successfully sent." };
   } catch (err: any) {
     if (err.code && Number(err.code) === 23505) {
-      return { success: false, message: "REPORT ERROR: User has already submitted a report." };
+      return { error: true, message: "DUPLICATE ERROR: User has already submitted a report." };
     }
-
-    return { success: false, message: "REPORT ERROR: Failed to create report." };
+    return { error: true, message: err.message ?? "UNKNOWN ERROR." };
   }
+
+  revalidatePath("/admin/dashboard");
+  return { message: "SUCCESS: Report transmitted." };
 }
 
 /**
@@ -304,19 +299,19 @@ export async function createReport(currentState: any, formData: FormData) {
 export async function getTotalSubmissions() {
   try {
     const [submissionsAmount] = await db.select({ count: count() }).from(gameRssEntries);
-
     return { data: submissionsAmount, message: "SUCCESS: Retrieved total submissions." };
   } catch (err) {
     return { message: "DATABASE ERROR: Failed retrieving total submissions." };
   }
 }
+
 /* GET TOTAL AMOUNT OF VOTES */
 export async function getTotalVotes() {
   try {
     const [votesAmount] = await db.select({ count: count() }).from(gameRssVotes);
     return { data: votesAmount, message: "SUCCESS: Retrieved total votes." };
   } catch (err) {
-    return { message: "DATABASE ERROR: Failed retrieving total submissions." };
+    return { message: "DATABASE ERROR: Failed retrieving total votes." };
   }
 }
 
@@ -363,10 +358,7 @@ export async function getPendingReports() {
       .orderBy(desc(rssReports.createdAt));
     return { data: pendingReports, message: "SUCCESS: Retrieved pending reports." };
   } catch (err) {
-    return {
-      message: "DATABASE ERROR: Failed retrieving pending reports.",
-      errors: { database: ["Failed retrieving pending reports."] },
-    };
+    return { error: true, message: "DATABASE ERROR: Failed retrieving pending reports." };
   }
 }
 
@@ -395,20 +387,18 @@ const approveSchema = z.object({
 });
 export async function modApproveReport(reportId: number, rssId: number) {
   const currentUser = auth();
-
   if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
-    return { message: "INVALID REPORT: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+    return { error: true, message: "AUTH ERROR: Unauthorized" };
   }
 
   const { success } = await ratelimit.limit(currentUser.userId);
-  if (!success) return { message: "RATELIMIT ERROR: Too many actions.", errors: { ratelimit: ["Too many actions."] } };
+  if (!success) {
+    return { error: true, message: "RATELIMIT ERROR: Too many actions." };
+  }
 
   const validated = approveSchema.safeParse({ reportId, rssId });
   if (!validated.success) {
-    return {
-      message: "INVALID ACTION: Failed to approve report.",
-      errors: validated.error.flatten().fieldErrors,
-    };
+    return { error: true, message: "VALIDATION ERROR: Failed to approve report." };
   }
 
   try {
@@ -418,11 +408,13 @@ export async function modApproveReport(reportId: number, rssId: number) {
         .from(rssReports)
         .where(eq(rssReports.rptId, reportId));
 
-      if (!currentStatus) throw new Error("MODERATION ERROR: This report no longer exists.");
+      if (!currentStatus) {
+        throw new Error("DATABASE ERROR: This report no longer exists.");
+      }
 
       // If report status was modified
       if (currentStatus.status !== "pending") {
-        throw new Error('This report is no longer in "Pending" status.');
+        throw new Error("STATUS ERROR: This report is no longer in 'Pending' status.");
       }
 
       // Soft-delete submission by adding deleted_at time now()
@@ -441,12 +433,13 @@ export async function modApproveReport(reportId: number, rssId: number) {
         .set({ status: "collateral" })
         .where(and(eq(rssReports.rssId, rssId), eq(rssReports.status, "pending")));
     });
-  } catch (err) {
-    // Probably end up using toasts for errors I don't want to show directly in the core UI
+  } catch (err: unknown) {
+    revalidatePath("/admin/dashboard");
+    return { error: true, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 
   revalidatePath("/admin/dashboard");
-  redirect("/admin/dashboard");
+  return { message: "SUCCESS: Set report status to 'APPROVED'." };
 }
 
 /* DENY A REPORT, KEEP SUBMISSION, STATUS DENIED */
@@ -457,18 +450,17 @@ export async function modDenyReport(reportId: number) {
   const currentUser = auth();
 
   if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
-    return { message: "INVALID REPORT: Unauthorized", errors: { auth: ["User is not Authorized."] } };
+    return { error: true, message: "AUTH ERROR: Unauthorized" };
   }
 
   const { success } = await ratelimit.limit(currentUser.userId);
-  if (!success) return { message: "RATELIMIT ERROR: Too many actions.", errors: { ratelimit: ["Too many actions."] } };
+  if (!success) {
+    return { error: true, message: "RATELIMIT ERROR: Too many actions." };
+  }
 
   const validated = denySchema.safeParse({ reportId });
   if (!validated.success) {
-    return {
-      message: "INVALID REPORT: Failed to Create Report.",
-      errors: validated.error.flatten().fieldErrors,
-    };
+    return { error: true, message: "VALIDATION ERROR: Failed to deny report." };
   }
 
   try {
@@ -478,20 +470,22 @@ export async function modDenyReport(reportId: number) {
         .from(rssReports)
         .where(eq(rssReports.rptId, reportId));
 
-      if (!currentStatus) throw new Error("MODERATION ERROR: This report no longer exists.");
+      if (!currentStatus) {
+        throw new Error("MODERATION ERROR: This report no longer exists.");
+      }
 
-      // If report status was modified
       if (currentStatus.status !== "pending") {
-        throw new Error('This report is no longer in "Pending" status.');
+        throw new Error("MODERATION ERROR: This report is no longer in 'PENDING' status.");
       }
 
       // Update report status to denied
       await tx.update(rssReports).set({ status: "denied" }).where(eq(rssReports.rptId, reportId));
     });
-  } catch (err) {
-    // Probably end up using toasts for errors I don't want to show directly in the core UI
+  } catch (err: unknown) {
+    revalidatePath("/admin/dashboard");
+    return { error: true, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 
   revalidatePath("/admin/dashboard");
-  redirect("/admin/dashboard");
+  return { message: "SUCCESS: Set report status to 'DENIED'." };
 }

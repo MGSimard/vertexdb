@@ -2,6 +2,8 @@
 import { useState, useEffect, useActionState } from "react";
 import { createReport } from "@/server/actions";
 import { reportReasonEnums } from "@/utils/enums";
+import { CustomToast } from "@/components/layout/CustomToast";
+import { toast } from "sonner";
 
 export function ReportForm({ onClose, info }: { onClose: () => void; info: any }) {
   const [formState, formAction, pending] = useActionState(createReport, null);
@@ -14,9 +16,10 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: any }
   };
 
   useEffect(() => {
-    if (formState) setDescCharCount(0);
-    if (formState?.success === true) {
-      onClose();
+    if (formState) {
+      toast.custom((t) => <CustomToast message={formState?.message} />);
+      setDescCharCount(0);
+      if (!formState.error) onClose();
     }
   }, [formState]);
 
@@ -59,7 +62,7 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: any }
               {pending ? "Submitting . . ." : "Submit"}
             </button>
           </fieldset>
-          {formState?.success === false && formState.message}
+          {formState?.error === true && formState.message}
         </form>
       </div>
     </>

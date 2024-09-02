@@ -67,13 +67,15 @@
 - [x] Edit report to only allow voting on null deletedAt
 - [x] Style pending report items
 - [x] Look into submissions clearing the text field, but the charcount above not getting affected by onChange (guess deletion on submission doesn't trigger onChange)
-- [ ] Maybe look into toasts for refreshed type alerts like admin moderation or error on ratelimit
-- [ ] Replace error returns for error throws into error toasts() for VOTING and MODERATION
+- [x] Maybe look into toasts for refreshed type alerts like admin moderation or error on ratelimit
+- [x] Replace error returns for error throws into error toasts() for VOTING and MODERATION
+- [x] Rework errors overall across the board with one specific return format
 - [ ] Figure out if I can match clerk theme to current theme
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
 - [ ] Look into using optimistic updates for visuals when voting
 - [ ] Remove "any" once done
+- [ ] Consider my own ratelimit service, I feel like someone could top me out with an autoclicker
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
 
 ## Few conventions

@@ -1,6 +1,8 @@
 "use client";
 import { useState, useEffect, useActionState } from "react";
 import { createSubmission } from "@/server/actions";
+import { CustomToast } from "@/components/layout/CustomToast";
+import { toast } from "sonner";
 
 interface AddSubmissionTypes {
   gameId: number;
@@ -14,9 +16,10 @@ export function AddSubmission({ gameId, slug, section }: AddSubmissionTypes) {
   const [descCharCount, setDescCharCount] = useState(0);
 
   useEffect(() => {
-    if (formState) setDescCharCount(0);
-    if (formState?.success === true) {
-      setFormOpen(false);
+    if (formState) {
+      toast.custom((t) => <CustomToast message={formState.message} />);
+      setDescCharCount(0);
+      if (!formState.error) setFormOpen(false);
     }
   }, [formState]);
 
@@ -74,7 +77,7 @@ export function AddSubmission({ gameId, slug, section }: AddSubmissionTypes) {
             {pending ? "Submitting . . ." : "Submit"}
           </button>
         </fieldset>
-        {formState?.success === false && formState.message}
+        {formState?.error === true && formState.message}
       </form>
     </div>
   );

@@ -35,7 +35,7 @@ export default async function Page() {
       <section>
         <h2>PENDING REPORTS</h2>
         <CardLarge>
-          {pendingReports.errors && pendingReports.message}
+          {pendingReports.error && pendingReports.message}
           {pendingReports.data &&
             (pendingReports.data.length ? (
               <ul>

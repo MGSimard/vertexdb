@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { createVote } from "@/server/actions";
 import { ArrowUp, ArrowDown } from "@/components/icons";
+import { CustomToast } from "@/components/layout/CustomToast";
+import { toast } from "sonner";
 
 export function VoteBlock({
   rssId,
@@ -22,7 +24,8 @@ export function VoteBlock({
     if (result.data) {
       setActiveVote(result.data.voteResult);
       setScore(result.data.scoreResult);
-    } else if (result.errors) {
+    } else if (result.error) {
+      toast.custom((t) => <CustomToast message={result.message} />);
       console.error(result.message);
     }
   };

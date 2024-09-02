@@ -2,6 +2,8 @@
 
 import { modApproveReport, modDenyReport } from "@/server/actions";
 import { Checkmark, Clear } from "@/components/icons";
+import { CustomToast } from "@/components/layout/CustomToast";
+import { toast } from "sonner";
 
 interface ModerateButtonTypes {
   approve: boolean;
@@ -15,11 +17,21 @@ export function ModerateButton({ approve, reportId, rssId }: ModerateButtonTypes
   const denyMessage =
     "Are you sure you want to deny this report?\n\n- This action will keep the reported submission.\n- Report status will be set to 'DENIED'.";
 
-  const handleApprove = (reportId: number) => {
-    if (window.confirm(approveMessage)) modApproveReport(reportId, rssId!);
+  const handleApprove = async (reportId: number) => {
+    if (window.confirm(approveMessage)) {
+      const result = await modApproveReport(reportId, rssId!);
+
+      toast.custom((t) => <CustomToast message={result.message} />);
+      if (result.error) console.error(result.message);
+    }
   };
-  const handleDeny = (reportId: number) => {
-    if (window.confirm(denyMessage)) modDenyReport(reportId);
+  const handleDeny = async (reportId: number) => {
+    if (window.confirm(denyMessage)) {
+      const result = await modDenyReport(reportId);
+
+      toast.custom((t) => <CustomToast message={result.message} />);
+      if (result.error) console.error(result.message);
+    }
   };
 
   return approve ? (
