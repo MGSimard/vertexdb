@@ -24,9 +24,9 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider appearance={{ baseTheme: dark, variables: { fontSize: "1.6rem" } }}>
-      <ThemeProvider disableTransitionOnChange>
-        <html lang="en" suppressHydrationWarning /*for next-themes*/>
-          <body className={`${rajdhani.className} antialiased`}>
+      <html lang="en" suppressHydrationWarning /*for next-themes*/>
+        <body className={`${rajdhani.className} antialiased`}>
+          <ThemeProvider disableTransitionOnChange>
             <header>
               <Navbar />
               <GamesIndexed />
@@ -35,9 +35,9 @@ export default function RootLayout({
             <Footer />
             <div id="portal" />
             <Toaster />
-          </body>
-        </html>
-      </ThemeProvider>
+          </ThemeProvider>
+        </body>
+      </html>
     </ClerkProvider>
   );
 }

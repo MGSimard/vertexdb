@@ -166,7 +166,8 @@ main {
   -webkit-mask-image: none;
   mask-image: none;
 }
-section {
+/* Aria is to not target sonner's Toaster section */
+section:not([aria-label="Notifications alt+T"]) {
   padding: 2rem 4rem;
   font-weight: 500;
 }
@@ -518,6 +519,7 @@ nav .search-container:focus-within::before {
   overflow: hidden;
   z-index: 9999;
 }
+/* TOAST STUFF */
 
 @media only screen and (max-width: 968px) {
   body {
