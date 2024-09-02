@@ -56,12 +56,32 @@ MGSimard - g.marcgs@gmail.com
 
 For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github.io). Resume attached.
 
-## Application Flow: Searching Games
+<details>
+<summary><h2>Application Flow: Searching Games</h2></summary>
+<p>Users can search for and access game pages, which also contain user-submitted resources.</p>
 
-## Application Flow: Resource Submission
+1. Users can use the search bar or direct URL to access game pages.
+2. Game information is retrieved from IGDB's API according to tailored request body.
+3. For the search function, matching games are displayed as a list.
+4. For the game page, information for the matching game slug is displayed on the page.
+5. Additionally, all user submitted resources matching the game ID are retrieved from the database then displayed accordingly.
+</details>
 
 <details>
-<summary><h2>Resource Voting</h2></summary>
+<summary><h2>Application Flow: Resource Submission</h2></summary>
+<p>Users can submit resources for each game page and section</p>
+
+1. Clicking [+] ADD unrolls a submission form.
+2. Title, URL and Description can be filled in then submitted.
+3. Upon submission, it will be added to the database if it passes the following checks:
+   - User is authorized.
+   - User is not rate limited.
+   - Form input passes validation.
+4. revalidatePath() to refresh from the server action.
+</details>
+
+<details>
+<summary><h2>Application Flow: Resource Voting</h2></summary>
 <p>Users can vote on submissions: Upvote, downvote, cancel vote.</p>
 
 1. If the user is logged in, their current vote for each submission is loaded and displayed.
@@ -73,7 +93,8 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
    - If existing vote is the same, delete the vote.
    - If existing vote is different, modify the vote.
    - Adjust the submission's score as a transaction to reflect vote.
-   </details>
+
+</details>
 
 <details>
 <summary><h2>Application Flow: Resource Reporting</h2></summary>
@@ -83,9 +104,10 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 2. Information on the submission to be reported is displayed along with the form.
 3. The user can select a report reason option, along with an optional "Additional Information" field.
 4. Upon confirmation, the report will be added to the database if it passes the following checks:
-   - User is authorized
-   - User is not rate limited
-   - Form input passes validation
+   - User is authorized.
+   - User is not rate limited.
+   - Form input passes validation.
+   - User has not already reported the submission.
 
 <p>From there, the report will be marked as "pending" and visible on the administrator dashboard.</p>
 </details>
@@ -106,7 +128,7 @@ Upon approval (and passing Auth+RBAC & validation checks), the following occurs 
    - All denied: Sensical reports marked as denied.
    - All deleted: You lose historical statistical tracking for reports submitted.
    - As such, the best option I found was to introduce a new status type called "collateral".
-5. RevalidatePath() to refresh from the server action.
+5. revalidatePath() to refresh from the server action.
 
 <h3>Denying a Report</h3>
 
