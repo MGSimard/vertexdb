@@ -106,6 +106,7 @@ Upon denial (and passing Auth+RBAC & validation checks), the following occurs as
 
 <details>
 <summary>Secret Sauce<summary>
+
 - [x] Feature planning
 - [x] Establish design guidelines
 - [x] Build mock layouts for index & game pages
@@ -183,4 +184,5 @@ Upon denial (and passing Auth+RBAC & validation checks), the following occurs as
 - [ ] Remove "any" once done
 - [ ] Consider my own ratelimit service, I feel like someone could top me out with an autoclicker
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
+
 </details>
