@@ -11,24 +11,19 @@ export default function Page() {
       <button
         type="button"
         onClick={() =>
-          toast.custom(
-            (t) => (
-              <CustomToast
-                icon="warning"
-                message="DATABASE ERROR: Could not retrieve current vote or submission score."
-              />
-            ),
-            { duration: Infinity }
-          )
+          toast.custom((t) => (
+            <CustomToast
+              icon="warning"
+              message="DATABASE ERROR: Could not retrieve current vote or submission score."
+            />
+          ))
         }>
         TEST ERROR
       </button>
       <button
         type="button"
         onClick={() =>
-          toast.custom((t) => <CustomToast icon="success" message="SUCCESS: Vote successfully modified." />, {
-            duration: Infinity,
-          })
+          toast.custom((t) => <CustomToast icon="success" message="SUCCESS: Vote successfully modified." />)
         }>
         TEST SUCCESS
       </button>

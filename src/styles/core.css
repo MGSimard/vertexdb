@@ -536,6 +536,8 @@ ol[data-sonner-toaster] li {
   gap: 1rem;
   width: 100%;
   transition: opacity 0.2s ease;
+  -webkit-filter: drop-shadow(0 0 1rem rgba(0, 0, 0, 0.2));
+  filter: drop-shadow(0 0 1rem rgba(0, 0, 0, 0.2));
 }
 ol[data-sonner-toaster] li[data-expanded="false"]:not(:first-child)[data-index="1"] .custom-toast {
   opacity: 0.5;
@@ -557,6 +559,7 @@ ol[data-sonner-toaster] li[data-expanded="false"]:not(:first-child)[data-index="
 }
 .custom-toast.warning .toast-icon svg {
   stroke: hsl(2.41, 88.77%, 62.75%);
+  fill: hsl(2.41, 88.77%, 62.75%);
 }
 .custom-toast.success .toast-icon {
   padding: 1rem;
