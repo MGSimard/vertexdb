@@ -11,13 +11,13 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: any }
 
   const { rssId, title, description, url } = info;
 
-  const handleCharCount = (e: any) => {
+  const handleCharCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescCharCount(e.target.value.length);
   };
 
   useEffect(() => {
     if (formState) {
-      toast.custom((t) => <CustomToast icon={formState.error ? "warning" : "success"} message={formState.message} />);
+      toast.custom(() => <CustomToast icon={formState.error ? "warning" : "success"} message={formState.message} />);
       setDescCharCount(0);
       if (!formState.error) onClose();
     }

@@ -1,8 +1,25 @@
 import { getNameCover } from "@/server/actions";
 import { ModerateButton } from "@/components/page_dashboard/ModerateButton";
 import { coverPath, isoToUTC } from "@/utils/helpers";
+import Image from "next/image";
+import { reportReasonEnums } from "@/utils/enums";
 
-export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
+interface ReportTypes {
+  rptId: number;
+  rssId: number;
+  reportBy: string;
+  reportReason: string;
+  optionalComment: string;
+  createdAt: Date;
+  gameId: number;
+  authorId: string;
+  title: string;
+  url: string;
+  description: string;
+  score: number;
+}
+
+export async function PendingReportRow({ reportInfo }: { reportInfo: ReportTypes }) {
   const {
     rptId,
     rssId,
@@ -20,13 +37,12 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
 
   const nameAndCover = await getNameCover(gameId);
 
-  console.log("OPTIONAL COMMENT:", optionalComment.length);
-
   return (
     <li className="pendingReportRow">
-      <img
+      <Image
         className="prr-left"
         src={nameAndCover?.cover?.image_id ? coverPath("720p", nameAndCover.cover.image_id) : "/missingasset.webp"}
+        alt="Game Cover"
       />
       <div className="prr-right">
         <div>

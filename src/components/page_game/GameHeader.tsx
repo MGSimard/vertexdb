@@ -13,9 +13,6 @@ export async function GameHeader({ slug }: { slug: string }) {
   // if (gameData?.websites && gameData.websites.length > 0) {
   //   console.log("WEBSITES:", gameData.websites);
   // }
-
-  const sections = sectionEnums;
-
   return (
     <>
       <section className="gamesection-header">
@@ -81,7 +78,7 @@ export async function GameHeader({ slug }: { slug: string }) {
 
       {gameData && (
         <section className="game-resources">
-          {sections.map((section) => (
+          {sectionEnums.map((section) => (
             <div key={section} className="rss-container">
               <h2>{section}</h2>
               {initialRss.error ? (

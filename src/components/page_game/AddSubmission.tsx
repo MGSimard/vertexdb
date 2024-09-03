@@ -17,13 +17,13 @@ export function AddSubmission({ gameId, slug, section }: AddSubmissionTypes) {
 
   useEffect(() => {
     if (formState) {
-      toast.custom((t) => <CustomToast icon={formState.error ? "warning" : "success"} message={formState.message} />);
+      toast.custom(() => <CustomToast icon={formState.error ? "warning" : "success"} message={formState.message} />);
       setDescCharCount(0);
       if (!formState.error) setFormOpen(false);
     }
   }, [formState]);
 
-  const handleCharCount = (e: any) => {
+  const handleCharCount = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     setDescCharCount(e.target.value.length);
   };
 

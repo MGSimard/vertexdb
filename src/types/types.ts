@@ -1,3 +1,5 @@
+import { sectionEnums } from "@/utils/enums";
+
 export interface GamedataResponseTypes {
   id: number;
   name: string;
