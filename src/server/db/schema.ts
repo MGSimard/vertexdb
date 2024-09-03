@@ -78,7 +78,7 @@ export const rssReports = createTable(
       .references(() => gameRssEntries.rssId),
     reportBy: varchar("report_by", { length: 255 }).notNull(),
     reportReason: reportReasonEnum("report_reason").default("Other").notNull(),
-    optionalComment: varchar("optional_comment", { length: 120 }),
+    optionalComment: varchar("optional_comment", { length: 120 }).notNull(),
     status: reportStatusEnum("status").default("pending").notNull(),
     createdAt: timestamp("created_at")
       .default(sql`CURRENT_TIMESTAMP`)

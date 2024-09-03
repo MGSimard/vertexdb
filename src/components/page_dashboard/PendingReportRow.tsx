@@ -2,24 +2,8 @@ import { getNameCover } from "@/server/actions";
 import { ModerateButton } from "@/components/page_dashboard/ModerateButton";
 import { coverPath, isoToUTC } from "@/utils/helpers";
 import Image from "next/image";
-import { reportReasonEnums } from "@/utils/enums";
 
-interface ReportTypes {
-  rptId: number;
-  rssId: number;
-  reportBy: string;
-  reportReason: string;
-  optionalComment: string;
-  createdAt: Date;
-  gameId: number;
-  authorId: string;
-  title: string;
-  url: string;
-  description: string;
-  score: number;
-}
-
-export async function PendingReportRow({ reportInfo }: { reportInfo: ReportTypes }) {
+export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
   const {
     rptId,
     rssId,
