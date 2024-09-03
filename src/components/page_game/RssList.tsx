@@ -1,5 +1,5 @@
 import { SignedOut, SignedIn } from "@clerk/nextjs";
-import { SubmissionTypes } from "@/types/types";
+import type { SubmissionTypes } from "@/types/types";
 import { ReportButton } from "@/components/page_game/ReportButton";
 import { VoteBlock } from "@/components/page_game/VoteBlock";
 import { AddSubmission } from "@/components/page_game/AddSubmission";

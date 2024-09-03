@@ -1,5 +1,5 @@
 import { getInitialRss, getGameData } from "@/server/actions";
-import { GamedataResponseTypes } from "@/types/types";
+import type { GamedataResponseTypes } from "@/types/types";
 import { convertUnix, coverPath } from "@/utils/helpers";
 import { sectionEnums } from "@/utils/enums";
 import { RssList } from "@/components/page_game/RssList";

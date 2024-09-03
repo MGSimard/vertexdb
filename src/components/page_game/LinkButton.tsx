@@ -1,4 +1,4 @@
-import { GamedataResponseTypes } from "@/types/types";
+import type { GamedataResponseTypes } from "@/types/types";
 
 interface LinkButtonTypes {
   category: number;
