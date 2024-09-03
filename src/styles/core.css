@@ -49,6 +49,10 @@ body {
   background-repeat: no-repeat;
   overflow: hidden;
 }
+header,
+footer {
+  flex-shrink: 0;
+}
 footer,
 .indexed-vertribbon {
   color: hsla(from var(--clr-trim) h s l / 0.3);

@@ -27,16 +27,26 @@ export function AddSubmission({ gameId, slug, section }: AddSubmissionTypes) {
     setDescCharCount(e.target.value.length);
   };
 
+  const handleFormOpen = () => {
+    setFormOpen(true);
+    setTimeout(() => {
+      const scrollTarget = document.getElementById(section);
+      if (scrollTarget) {
+        scrollTarget.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+    }, 100); // 100ms delay
+  };
+
   if (!formOpen) {
     return (
-      <button className="card-content" onClick={() => setFormOpen(true)}>
+      <button className="card-content" onClick={handleFormOpen}>
         [+] ADD
       </button>
     );
   }
 
   return (
-    <div className="card-content">
+    <div id={section} className="card-content">
       <form className="submissionForm" action={formAction}>
         <h3>/ / ADD TO [{section}]</h3>
         <label htmlFor={`title-${section}`}>
