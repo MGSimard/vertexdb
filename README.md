@@ -28,6 +28,7 @@ Full Cycle Next.js App
 - Resource Submission
 - Submission Voting
 - Submission Reporting
+- Submission Moderation
 - Admin Dashboard
 - Auth & RBAC
 - Theme toggle
@@ -43,6 +44,7 @@ Full Cycle Next.js App
 - [Upstash (Ratelimit)](https://upstash.com/)
 - [Zod 3.23.8 (Validation)](https://zod.dev/)
 - [Next-themes (Trigger)](https://github.com/pacocoursey/next-themes)
+- [Sonner](https://sonner.emilkowal.ski/)
 - [Vercel Hosting](https://vercel.com/)
 
 ## Usage
