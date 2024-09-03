@@ -64,7 +64,7 @@ export function GameSkeleton() {
       </section>
       <section className="game-resources">
         {sections.map((section) => (
-          <div key={section}>
+          <div key={section} className="rss-container">
             <h2>{section}</h2>
             <SkeleCard />
           </div>
