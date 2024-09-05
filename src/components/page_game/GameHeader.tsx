@@ -1,15 +1,20 @@
 import { getInitialRss, getGameData } from "@/server/actions";
-import type { GamedataResponseTypes } from "@/types/types";
 import { convertUnix, coverPath } from "@/utils/helpers";
 import { sectionEnums } from "@/utils/enums";
 import { RssList } from "@/components/page_game/RssList";
 import { LinkButton } from "@/components/page_game/LinkButton";
 import { Globe, Discord, Steam } from "@/components/icons";
+import { GamedataResponseTypes, InitialRssResponseTypes, InitialRss } from "@/types/types";
 
 export async function GameHeader({ slug }: { slug: string }) {
   const gameData = (await getGameData(slug)) as GamedataResponseTypes;
-  const initialRss = (await getInitialRss(gameData?.id)) as any;
+  const initialRss = (await getInitialRss(gameData?.id)) as InitialRssResponseTypes;
 
+  const developers = gameData?.involved_companies?.filter((company) => company.developer === true);
+  const publishers = gameData?.involved_companies?.filter((company) => company.publisher === true);
+
+  console.log("DEVELOPERS:", developers);
+  console.log("PUBLISHERS:", publishers);
   // if (gameData?.websites && gameData.websites.length > 0) {
   //   console.log("WEBSITES:", gameData.websites);
   // }
@@ -45,25 +50,11 @@ export async function GameHeader({ slug }: { slug: string }) {
                 </tr>
                 <tr>
                   <th>DEVELOPER:</th>
-                  <td>
-                    {gameData?.involved_companies
-                      ? gameData?.involved_companies
-                          ?.filter((company) => company.developer === true)
-                          .map((company) => company.company.name)
-                          .join(", ")
-                      : "-"}
-                  </td>
+                  <td>{developers?.length ? developers.map((company) => company.company.name).join(", ") : "-"}</td>
                 </tr>
                 <tr>
                   <th>PUBLISHER:</th>
-                  <td>
-                    {gameData?.involved_companies
-                      ? gameData?.involved_companies
-                          ?.filter((company) => company.publisher === true)
-                          .map((company) => company.company.name)
-                          .join(", ")
-                      : "-"}
-                  </td>
+                  <td>{publishers?.length ? publishers.map((company) => company.company.name).join(", ") : "-"}</td>
                 </tr>
               </tbody>
             </table>
@@ -81,14 +72,14 @@ export async function GameHeader({ slug }: { slug: string }) {
           {sectionEnums.map((section) => (
             <div key={section} className="rss-container">
               <h2>{section}</h2>
-              {initialRss.error ? (
+              {"error" in initialRss && initialRss.error ? (
                 <div>{initialRss.error}</div>
               ) : (
                 <RssList
                   gameId={gameData?.id}
                   slug={slug}
                   section={section.toLowerCase()}
-                  content={initialRss.filter((entry: any) => entry.section === section.toLowerCase()) ?? []}
+                  content={initialRss.filter((entry: InitialRss) => entry.section === section.toLowerCase()) ?? []}
                 />
               )}
             </div>

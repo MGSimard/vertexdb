@@ -1,3 +1,5 @@
+import { sectionEnums } from "@/utils/enums";
+
 export interface GamedataResponseTypes {
   id: number;
   name: string;
@@ -10,6 +12,17 @@ export interface GamedataResponseTypes {
   summary?: string;
   websites?: { id: number; category: number; url: string }[];
 }
+
+export interface InitialRss {
+  rssId: number;
+  title: string;
+  url: string;
+  description: string;
+  section: (typeof sectionEnums)[number];
+  score: number;
+  currentUserVote?: boolean | null;
+}
+export type InitialRssResponseTypes = InitialRss[] | { error: string };
 
 export interface SearchResponseTypes {
   id: number;
