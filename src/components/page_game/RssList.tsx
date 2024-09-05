@@ -1,10 +1,10 @@
 import { SignedOut, SignedIn } from "@clerk/nextjs";
-import type { SubmissionTypes } from "@/types/types";
+import type { InitialRssTypes } from "@/types/types";
 import { ReportButton } from "@/components/page_game/ReportButton";
 import { VoteBlock } from "@/components/page_game/VoteBlock";
 import { AddSubmission } from "@/components/page_game/AddSubmission";
 
-const SubmissionEntry = ({ submission }: { submission: SubmissionTypes }) => {
+const SubmissionEntry = ({ submission }: { submission: InitialRssTypes }) => {
   return (
     <div className="card-submission">
       <div className="cs-left">
@@ -32,7 +32,7 @@ export function RssList({
   gameId: number;
   slug: string;
   section: string;
-  content: SubmissionTypes[] | [];
+  content: InitialRssTypes[];
 }) {
   return (
     <>

@@ -4,7 +4,7 @@ import { sectionEnums } from "@/utils/enums";
 import { RssList } from "@/components/page_game/RssList";
 import { LinkButton } from "@/components/page_game/LinkButton";
 import { Globe, Discord, Steam } from "@/components/icons";
-import { GamedataResponseTypes, InitialRssResponseTypes, InitialRss } from "@/types/types";
+import type { GamedataResponseTypes, InitialRssResponseTypes, InitialRssTypes } from "@/types/types";
 
 export async function GameHeader({ slug }: { slug: string }) {
   const gameData = (await getGameData(slug)) as GamedataResponseTypes;
@@ -79,7 +79,9 @@ export async function GameHeader({ slug }: { slug: string }) {
                   gameId={gameData?.id}
                   slug={slug}
                   section={section.toLowerCase()}
-                  content={initialRss.filter((entry: InitialRss) => entry.section === section.toLowerCase()) ?? []}
+                  content={
+                    (initialRss as InitialRssTypes[]).filter((entry) => entry.section === section.toLowerCase()) ?? []
+                  }
                 />
               )}
             </div>

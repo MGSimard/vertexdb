@@ -212,8 +212,9 @@ Upon denial (and passing Auth+RBAC & validation checks), the following occurs as
 - [x] Replace error returns for error throws into error toasts() for SUBMISSIONS, VOTING and MODERATION
 - [x] Rework errors overall across the board with one specific return format
 - [x] Finish styling the custom toast component
-- [ ] On opening form scroll to its anchor
+- [x] On opening form scroll to its anchor
 - [ ] Maybe make button styles like gun button design
+- [ ] Change word-wrap behaviour to prioritize words for headings
 - [ ] Figure out if I can match clerk theme to current theme
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites

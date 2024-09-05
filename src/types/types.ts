@@ -13,7 +13,7 @@ export interface GamedataResponseTypes {
   websites?: { id: number; category: number; url: string }[];
 }
 
-export interface InitialRss {
+export interface InitialRssTypes {
   rssId: number;
   title: string;
   url: string;
@@ -22,7 +22,7 @@ export interface InitialRss {
   score: number;
   currentUserVote?: boolean | null;
 }
-export type InitialRssResponseTypes = InitialRss[] | { error: string };
+export type InitialRssResponseTypes = InitialRssTypes[] | { error: string };
 
 export interface SearchResponseTypes {
   id: number;
