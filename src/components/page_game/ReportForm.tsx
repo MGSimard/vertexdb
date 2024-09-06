@@ -4,8 +4,9 @@ import { createReport } from "@/server/actions";
 import { reportReasonEnums } from "@/utils/enums";
 import { CustomToast } from "@/components/layout/CustomToast";
 import { toast } from "sonner";
+import { InitialRssTypes } from "@/types/types";
 
-export function ReportForm({ onClose, info }: { onClose: () => void; info: any }) {
+export function ReportForm({ onClose, info }: { onClose: () => void; info: InitialRssTypes }) {
   const [formState, formAction, pending] = useActionState(createReport, null);
   const [descCharCount, setDescCharCount] = useState(0);
 

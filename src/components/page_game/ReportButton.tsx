@@ -3,8 +3,9 @@ import { useState } from "react";
 import { Modal } from "@/components/layout/Modal";
 import { ReportForm } from "@/components/page_game/ReportForm";
 import { Warning } from "@/components/icons";
+import { InitialRssTypes } from "@/types/types";
 
-export function ReportButton({ info }: { info: any }) {
+export function ReportButton({ info }: { info: InitialRssTypes }) {
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleModalOpen = () => {

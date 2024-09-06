@@ -281,11 +281,12 @@ export async function createReport(currentState: any, formData: FormData) {
     await db
       .insert(rssReports)
       .values({ rssId, reportBy: currentUserId, reportReason, optionalComment, status: "pending" });
-  } catch (err: any) {
-    if (err.code && Number(err.code) === 23505) {
+  } catch (err: unknown) {
+    if (err instanceof Error && "code" in err && Number(err.code) === 23505) {
       return { error: true, message: "DUPLICATE ERROR: User has already submitted a report." };
     }
-    return { error: true, message: err.message ?? "UNKNOWN ERROR." };
+
+    return { error: true, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 
   revalidatePath("/admin/dashboard");

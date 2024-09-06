@@ -20,7 +20,7 @@ export async function searchGames(query: string) {
 
     const data = await res.json();
     return data;
-  } catch (err: any) {
-    return { error: err.message };
+  } catch (err: unknown) {
+    return { error: true, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 }
