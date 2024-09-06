@@ -28,8 +28,8 @@ export function Searchbar() {
       }
     };
 
-    const delay = setTimeout(() => {
-      if (query) getMatchingGames();
+    const delay = setTimeout(async () => {
+      if (query) await getMatchingGames();
       else setGames([]);
     }, 500);
 
