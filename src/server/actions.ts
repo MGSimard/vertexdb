@@ -7,7 +7,6 @@ import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 import { ratelimit } from "@/server/ratelimit";
 import { reportReasonEnums, sectionEnums } from "@/utils/enums";
-import type { GamedataResponseTypes, InitialRssResponseTypes } from "@/types/types";
 
 /* FETCH CURRENTGAME DATA */
 export async function getGameData(query: string) {
@@ -29,7 +28,7 @@ export async function getGameData(query: string) {
 }
 
 /* FETCH CURRENTGAME SUBMISSIONS */
-export async function getInitialRss(currentGameId: number): Promise<InitialRssResponseTypes> {
+export async function getInitialRss(currentGameId: number) {
   const user = auth();
   const currentUser = user.userId;
 

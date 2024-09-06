@@ -1,9 +1,11 @@
 import { getNameCover } from "@/server/actions";
 import { ModerateButton } from "@/components/page_dashboard/ModerateButton";
 import { coverPath, isoToUTC } from "@/utils/helpers";
-import Image from "next/image";
+import type { ReportTypes } from "@/types/types";
 
-export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
+export async function PendingReportRow({ reportInfo }: { reportInfo: ReportTypes }) {
+  console.log(reportInfo);
+
   const {
     rptId,
     rssId,
@@ -23,7 +25,7 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: any }) {
 
   return (
     <li className="pendingReportRow">
-      <Image
+      <img
         className="prr-left"
         src={nameAndCover?.cover?.image_id ? coverPath("720p", nameAndCover.cover.image_id) : "/missingasset.webp"}
         alt="Game Cover"

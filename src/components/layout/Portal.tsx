@@ -6,7 +6,7 @@ import { createPortal } from "react-dom";
 export function Portal({ onClose, children }: { onClose: () => void; children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
-  const handleKeyDown = (e: any) => {
+  const handleKeyDown = (e: KeyboardEvent) => {
     if (e.key === "Escape") onClose();
   };
 

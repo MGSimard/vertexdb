@@ -1,4 +1,4 @@
-import { sectionEnums } from "@/utils/enums";
+import { sectionEnums, reportStatusEnums, reportReasonEnums } from "@/utils/enums";
 
 export interface GamedataResponseTypes {
   id: number;
@@ -43,4 +43,21 @@ export interface SubmissionTypes {
   section: string;
   score: number;
   currentUserVote?: boolean | null;
+}
+
+export interface ReportTypes {
+  rptId: number;
+  rssId: number;
+  reportBy: string;
+  status: (typeof reportStatusEnums)[number];
+  reportReason: (typeof reportReasonEnums)[number];
+  optionalComment: string;
+  createdAt: Date;
+  updatedAt: Date;
+  gameId: number;
+  authorId: string;
+  title: string;
+  url: string;
+  description: string;
+  score: number;
 }
