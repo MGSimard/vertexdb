@@ -365,19 +365,23 @@ export async function getPendingReports() {
 /* GET GAME NAME & COVER IMAGE FOR REPORTS IN ADMIN DASHBOARD */
 export async function getNameCover(gameId: number) {
   // Same as last time, handle errors as alt missing data in component
-  const res = await fetch("https://api.igdb.com/v4/games", {
-    method: "POST",
-    headers: {
-      Accept: "application/json",
-      "Client-ID": process.env.CLIENT_ID,
-      Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
-    } as HeadersInit,
-    body: `fields name, cover.image_id; where id = ${gameId};`,
-  });
+  try {
+    const res = await fetch("https://api.igdb.com/v4/games", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Client-ID": process.env.CLIENT_ID,
+        Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
+      } as HeadersInit,
+      body: `fields name, cover.image_id; where id = ${gameId};`,
+    });
 
-  const data = await res.json();
-
-  return data[0];
+    const data = await res.json();
+    console.log(data);
+    return data[0];
+  } catch (err: unknown) {
+    return { error: true, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+  }
 }
 
 /* APPROVE REPORT, DELETE SUBMISSION, STATUS APPROVED */

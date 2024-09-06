@@ -61,5 +61,11 @@ export interface ReportTypes {
   description: string;
   score: number;
 }
-
 export type PendingReportsResponse = { data: ReportTypes[]; message: string } | { error: boolean; message: string };
+
+interface NameCoverTypes {
+  id: number;
+  cover?: { id: number; image_id: string };
+  name: string;
+}
+export type NameCoverResponse = NameCoverTypes | { error: boolean; message: string };

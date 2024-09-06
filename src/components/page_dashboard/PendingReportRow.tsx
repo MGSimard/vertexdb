@@ -1,11 +1,9 @@
 import { getNameCover } from "@/server/actions";
 import { ModerateButton } from "@/components/page_dashboard/ModerateButton";
 import { coverPath, isoToUTC } from "@/utils/helpers";
-import type { ReportTypes } from "@/types/types";
+import type { NameCoverResponse, ReportTypes } from "@/types/types";
 
 export async function PendingReportRow({ reportInfo }: { reportInfo: ReportTypes }) {
-  console.log(reportInfo);
-
   const {
     rptId,
     rssId,
@@ -21,19 +19,23 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: ReportTypes
     score,
   } = reportInfo;
 
-  const nameAndCover = await getNameCover(gameId);
+  const nameAndCover = (await getNameCover(gameId)) as NameCoverResponse;
 
   return (
     <li className="pendingReportRow">
       <img
         className="prr-left"
-        src={nameAndCover?.cover?.image_id ? coverPath("720p", nameAndCover.cover.image_id) : "/missingasset.webp"}
+        src={
+          "error" in nameAndCover || !nameAndCover.cover?.image_id
+            ? "/missingasset.webp"
+            : coverPath("720p", nameAndCover.cover.image_id)
+        }
         alt="Game Cover"
       />
       <div className="prr-right">
         <div>
           <h3>GAME</h3>
-          <p className="prr-game">{nameAndCover?.name.toUpperCase() ?? "NOT FOUND"}</p>
+          <p className="prr-game">{"error" in nameAndCover ? "NOT FOUND" : nameAndCover?.name?.toUpperCase()}</p>
         </div>
         <div>
           <h3>SUBMISSION DATA</h3>
