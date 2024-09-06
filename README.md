@@ -28,31 +28,6 @@ Full Cycle Next.js App
 - Auth & RBAC
 - Theme toggle
 
-### Built With
-
-- [Based on T3 Stack](https://create.t3.gg/)
-- [Next.js 15.0.0-rc.0](https://nextjs.org/)
-- [React 19.0.0-rc-19bd26be-20240815](https://react.dev/)
-- [TypeScript 5.5.3](https://www.typescriptlang.org/)
-- [Drizzle (PostgreSQL)](https://orm.drizzle.team/)
-- [Clerk (Auth)](https://clerk.com)
-- [Upstash (Ratelimit)](https://upstash.com/)
-- [Zod 3.23.8 (Validation)](https://zod.dev/)
-- [Next-themes (Trigger)](https://github.com/pacocoursey/next-themes)
-- [Sonner](https://sonner.emilkowal.ski/)
-- [Vercel Hosting](https://vercel.com/)
-
-## Usage
-
-- Go to https://vertexdb.vercel.app/
-
-## Contact
-
-MGSimard - g.marcgs@gmail.com  
-[@MGSimard on X](https://x.com/MGSimard)
-
-For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github.io). Resume attached.
-
 <details>
 <summary><h2>Application Flow: Searching Games</h2></summary>
 <p>Users can search for and access game pages, which also contain user-submitted resources.</p>
@@ -135,6 +110,31 @@ Upon denial (and passing Auth+RBAC & validation checks), the following occurs as
 2. On success, update the current report's status to "denied".
 3. revalidatePath() to refresh from server action.
 </details>
+
+### Built With
+
+- [Based on T3 Stack](https://create.t3.gg/)
+- [Next.js 15.0.0-rc.0](https://nextjs.org/)
+- [React 19.0.0-rc-19bd26be-20240815](https://react.dev/)
+- [TypeScript 5.5.3](https://www.typescriptlang.org/)
+- [Drizzle (PostgreSQL)](https://orm.drizzle.team/)
+- [Clerk (Auth)](https://clerk.com)
+- [Upstash (Ratelimit)](https://upstash.com/)
+- [Zod 3.23.8 (Validation)](https://zod.dev/)
+- [Next-themes (Trigger)](https://github.com/pacocoursey/next-themes)
+- [Sonner](https://sonner.emilkowal.ski/)
+- [Vercel Hosting](https://vercel.com/)
+
+## Usage
+
+- Go to https://vertexdb.vercel.app/
+
+## Contact
+
+MGSimard - g.marcgs@gmail.com  
+[@MGSimard on X](https://x.com/MGSimard)
+
+For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github.io). Resume attached.
 
 ## Task List
 
