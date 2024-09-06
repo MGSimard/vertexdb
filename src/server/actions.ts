@@ -177,7 +177,7 @@ export async function createVote(rssId: number, voteType: boolean) {
       throw new Error("DATABASE ERROR: This submission no longer exists.");
     }
 
-    if (!currentUserVote || isNaN(currentSubmission!.score)) {
+    if (!currentUserVote || isNaN(currentSubmission.score)) {
       throw new Error("DATABASE ERROR: Could not retrieve current vote or submission score.");
     }
 
@@ -190,7 +190,7 @@ export async function createVote(rssId: number, voteType: boolean) {
           .returning({ newVote: gameRssVotes.voteType });
         const [newScore] = await tx
           .update(gameRssEntries)
-          .set({ score: currentSubmission!.score + (voteInput ? 1 : -1) })
+          .set({ score: currentSubmission.score + (voteInput ? 1 : -1) })
           .where(eq(gameRssEntries.rssId, submissionId))
           .returning({ newScore: gameRssEntries.score });
         return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
@@ -208,7 +208,7 @@ export async function createVote(rssId: number, voteType: boolean) {
             .returning({ newVote: gameRssVotes.voteType });
           const [newScore] = await tx
             .update(gameRssEntries)
-            .set({ score: currentSubmission!.score + (voteInput ? 2 : -2) })
+            .set({ score: currentSubmission.score + (voteInput ? 2 : -2) })
             .where(eq(gameRssEntries.rssId, submissionId))
             .returning({ newScore: gameRssEntries.score });
           return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
@@ -222,7 +222,7 @@ export async function createVote(rssId: number, voteType: boolean) {
             .where(and(eq(gameRssVotes.rssId, submissionId), eq(gameRssVotes.voterId, currentUserId)));
           const [newScore] = await tx
             .update(gameRssEntries)
-            .set({ score: currentSubmission!.score + (voteInput ? -1 : 1) })
+            .set({ score: currentSubmission.score + (voteInput ? -1 : 1) })
             .where(eq(gameRssEntries.rssId, submissionId))
             .returning({ newScore: gameRssEntries.score });
           return { voteResult: null, scoreResult: newScore!.newScore };
@@ -243,7 +243,7 @@ const reportSchema = z.object({
   optionalComment: z.string().max(120).trim(),
 });
 const CreateReport = reportSchema.omit({ reportBy: true });
-export async function createReport(currentState: any, formData: FormData) {
+export async function createReport(formData: FormData) {
   const user = auth();
   if (!user.userId) {
     return { success: false, message: "AUTH ERROR: Unauthorized." };
@@ -377,7 +377,6 @@ export async function getNameCover(gameId: number) {
     });
 
     const data = await res.json();
-    console.log(data);
     return data[0];
   } catch (err: unknown) {
     return { error: true, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
