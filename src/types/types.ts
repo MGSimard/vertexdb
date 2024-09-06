@@ -1,4 +1,4 @@
-import { sectionEnums, reportStatusEnums, reportReasonEnums } from "@/utils/enums";
+import type { sectionEnums, reportStatusEnums, reportReasonEnums } from "@/utils/enums";
 
 export interface GamedataResponseTypes {
   id: number;
