@@ -1,9 +1,4 @@
-## Few conventions
-
-- Import order: React Core > Next Core > Other core > Types > Components > functions > styles
-- export default function() for pages
-- export function() for components
-- const = () => {} for anything "in-house"
+## THIS APP IS IN ACTIVE DEVELOPMENT
 
 <br/>
 <div align="center">
@@ -214,11 +209,11 @@ Upon denial (and passing Auth+RBAC & validation checks), the following occurs as
 - [x] Finish styling the custom toast component
 - [x] On opening form scroll to its anchor
 - [ ] Maybe make button styles like gun button design
-- [ ] Change word-wrap behaviour to prioritize words for headings
+- [x] Change word-wrap behaviour to prioritize words for headings
 - [ ] Figure out if I can match clerk theme to current theme
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites
 - [ ] Look into using optimistic updates for visuals when voting
-- [ ] Remove "any" once done
 - [ ] Consider my own ratelimit service, I feel like someone could top me out with an autoclicker
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
+- [ ] Remove "any" once done

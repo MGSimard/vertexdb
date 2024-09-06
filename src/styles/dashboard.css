@@ -21,7 +21,8 @@
   display: flex;
   align-items: stretch;
   border: 1px solid var(--clr-ui-border-idle);
-  word-break: break-all;
+  word-break: break-word;
+  overflow-wrap: break-word;
 }
 .pendingReportRow:hover,
 .pendingReportRow:focus-within {

@@ -234,6 +234,11 @@ button,
 label {
   text-transform: uppercase;
 }
+p {
+  word-break: break-word;
+  overflow-wrap: break-word;
+  hyphens: auto;
+}
 label {
   font-weight: 600;
 }
