@@ -70,7 +70,7 @@ export async function GameHeader({ slug }: { slug: string }) {
           {sectionEnums.map((section) => (
             <div key={section} className="rss-container">
               <h2>{section}</h2>
-              {"error" in initialRss && initialRss.error ? (
+              {"error" in initialRss ? (
                 <div>{initialRss.error}</div>
               ) : (
                 <RssList

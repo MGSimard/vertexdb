@@ -61,3 +61,5 @@ export interface ReportTypes {
   description: string;
   score: number;
 }
+
+export type PendingReportsResponse = { data: ReportTypes[]; message: string } | { error: boolean; message: string };
