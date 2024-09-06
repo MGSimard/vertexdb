@@ -208,6 +208,7 @@ Upon denial (and passing Auth+RBAC & validation checks), the following occurs as
 - [x] Rework errors overall across the board with one specific return format
 - [x] Finish styling the custom toast component
 - [x] On opening form scroll to its anchor
+- [ ] Edit return consistency across the entire app ({data: [], message: "", error: boolean})
 - [ ] Maybe make button styles like gun button design
 - [x] Change word-wrap behaviour to prioritize words for headings
 - [ ] Figure out if I can match clerk theme to current theme
