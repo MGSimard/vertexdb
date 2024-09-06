@@ -243,7 +243,7 @@ const reportSchema = z.object({
   optionalComment: z.string().max(120).trim(),
 });
 const CreateReport = reportSchema.omit({ reportBy: true });
-export async function createReport(formData: FormData) {
+export async function createReport(currentState: any, formData: FormData) {
   const user = auth();
   if (!user.userId) {
     return { success: false, message: "AUTH ERROR: Unauthorized." };
