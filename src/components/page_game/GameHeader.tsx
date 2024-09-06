@@ -77,9 +77,7 @@ export async function GameHeader({ slug }: { slug: string }) {
                   gameId={gameData?.id}
                   slug={slug}
                   section={section.toLowerCase()}
-                  content={
-                    (initialRss as InitialRssTypes[]).filter((entry) => entry.section === section.toLowerCase()) ?? []
-                  }
+                  content={initialRss.filter((entry) => entry.section === section.toLowerCase()) ?? []}
                 />
               )}
             </div>
