@@ -53,7 +53,7 @@ export interface ReportTypes {
   reportReason: (typeof reportReasonEnums)[number];
   optionalComment: string;
   createdAt: Date;
-  updatedAt: Date;
+  updatedAt: Date | null;
   gameId: number;
   authorId: string;
   title: string;
