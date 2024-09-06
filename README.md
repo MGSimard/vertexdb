@@ -14,7 +14,7 @@ Full Cycle Next.js App
 
 ## About The Project
 
-![Screenshot]()
+![Screenshot](https://i.imgur.com/1nl0nuf.png)
 
 ### Features
 
@@ -128,6 +128,10 @@ Upon denial (and passing Auth+RBAC & validation checks), the following occurs as
 ## Usage
 
 - Go to https://vertexdb.vercel.app/
+
+## Acknowledgments
+
+- Cyberpunk 2077 (Inspiration for UI design)
 
 ## Contact
 
