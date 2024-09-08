@@ -1,6 +1,6 @@
 import type { sectionEnums, reportStatusEnums, reportReasonEnums } from "@/utils/enums";
 
-export interface GamedataResponseTypes {
+export interface GamedataTypes {
   id: number;
   name: string;
   cover?: {
@@ -12,6 +12,7 @@ export interface GamedataResponseTypes {
   summary?: string;
   websites?: { id: number; category: number; url: string }[];
 }
+export type GamedataResponseTypes = { success: boolean; data?: GamedataTypes; message: string };
 
 export interface InitialRssTypes {
   rssId: number;

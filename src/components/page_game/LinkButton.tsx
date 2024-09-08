@@ -1,10 +1,10 @@
-import type { GamedataResponseTypes } from "@/types/types";
+import type { GamedataTypes } from "@/types/types";
 
 interface LinkButtonTypes {
   category: number;
   icon: React.ReactNode | undefined;
   text: string;
-  gameData: GamedataResponseTypes | undefined;
+  gameData: GamedataTypes | undefined;
 }
 
 export function LinkButton({ category, icon, text, gameData }: LinkButtonTypes) {

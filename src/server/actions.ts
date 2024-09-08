@@ -7,6 +7,7 @@ import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 import { ratelimit } from "@/server/ratelimit";
 import { reportReasonEnums, sectionEnums } from "@/utils/enums";
+import { GamedataResponseTypes } from "@/types/types";
 
 /* RETURN FORMAT CONVENTIONS */
 
@@ -15,7 +16,7 @@ import { reportReasonEnums, sectionEnums } from "@/utils/enums";
 // { success: false, message: "" }
 
 /* FETCH CURRENTGAME DATA */
-export async function getGameData(query: string) {
+export async function getGameData(query: string): Promise<GamedataResponseTypes> {
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",
@@ -29,8 +30,13 @@ export async function getGameData(query: string) {
 
     const data = await res.json();
 
-    return data[0];
-  } catch (err) {}
+    if (!data.length) throw new Error("IGDB ERROR: Game not found.");
+
+    return { success: true, data, message: "SUCCESS: Retrieved game data." };
+  } catch (err) {
+    console.log("failure");
+    return { success: false, message: "IGDB ERROR: Failed to retrieve game data." };
+  }
 }
 
 /* FETCH CURRENTGAME SUBMISSIONS */
