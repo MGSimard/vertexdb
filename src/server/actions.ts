@@ -40,12 +40,14 @@ export async function getGameData(query: string): Promise<GamedataResponseTypes>
 
 /* FETCH CURRENTGAME SUBMISSIONS */
 export async function getInitialRss(currentGameId: number | undefined) {
+  if (currentGameId === null || currentGameId === undefined) {
+    return { success: false, message: "DATABASE ERROR: Missing game ID." };
+  }
+
   const user = auth();
   const currentUser = user.userId;
 
   try {
-    if (currentGameId === null || currentGameId === undefined) throw new Error("DATABASE ERROR: No game id supplied.");
-
     const query = db
       .select({
         rssId: gameRssEntries.rssId,
