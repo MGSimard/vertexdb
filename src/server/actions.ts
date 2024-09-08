@@ -305,9 +305,9 @@ export async function createReport(currentState: any, formData: FormData) {
 export async function getTotalSubmissions() {
   try {
     const [submissionsAmount] = await db.select({ count: count() }).from(gameRssEntries);
-    return { data: submissionsAmount, message: "SUCCESS: Retrieved total submissions." };
+    return { success: false, data: submissionsAmount, message: "SUCCESS: Retrieved total submissions." };
   } catch (err) {
-    return { message: "DATABASE ERROR: Failed retrieving total submissions." };
+    return { success: false, message: "DATABASE ERROR: Failed retrieving total submissions." };
   }
 }
 
@@ -315,9 +315,9 @@ export async function getTotalSubmissions() {
 export async function getTotalVotes() {
   try {
     const [votesAmount] = await db.select({ count: count() }).from(gameRssVotes);
-    return { data: votesAmount, message: "SUCCESS: Retrieved total votes." };
+    return { success: true, data: votesAmount, message: "SUCCESS: Retrieved total votes." };
   } catch (err) {
-    return { message: "DATABASE ERROR: Failed retrieving total votes." };
+    return { success: false, message: "DATABASE ERROR: Failed retrieving total votes." };
   }
 }
 
@@ -332,9 +332,9 @@ export async function getReportCounts() {
         totalCount: sql<number>`COUNT(*)::int`,
       })
       .from(rssReports);
-    return { data: counts, message: "SUCCESS: Retrieved report counts." };
+    return { success: true, data: counts, message: "SUCCESS: Retrieved report counts." };
   } catch (err) {
-    return { message: "DATABASE ERROR: Failed retrieving report counts." };
+    return { success: false, message: "DATABASE ERROR: Failed retrieving report counts." };
   }
 }
 
