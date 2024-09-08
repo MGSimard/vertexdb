@@ -214,6 +214,7 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 - [x] On opening form scroll to its anchor
 - [ ] Maybe make button styles like gun button design
 - [x] Change word-wrap behaviour to prioritize words for headings
+- [ ] Prevent form clear on error
 - [ ] Figure out if I can match clerk theme to current theme
 - [ ] Make decision on displayed storefront links
 - [ ] Finalize websites

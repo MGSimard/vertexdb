@@ -94,12 +94,12 @@ export async function createSubmission(currentState: any, formData: FormData) {
   const user = auth();
 
   if (!user.userId) {
-    return { error: true, message: "AUTH ERROR: Unauthorized." };
+    return { success: false, message: "AUTH ERROR: Unauthorized." };
   }
 
   const { success } = await ratelimit.limit(user.userId);
   if (!success) {
-    return { error: true, message: "RATELIMIT: Too many actions." };
+    return { success: false, message: "RATELIMIT: Too many actions." };
   }
 
   const validated = CreateSubmission.safeParse({
@@ -112,7 +112,7 @@ export async function createSubmission(currentState: any, formData: FormData) {
   });
 
   if (!validated.success) {
-    return { error: true, message: "VALIDATION ERROR: Invalid Fields." };
+    return { success: false, message: "VALIDATION ERROR: Invalid Fields." };
   }
 
   const { gameId, title, url, description, section, slug } = validated.data;
@@ -127,14 +127,13 @@ export async function createSubmission(currentState: any, formData: FormData) {
       await tx.insert(gameRssVotes).values({ rssId: insertedRssId!.id, voterId: author, voteType: true });
     });
   } catch (err) {
-    return { error: true, message: "DATABASE ERROR: Failed to create submission." };
+    return { success: false, message: "DATABASE ERROR: Failed to create submission." };
   }
 
   revalidatePath(`/game/${slug}`);
-  return { message: "SUCCESS: Submission added." };
+  return { success: true, message: "SUCCESS: Submission added." };
 }
 
-/* NEXT HERE AT CREATEVOTE */
 /* CREATE VOTE */
 const voteSchema = z.object({
   voteId: z.number().int().positive().lte(2147483647), // Ignore, DB auto

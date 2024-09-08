@@ -17,9 +17,9 @@ export function AddSubmission({ gameId, slug, section }: AddSubmissionTypes) {
 
   useEffect(() => {
     if (formState) {
-      toast.custom(() => <CustomToast icon={formState.error ? "warning" : "success"} message={formState.message} />);
+      toast.custom(() => <CustomToast icon={formState.success ? "success" : "warning"} message={formState.message} />);
       setDescCharCount(0);
-      if (!formState.error) setFormOpen(false);
+      if (formState.success) setFormOpen(false);
     }
   }, [formState]);
 
@@ -87,7 +87,7 @@ export function AddSubmission({ gameId, slug, section }: AddSubmissionTypes) {
             {pending ? "Submitting . . ." : "Submit"}
           </button>
         </fieldset>
-        {formState?.error === true && formState.message}
+        {formState?.success === false && formState.message}
       </form>
     </div>
   );
