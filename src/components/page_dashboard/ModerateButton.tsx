@@ -21,16 +21,16 @@ export function ModerateButton({ approve, reportId, rssId }: ModerateButtonTypes
     if (window.confirm(approveMessage)) {
       const result = await modApproveReport(reportId, rssId!);
 
-      toast.custom(() => <CustomToast icon={result.error ? "warning" : "success"} message={result.message} />);
-      if (result.error) console.error(result.message);
+      toast.custom(() => <CustomToast icon={result.success ? "success" : "warning"} message={result.message} />);
+      if (!result.success) console.error(result.message);
     }
   };
   const handleDeny = async (reportId: number) => {
     if (window.confirm(denyMessage)) {
       const result = await modDenyReport(reportId);
 
-      toast.custom(() => <CustomToast icon={result.error ? "warning" : "success"} message={result.message} />);
-      if (result.error) console.error(result.message);
+      toast.custom(() => <CustomToast icon={result.success ? "success" : "warning"} message={result.message} />);
+      if (!result.success) console.error(result.message);
     }
   };
 

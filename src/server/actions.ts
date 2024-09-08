@@ -8,6 +8,12 @@ import { z } from "zod";
 import { ratelimit } from "@/server/ratelimit";
 import { reportReasonEnums, sectionEnums } from "@/utils/enums";
 
+/* RETURN FORMAT CONVENTIONS */
+
+// success, data, message
+// { success: true, data: [], message: ""}
+// { success: false, message: "" }
+
 /* FETCH CURRENTGAME DATA */
 export async function getGameData(query: string) {
   try {
@@ -391,17 +397,17 @@ const approveSchema = z.object({
 export async function modApproveReport(reportId: number, rssId: number) {
   const currentUser = auth();
   if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
-    return { error: true, message: "AUTH ERROR: Unauthorized" };
+    return { success: false, message: "AUTH ERROR: Unauthorized" };
   }
 
   const { success } = await ratelimit.limit(currentUser.userId);
   if (!success) {
-    return { error: true, message: "RATELIMIT ERROR: Too many actions." };
+    return { success: false, message: "RATELIMIT ERROR: Too many actions." };
   }
 
   const validated = approveSchema.safeParse({ reportId, rssId });
   if (!validated.success) {
-    return { error: true, message: "VALIDATION ERROR: Failed to approve report." };
+    return { success: false, message: "VALIDATION ERROR: Failed to approve report." };
   }
 
   try {
@@ -438,11 +444,11 @@ export async function modApproveReport(reportId: number, rssId: number) {
     });
   } catch (err: unknown) {
     revalidatePath("/admin/dashboard");
-    return { error: true, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 
   revalidatePath("/admin/dashboard");
-  return { message: "SUCCESS: Set report status to 'APPROVED'." };
+  return { success: true, message: "SUCCESS: Set report status to 'APPROVED'." };
 }
 
 /* DENY A REPORT, KEEP SUBMISSION, STATUS DENIED */
@@ -453,17 +459,17 @@ export async function modDenyReport(reportId: number) {
   const currentUser = auth();
 
   if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
-    return { error: true, message: "AUTH ERROR: Unauthorized" };
+    return { success: false, message: "AUTH ERROR: Unauthorized" };
   }
 
   const { success } = await ratelimit.limit(currentUser.userId);
   if (!success) {
-    return { error: true, message: "RATELIMIT ERROR: Too many actions." };
+    return { success: false, message: "RATELIMIT ERROR: Too many actions." };
   }
 
   const validated = denySchema.safeParse({ reportId });
   if (!validated.success) {
-    return { error: true, message: "VALIDATION ERROR: Failed to deny report." };
+    return { success: false, message: "VALIDATION ERROR: Failed to deny report." };
   }
 
   try {
@@ -486,9 +492,9 @@ export async function modDenyReport(reportId: number) {
     });
   } catch (err: unknown) {
     revalidatePath("/admin/dashboard");
-    return { error: true, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 
   revalidatePath("/admin/dashboard");
-  return { message: "SUCCESS: Set report status to 'DENIED'." };
+  return { success: true, message: "SUCCESS: Report status set to 'DENIED'." };
 }
