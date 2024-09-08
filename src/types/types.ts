@@ -63,9 +63,3 @@ export interface ReportTypes {
   description: string | null;
   score: number | null;
 }
-
-interface NameCoverTypes {
-  id: number;
-  cover?: { id: number; image_id: string };
-  name: string;
-}

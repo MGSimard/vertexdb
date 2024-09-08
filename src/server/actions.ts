@@ -47,9 +47,13 @@ export async function getGameData(query: string): Promise<GamedataResponseTypes>
       body: `fields name, cover.image_id, first_release_date, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, summary, websites.category, websites.url; where slug = "${query}" & version_parent = null & category = (0,4,8,9,12);`,
     });
 
+    if (!res.ok) throw new Error(`HTTP ERROR: ${res.status}`);
+
     const data = await res.json();
 
-    if (!data.length) throw new Error("IGDB ERROR: Game not found.");
+    if (!data.length) {
+      throw new Error("IGDB ERROR: Matching game not found.");
+    }
 
     return { success: true, data: data[0], message: "SUCCESS: Retrieved game data." };
   } catch (err) {
@@ -411,12 +415,15 @@ export async function getNameCover(gameId: number | null) {
       body: `fields name, cover.image_id; where id = ${gameId};`,
     });
 
+    if (!res.ok) throw new Error(`HTTP ERROR: ${res.status}`);
+
     const data = await res.json();
 
-    if (!data.length) throw new Error("ERROR: Game does not exist.");
+    if (!data.length) throw new Error("IGDB ERROR: Game does not exist.");
 
     return { success: true, data: data[0], message: "SUCCESS: Fetched game name & cover." };
   } catch (err: unknown) {
+    console.log(err instanceof Error ? err.message : "UNKNOWN ERROR.");
     return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 }
