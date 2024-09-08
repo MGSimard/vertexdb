@@ -9,12 +9,6 @@ import { ratelimit } from "@/server/ratelimit";
 import { reportReasonEnums, sectionEnums } from "@/utils/enums";
 import { GamedataResponseTypes } from "@/types/types";
 
-/* RETURN FORMAT CONVENTIONS */
-
-// success, data, message
-// { success: true, data: [], message: ""}
-// { success: false, message: "" }
-
 /* FETCH CURRENTGAME DATA */
 export async function getGameData(query: string): Promise<GamedataResponseTypes> {
   try {
@@ -381,7 +375,6 @@ export async function getPendingReports() {
 
 /* GET GAME NAME & COVER IMAGE FOR REPORTS IN ADMIN DASHBOARD */
 export async function getNameCover(gameId: number | null) {
-  // Same as last time, handle errors as alt missing data in component
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",
