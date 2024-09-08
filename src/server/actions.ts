@@ -257,7 +257,7 @@ export async function createReport(currentState: any, formData: FormData) {
 
   const { success } = await ratelimit.limit(user.userId);
   if (!success) {
-    return { error: true, message: "RATELIMIT ERROR: Too many actions." };
+    return { success: false, message: "RATELIMIT ERROR: Too many actions." };
   }
 
   const validated = CreateReport.safeParse({
@@ -266,7 +266,7 @@ export async function createReport(currentState: any, formData: FormData) {
     optionalComment: formData.get("report-optionalComment"),
   });
   if (!validated.success) {
-    return { error: true, message: "VALIDATION ERROR: Invalid fields." };
+    return { success: false, message: "VALIDATION ERROR: Invalid fields." };
   }
 
   const { rssId, reportReason, optionalComment } = validated.data;
@@ -288,14 +288,13 @@ export async function createReport(currentState: any, formData: FormData) {
       .values({ rssId, reportBy: currentUserId, reportReason, optionalComment, status: "pending" });
   } catch (err: unknown) {
     if (err instanceof Error && "code" in err && Number(err.code) === 23505) {
-      return { error: true, message: "DUPLICATE ERROR: User has already submitted a report." };
+      return { success: false, message: "DUPLICATE ERROR: User has already submitted a report." };
     }
-
-    return { error: true, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 
   revalidatePath("/admin/dashboard");
-  return { message: "SUCCESS: Report transmitted." };
+  return { success: true, message: "SUCCESS: Submission reported." };
 }
 
 /**

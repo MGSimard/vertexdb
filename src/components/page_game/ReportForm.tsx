@@ -18,9 +18,9 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: Initi
 
   useEffect(() => {
     if (formState) {
-      toast.custom(() => <CustomToast icon={formState.error ? "warning" : "success"} message={formState.message} />);
+      toast.custom(() => <CustomToast icon={formState.success ? "success" : "warning"} message={formState.message} />);
       setDescCharCount(0);
-      if (!formState.error) onClose();
+      if (formState.success) onClose();
     }
   }, [formState]);
 
@@ -63,7 +63,7 @@ export function ReportForm({ onClose, info }: { onClose: () => void; info: Initi
               {pending ? "Submitting . . ." : "Submit"}
             </button>
           </fieldset>
-          {formState?.error === true && formState.message}
+          {formState?.success === false && formState.message}
         </form>
       </div>
     </>
