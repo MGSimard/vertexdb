@@ -18,21 +18,23 @@ export function Searchbar() {
 
   useEffect(() => {
     let ignore = false;
-    const getMatchingGames = async () => {
-      const { success, data, message } = await getGames(query);
 
-      if (!success && !ignore) {
+    const delay = setTimeout(async () => {
+      if (query) {
+        const { success, data, message } = await getGames(query);
+
+        if (!ignore) {
+          if (!success) {
+            setGames([]);
+            toast.custom(() => <CustomToast icon={"warning"} message={message} />);
+            console.error(message);
+          } else if (data) {
+            setGames(data);
+          }
+        }
+      } else {
         setGames([]);
-        toast.custom(() => <CustomToast icon={"warning"} message={message} />);
-        console.error(message);
       }
-
-      if (success && data && !ignore) setGames(data);
-    };
-
-    const delay = setTimeout(() => {
-      if (query) getMatchingGames();
-      else setGames([]);
     }, 500);
 
     return () => {
