@@ -212,7 +212,6 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 - [x] Rework errors overall across the board with one specific return format
 - [x] Finish styling the custom toast component
 - [x] On opening form scroll to its anchor
-- [ ] Edit return consistency across the entire app ({data: [], message: "", error: boolean})
 - [ ] Maybe make button styles like gun button design
 - [x] Change word-wrap behaviour to prioritize words for headings
 - [ ] Figure out if I can match clerk theme to current theme
@@ -223,3 +222,9 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
 - [ ] Metadata
 - [ ] Remove "any" once done
+
+## Priority
+
+- [ ] Rework returns across entire app
+      {success: true, data?: [], message: ""}
+      {success: false, message: ""}
