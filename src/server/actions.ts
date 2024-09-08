@@ -32,7 +32,7 @@ export async function getGameData(query: string): Promise<GamedataResponseTypes>
 
     if (!data.length) throw new Error("IGDB ERROR: Game not found.");
 
-    return { success: true, data, message: "SUCCESS: Retrieved game data." };
+    return { success: true, data: data[0], message: "SUCCESS: Retrieved game data." };
   } catch (err) {
     console.log("failure");
     return { success: false, message: "IGDB ERROR: Failed to retrieve game data." };
@@ -40,11 +40,14 @@ export async function getGameData(query: string): Promise<GamedataResponseTypes>
 }
 
 /* FETCH CURRENTGAME SUBMISSIONS */
-export async function getInitialRss(currentGameId: number) {
+export async function getInitialRss(currentGameId: number | undefined) {
+  console.log(currentGameId);
   const user = auth();
   const currentUser = user.userId;
 
   try {
+    if (currentGameId === null || currentGameId === undefined) throw new Error("DATABASE ERROR: No game id supplied.");
+
     const query = db
       .select({
         rssId: gameRssEntries.rssId,

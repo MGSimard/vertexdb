@@ -7,7 +7,9 @@ import { Globe, Discord, Steam } from "@/components/icons";
 
 export async function GameHeader({ slug }: { slug: string }) {
   const { success, data: gameData } = await getGameData(slug);
-  const initialRss = success ? await getInitialRss(gameData!.id) : null;
+
+  console.log(gameData);
+  const initialRss = await getInitialRss(gameData?.id);
 
   const developers = gameData?.involved_companies?.filter((company) => company.developer === true);
   const publishers = gameData?.involved_companies?.filter((company) => company.publisher === true);
@@ -69,14 +71,14 @@ export async function GameHeader({ slug }: { slug: string }) {
           {sectionEnums.map((section) => (
             <div key={section} className="rss-container">
               <h2>{section}</h2>
-              {!initialRss!.success ? (
-                initialRss!.message
+              {!initialRss.success ? (
+                initialRss.message
               ) : (
                 <RssList
                   gameId={gameData!.id}
                   slug={slug}
                   section={section.toLowerCase()}
-                  content={initialRss!.data!.filter((entry) => entry.section === section.toLowerCase()) ?? []}
+                  content={initialRss.data!.filter((entry) => entry.section === section.toLowerCase()) ?? []}
                 />
               )}
             </div>
