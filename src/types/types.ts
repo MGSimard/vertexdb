@@ -1,6 +1,6 @@
 import type { sectionEnums, reportStatusEnums, reportReasonEnums } from "@/utils/enums";
 
-interface GameSearchbarTypes {
+export interface GameSearchbarTypes {
   id: number;
   cover?: { id: number; image_id: string };
   name: string;
@@ -30,16 +30,6 @@ export interface InitialRssTypes {
   section: (typeof sectionEnums)[number];
   score: number;
   currentUserVote?: boolean | null;
-}
-
-export interface SearchResponseTypes {
-  id: number;
-  name: string;
-  slug: string;
-  cover?: {
-    id: number;
-    image_id: string;
-  };
 }
 
 export interface SubmissionTypes {

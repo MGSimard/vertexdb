@@ -3,14 +3,16 @@ import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { getGames } from "@/server/actions";
-import type { SearchResponseTypes } from "@/types/types";
+import type { GameSearchbarTypes } from "@/types/types";
 import { Result } from "@/components/searchbar/Result";
 import { Clear, MagnifyingGlass } from "@/components/icons";
 import { flatnamed } from "@/utils/helpers";
+import { CustomToast } from "@/components/layout/CustomToast";
+import { toast } from "sonner";
 
 export function Searchbar() {
   const [query, setQuery] = useState("");
-  const [games, setGames] = useState<SearchResponseTypes[]>([]);
+  const [games, setGames] = useState<GameSearchbarTypes[]>([]);
   const pathname = usePathname();
   const router = useRouter();
 
@@ -19,12 +21,17 @@ export function Searchbar() {
     const getMatchingGames = async () => {
       const { success, data, message } = await getGames(query);
 
-      if (!success) console.error(message);
+      if (!success && !ignore) {
+        toast.custom(() => <CustomToast icon={"warning"} message={message} />);
+        console.error(message);
+        setGames([]);
+      }
+
       if (success && data && !ignore) setGames(data);
     };
 
-    const delay = setTimeout(() => {
-      if (query) getMatchingGames();
+    const delay = setTimeout(async () => {
+      if (query) await getMatchingGames();
       else setGames([]);
     }, 500);
 
