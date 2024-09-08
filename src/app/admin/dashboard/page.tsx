@@ -6,7 +6,6 @@ import { CardLarge } from "@/components/CardLarge";
 import { PendingReportRow } from "@/components/page_dashboard/PendingReportRow";
 import { OtherCountSkeleton, ReportsCardSkeleton } from "@/components/page_dashboard/CardSkeletons";
 import "@/styles/dashboard.css";
-import type { PendingReportsResponse } from "@/types/types";
 
 export default async function Page() {
   const currentUser = auth();
@@ -15,7 +14,7 @@ export default async function Page() {
     notFound();
   }
 
-  const pendingReports = (await getPendingReports()) as PendingReportsResponse;
+  const pendingReports = await getPendingReports();
 
   return (
     <main className="admin">
@@ -36,11 +35,11 @@ export default async function Page() {
       <section>
         <h2>PENDING REPORTS</h2>
         <CardLarge>
-          {"error" in pendingReports ? (
+          {!pendingReports.success ? (
             pendingReports.message
-          ) : pendingReports.data.length ? (
+          ) : pendingReports.data!.length ? (
             <ul>
-              {pendingReports.data.map((report) => (
+              {pendingReports.data!.map((report) => (
                 <PendingReportRow key={report.rptId} reportInfo={report} />
               ))}
             </ul>

@@ -362,14 +362,15 @@ export async function getPendingReports() {
       .leftJoin(gameRssEntries, eq(rssReports.rssId, gameRssEntries.rssId))
       .where(eq(rssReports.status, "pending"))
       .orderBy(desc(rssReports.createdAt));
-    return { data: pendingReports, message: "SUCCESS: Retrieved pending reports." };
+
+    return { success: true, data: pendingReports, message: "SUCCESS: Retrieved pending reports." };
   } catch (err) {
-    return { error: true, message: "DATABASE ERROR: Failed retrieving pending reports." };
+    return { success: false, message: "DATABASE ERROR: Failed retrieving pending reports." };
   }
 }
 
 /* GET GAME NAME & COVER IMAGE FOR REPORTS IN ADMIN DASHBOARD */
-export async function getNameCover(gameId: number) {
+export async function getNameCover(gameId: number | null) {
   // Same as last time, handle errors as alt missing data in component
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
@@ -383,6 +384,9 @@ export async function getNameCover(gameId: number) {
     });
 
     const data = await res.json();
+
+    if (!data.length) throw new Error("ERROR: Game does not exist.");
+
     return { success: true, data: data[0], message: "SUCCESS: Fetched game name & cover." };
   } catch (err: unknown) {
     return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };

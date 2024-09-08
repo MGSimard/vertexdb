@@ -26,7 +26,7 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: ReportTypes
       <img
         className="prr-left"
         src={
-          !nameAndCover.success || !nameAndCover.data.cover.image_id
+          !nameAndCover.success || !nameAndCover.data?.cover?.image_id
             ? "/missingasset.webp"
             : coverPath("720p", nameAndCover.data.cover.image_id)
         }
@@ -36,7 +36,7 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: ReportTypes
         <div>
           <h3>GAME</h3>
           <p className="prr-game">
-            {!nameAndCover.success ? "NOT FOUND" : nameAndCover.data.name.toUpperCase() ?? "UNTITLED"}
+            {!nameAndCover.success ? "NOT FOUND" : nameAndCover.data?.name?.toUpperCase() ?? "UNTITLED"}
           </p>
         </div>
         <div>

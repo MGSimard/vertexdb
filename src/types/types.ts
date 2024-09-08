@@ -22,7 +22,6 @@ export interface InitialRssTypes {
   score: number;
   currentUserVote?: boolean | null;
 }
-export type InitialRssResponseTypes = InitialRssTypes[] | { error: string };
 
 export interface SearchResponseTypes {
   id: number;
@@ -54,18 +53,18 @@ export interface ReportTypes {
   optionalComment: string;
   createdAt: Date;
   updatedAt: Date | null;
-  gameId: number;
-  authorId: string;
-  title: string;
-  url: string;
-  description: string;
-  score: number;
+  // Below are leftJoin - technically FK ensures this
+  // never happens but don't want to take chances, so I still handle possibility.
+  gameId: number | null;
+  authorId: string | null;
+  title: string | null;
+  url: string | null;
+  description: string | null;
+  score: number | null;
 }
-export type PendingReportsResponse = { data: ReportTypes[]; message: string } | { error: boolean; message: string };
 
 interface NameCoverTypes {
   id: number;
   cover?: { id: number; image_id: string };
   name: string;
 }
-export type NameCoverResponse = NameCoverTypes | { error: boolean; message: string };
