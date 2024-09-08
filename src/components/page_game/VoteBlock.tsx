@@ -13,7 +13,7 @@ export function VoteBlock({
 }: {
   rssId: number;
   initialScore: number;
-  initialVote: boolean | null;
+  initialVote?: boolean | null;
 }) {
   const [score, setScore] = useState(initialScore);
   const [activeVote, setActiveVote] = useState(initialVote);
@@ -24,7 +24,7 @@ export function VoteBlock({
     if (result.data) {
       setActiveVote(result.data.voteResult);
       setScore(result.data.scoreResult);
-    } else if (result.error) {
+    } else if (!result.success) {
       toast.custom(() => <CustomToast icon="warning" message={result.message} />);
       console.error(result.message);
     }

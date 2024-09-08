@@ -134,6 +134,7 @@ export async function createSubmission(currentState: any, formData: FormData) {
   return { message: "SUCCESS: Submission added." };
 }
 
+/* NEXT HERE AT CREATEVOTE */
 /* CREATE VOTE */
 const voteSchema = z.object({
   voteId: z.number().int().positive().lte(2147483647), // Ignore, DB auto
@@ -147,12 +148,12 @@ const CreateVote = voteSchema.omit({ voteId: true, voterId: true, createdAt: tru
 export async function createVote(rssId: number, voteType: boolean) {
   const user = auth();
   if (!user.userId) {
-    return { error: true, message: "AUTH ERROR: Unauthorized" };
+    return { success: false, message: "AUTH ERROR: Unauthorized" };
   }
 
   const { success } = await ratelimit.limit(user.userId);
   if (!success) {
-    return { error: true, message: "RATELIMIT ERROR: Too many actions." };
+    return { success: false, message: "RATELIMIT ERROR: Too many actions." };
   }
 
   const validated = CreateVote.safeParse({
@@ -160,7 +161,7 @@ export async function createVote(rssId: number, voteType: boolean) {
     voteType,
   });
   if (!validated.success) {
-    return { error: true, message: "VALIDATION ERROR: Failed to create vote." };
+    return { success: false, message: "VALIDATION ERROR: Failed to create vote." };
   }
 
   const { rssId: submissionId, voteType: voteInput } = validated.data;
@@ -201,7 +202,7 @@ export async function createVote(rssId: number, voteType: boolean) {
           .returning({ newScore: gameRssEntries.score });
         return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
       });
-      return { data: voteResult, message: "SUCCESS: Vote successfully added." };
+      return { success: true, data: voteResult, message: "SUCCESS: Vote successfully added." };
     } else {
       // ELSE IF EXISTING VOTE
       if (currentUserVote[0]!.currentUserVote !== voteInput) {
@@ -219,7 +220,7 @@ export async function createVote(rssId: number, voteType: boolean) {
             .returning({ newScore: gameRssEntries.score });
           return { voteResult: newVote!.newVote, scoreResult: newScore!.newScore };
         });
-        return { data: voteResult, message: "SUCCESS: Vote successfully modified." };
+        return { success: true, data: voteResult, message: "SUCCESS: Vote successfully modified." };
       } else {
         // ELSE - AND EXISTING VOTE IS SAME AS NEW VOTE: Delete vote from table, update score.
         const voteResult = await db.transaction(async (tx) => {
@@ -233,11 +234,11 @@ export async function createVote(rssId: number, voteType: boolean) {
             .returning({ newScore: gameRssEntries.score });
           return { voteResult: null, scoreResult: newScore!.newScore };
         });
-        return { data: voteResult, message: "SUCCESS: Vote Successfully deleted." };
+        return { success: true, data: voteResult, message: "SUCCESS: Vote Successfully deleted." };
       }
     }
   } catch (err: unknown) {
-    return { error: true, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 }
 
