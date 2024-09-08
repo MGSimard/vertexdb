@@ -20,7 +20,7 @@ export function Searchbar() {
       const { success, data, message } = await getGames(query);
 
       if (!success) console.error(message);
-      if (success && !ignore) setGames(data);
+      if (success && data && !ignore) setGames(data);
     };
 
     const delay = setTimeout(async () => {
