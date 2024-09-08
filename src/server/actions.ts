@@ -9,6 +9,31 @@ import { ratelimit } from "@/server/ratelimit";
 import { reportReasonEnums, sectionEnums } from "@/utils/enums";
 import { GamedataResponseTypes } from "@/types/types";
 
+/* SEARCH BAR FETCH */
+export async function getGames(query: string) {
+  try {
+    const res = await fetch("https://api.igdb.com/v4/games", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Client-ID": process.env.CLIENT_ID,
+        Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
+      } as HeadersInit,
+      body: `fields name, slug, cover.image_id; where version_parent = null & category = (0,4,8,9,12);limit 9; search "${query}";`,
+    });
+
+    if (!res.ok) {
+      throw new Error(`HTTP Error: ${res.status}`);
+    }
+
+    const data = await res.json();
+
+    return { success: true, data, message: "SUCCESS: Searched game list indexed." };
+  } catch (err: unknown) {
+    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+  }
+}
+
 /* FETCH CURRENTGAME DATA */
 export async function getGameData(query: string): Promise<GamedataResponseTypes> {
   try {

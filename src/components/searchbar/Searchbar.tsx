@@ -2,6 +2,7 @@
 import { usePathname, useRouter } from "next/navigation";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { getGames } from "@/server/actions";
 import type { SearchResponseTypes } from "@/types/types";
 import { Result } from "@/components/searchbar/Result";
 import { Clear, MagnifyingGlass } from "@/components/icons";
@@ -16,16 +17,10 @@ export function Searchbar() {
   useEffect(() => {
     let ignore = false;
     const getMatchingGames = async () => {
-      try {
-        const res = await fetch(`/api/search?query=${query}`);
-        if (!res.ok) {
-          throw new Error(`HTTP Error: ${res.status}`);
-        }
-        const data = await res.json();
-        if (!ignore) setGames(data);
-      } catch (err) {
-        console.error(err);
-      }
+      const { success, data, message } = await getGames(query);
+
+      if (!success) console.error(message);
+      if (success && !ignore) setGames(data);
     };
 
     const delay = setTimeout(async () => {
