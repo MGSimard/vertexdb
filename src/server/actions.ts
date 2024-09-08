@@ -383,9 +383,9 @@ export async function getNameCover(gameId: number) {
     });
 
     const data = await res.json();
-    return data[0];
+    return { success: true, data: data[0], message: "SUCCESS: Fetched game name & cover." };
   } catch (err: unknown) {
-    return { error: true, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 }
 
