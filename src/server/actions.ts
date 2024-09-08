@@ -34,14 +34,12 @@ export async function getGameData(query: string): Promise<GamedataResponseTypes>
 
     return { success: true, data: data[0], message: "SUCCESS: Retrieved game data." };
   } catch (err) {
-    console.log("failure");
     return { success: false, message: "IGDB ERROR: Failed to retrieve game data." };
   }
 }
 
 /* FETCH CURRENTGAME SUBMISSIONS */
 export async function getInitialRss(currentGameId: number | undefined) {
-  console.log(currentGameId);
   const user = auth();
   const currentUser = user.userId;
 

@@ -8,7 +8,6 @@ import { Globe, Discord, Steam } from "@/components/icons";
 export async function GameHeader({ slug }: { slug: string }) {
   const { success, data: gameData } = await getGameData(slug);
 
-  console.log(gameData);
   const initialRss = await getInitialRss(gameData?.id);
 
   const developers = gameData?.involved_companies?.filter((company) => company.developer === true);
