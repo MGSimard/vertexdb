@@ -7,10 +7,10 @@ import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 import { ratelimit } from "@/server/ratelimit";
 import { reportReasonEnums, sectionEnums } from "@/utils/enums";
-import { GamedataResponseTypes } from "@/types/types";
+import type { GamedataResponseTypes, GetGamesResponseTypes } from "@/types/types";
 
 /* SEARCH BAR FETCH */
-export async function getGames(query: string) {
+export async function getGames(query: string): Promise<GetGamesResponseTypes> {
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",
@@ -423,7 +423,6 @@ export async function getNameCover(gameId: number | null) {
 
     return { success: true, data: data[0], message: "SUCCESS: Fetched game name & cover." };
   } catch (err: unknown) {
-    console.log(err instanceof Error ? err.message : "UNKNOWN ERROR.");
     return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
 }

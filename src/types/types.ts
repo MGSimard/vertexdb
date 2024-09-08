@@ -1,5 +1,13 @@
 import type { sectionEnums, reportStatusEnums, reportReasonEnums } from "@/utils/enums";
 
+interface GameSearchbarTypes {
+  id: number;
+  cover?: { id: number; image_id: string };
+  name: string;
+  slug: string;
+}
+export type GetGamesResponseTypes = { success: boolean; data?: GameSearchbarTypes[]; message: string };
+
 export interface GamedataTypes {
   id: number;
   name: string;
