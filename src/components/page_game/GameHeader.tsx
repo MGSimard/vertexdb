@@ -4,11 +4,11 @@ import { sectionEnums } from "@/utils/enums";
 import { RssList } from "@/components/page_game/RssList";
 import { LinkButton } from "@/components/page_game/LinkButton";
 import { Globe, Discord, Steam } from "@/components/icons";
-import type { GamedataResponseTypes, InitialRssResponseTypes, InitialRssTypes } from "@/types/types";
+import type { GamedataResponseTypes } from "@/types/types";
 
 export async function GameHeader({ slug }: { slug: string }) {
   const gameData = (await getGameData(slug)) as GamedataResponseTypes;
-  const initialRss = (await getInitialRss(gameData?.id)) as InitialRssResponseTypes;
+  const initialRss = await getInitialRss(gameData?.id);
 
   const developers = gameData?.involved_companies?.filter((company) => company.developer === true);
   const publishers = gameData?.involved_companies?.filter((company) => company.publisher === true);
@@ -70,14 +70,14 @@ export async function GameHeader({ slug }: { slug: string }) {
           {sectionEnums.map((section) => (
             <div key={section} className="rss-container">
               <h2>{section}</h2>
-              {"error" in initialRss ? (
-                <div>{initialRss.error}</div>
+              {!initialRss.success ? (
+                initialRss.message
               ) : (
                 <RssList
                   gameId={gameData?.id}
                   slug={slug}
                   section={section.toLowerCase()}
-                  content={initialRss.filter((entry) => entry.section === section.toLowerCase()) ?? []}
+                  content={initialRss.data!.filter((entry) => entry.section === section.toLowerCase()) ?? []}
                 />
               )}
             </div>

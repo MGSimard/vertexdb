@@ -229,3 +229,4 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 - [ ] Rework returns across entire app
       {success: true, data?: [], message: ""}
       {success: false, message: ""}
+- [ ] Optionally add typeguards if necessary

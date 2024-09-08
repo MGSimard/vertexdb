@@ -56,15 +56,17 @@ export async function getInitialRss(currentGameId: number) {
     const dynamicQuery = query.$dynamic();
     // If user isn't logged in ignore leftJoin() and currentUserVote field check
     if (!currentUser) {
-      return await query;
+      const data = await query;
+      return { success: true, data, message: "SUCCESS: Submissions retrieved." };
     }
 
-    return await dynamicQuery.leftJoin(
+    const data = await dynamicQuery.leftJoin(
       gameRssVotes,
       and(eq(gameRssEntries.rssId, gameRssVotes.rssId), eq(gameRssVotes.voterId, currentUser))
     );
+    return { success: true, data, message: "SUCCESS: Submissions retrieved." };
   } catch (err) {
-    return { error: "DATABASE ERROR: Failed to retrieve submissions." };
+    return { success: false, message: "DATABASE ERROR: Failed to retrieve submissions." };
   }
 }
 
