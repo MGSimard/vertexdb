@@ -22,9 +22,9 @@ export function Searchbar() {
       const { success, data, message } = await getGames(query);
 
       if (!success && !ignore) {
+        setGames([]);
         toast.custom(() => <CustomToast icon={"warning"} message={message} />);
         console.error(message);
-        setGames([]);
       }
 
       if (success && data && !ignore) setGames(data);
