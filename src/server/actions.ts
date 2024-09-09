@@ -19,7 +19,7 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
   const getUserIdentifier = () => {
     if (user.userId) return user.userId;
 
-    if (forwardedFor) {
+    if (forwardedFor === "test to go for realip") {
       return forwardedFor.split(",")[0]!.trim();
     } else if (realIP) {
       return realIP.trim();
