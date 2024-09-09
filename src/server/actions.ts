@@ -10,8 +10,10 @@ import { reportReasonEnums, sectionEnums } from "@/utils/enums";
 import type {
   GamedataResponseTypes,
   GamedataTypes,
+  GameSearchbarTypes,
   GetGamesResponseTypes,
   GetNameCoverResponseTypes,
+  GetNameCoverTypes,
 } from "@/types/types";
 import { headers } from "next/headers";
 
@@ -55,7 +57,7 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
       throw new Error(`HTTP Error: ${res.status}`);
     }
 
-    const data = await res.json();
+    const data = (await res.json()) as GameSearchbarTypes[];
 
     return { success: true, data, message: "SUCCESS: Searched game list indexed." };
   } catch (err: unknown) {
@@ -489,7 +491,7 @@ export async function getNameCover(gameId: number | null): Promise<GetNameCoverR
 
     if (!res.ok) throw new Error(`HTTP ERROR: ${res.status}`);
 
-    const data = await res.json();
+    const data = (await res.json()) as GetNameCoverTypes[];
 
     if (!data.length) throw new Error("IGDB ERROR: Game does not exist.");
 
