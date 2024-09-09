@@ -52,11 +52,7 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
 
     const data = await res.json();
 
-    return {
-      success: true,
-      data,
-      message: `FORWADED FOR: ${forwardedFor!.split(",")[0]!.trim()} - USER IP: ${realIP}`,
-    };
+    return { success: true, data, message: "SUCCESS: Searched game list indexed." };
   } catch (err: unknown) {
     return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
