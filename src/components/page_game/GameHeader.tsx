@@ -13,9 +13,6 @@ export async function GameHeader({ slug }: { slug: string }) {
   const developers = gameData?.involved_companies?.filter((company) => company.developer === true);
   const publishers = gameData?.involved_companies?.filter((company) => company.publisher === true);
 
-  if (gameData?.websites && gameData.websites.length > 0) {
-    console.log("WEBSITES:", gameData.websites);
-  }
   return (
     <>
       <section className="gamesection-header">

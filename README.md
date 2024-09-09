@@ -218,5 +218,5 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 - [x] Make decision on displayed storefront links
 - [x] Finalize websites
 - [ ] Maybe make button styles like gun button design
-- [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
 - [ ] Metadata
+- [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
