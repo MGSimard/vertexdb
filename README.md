@@ -218,8 +218,8 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 - [x] Rework returns across entire app
 - [ ] Prevent form clear on error
 - [ ] Figure out if I can match clerk theme to current theme
-- [ ] Make decision on displayed storefront links
-- [ ] Finalize websites
+- [x] Make decision on displayed storefront links
+- [x] Finalize websites
 - [ ] Look into using optimistic updates for visuals when voting
 - [ ] Consider my own ratelimit service, I feel like someone could top me out with an autoclicker
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
