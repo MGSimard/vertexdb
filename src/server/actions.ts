@@ -7,7 +7,12 @@ import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 import { ratelimit } from "@/server/ratelimit";
 import { reportReasonEnums, sectionEnums } from "@/utils/enums";
-import type { GamedataResponseTypes, GetGamesResponseTypes, GetNameCoverResponseTypes } from "@/types/types";
+import type {
+  GamedataResponseTypes,
+  GamedataTypes,
+  GetGamesResponseTypes,
+  GetNameCoverResponseTypes,
+} from "@/types/types";
 import { headers } from "next/headers";
 
 /* SEARCH BAR FETCH */
@@ -96,7 +101,7 @@ export async function getGameData(query: string): Promise<GamedataResponseTypes>
 
     if (!res.ok) throw new Error(`HTTP ERROR: ${res.status}`);
 
-    const data = await res.json();
+    const data: GamedataTypes[] = await res.json();
 
     if (!data.length) {
       throw new Error("IGDB ERROR: Matching game not found.");
