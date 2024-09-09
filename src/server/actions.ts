@@ -21,7 +21,7 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
 
     if (forwardedFor === "test to go for realip") {
       return forwardedFor.split(",")[0]!.trim();
-    } else if (realIP) {
+    } else if (realIP === "test to get third") {
       return realIP.trim();
     } else {
       return "0.0.0.0";
