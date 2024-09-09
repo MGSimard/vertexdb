@@ -214,6 +214,8 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 - [x] On opening form scroll to its anchor
 - [ ] Maybe make button styles like gun button design
 - [x] Change word-wrap behaviour to prioritize words for headings
+- [x] Remove "any" everywhere, make typescript happy to pass build without config cheatcode
+- [x] Rework returns across entire app
 - [ ] Prevent form clear on error
 - [ ] Figure out if I can match clerk theme to current theme
 - [ ] Make decision on displayed storefront links
@@ -222,11 +224,5 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 - [ ] Consider my own ratelimit service, I feel like someone could top me out with an autoclicker
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
 - [ ] Metadata
-- [ ] Remove "any" once done
 
 ## Priority
-
-- [ ] Rework returns across entire app
-      {success: true, data?: [], message: ""}
-      {success: false, message: ""}
-- [ ] Optionally add typeguards if necessary
