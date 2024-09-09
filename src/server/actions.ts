@@ -64,6 +64,29 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
 
 /* FETCH CURRENTGAME DATA */
 export async function getGameData(query: string): Promise<GamedataResponseTypes> {
+  const user = auth();
+  let forwardedFor = headers().get("x-forwarded-for");
+  let realIP = headers().get("x-real-ip");
+
+  // Since this server action is allowed for non-auth users
+  // We need to identify them with something other than auth if not auth
+  const getUserIdentifier = () => {
+    if (user.userId) return user.userId;
+
+    if (forwardedFor) {
+      return forwardedFor.split(",")[0]!.trim();
+    } else if (realIP) {
+      return realIP.trim();
+    } else {
+      return "0.0.0.0";
+    }
+  };
+
+  const { success } = await ratelimit.limit(getUserIdentifier());
+  if (!success) {
+    return { success: false, message: "RATELIMIT ERROR: Too many actions." };
+  }
+
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",
