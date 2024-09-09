@@ -8,9 +8,17 @@ import { z } from "zod";
 import { ratelimit } from "@/server/ratelimit";
 import { reportReasonEnums, sectionEnums } from "@/utils/enums";
 import type { GamedataResponseTypes, GetGamesResponseTypes } from "@/types/types";
+import { headers } from "next/headers";
 
 /* SEARCH BAR FETCH */
 export async function getGames(query: string): Promise<GetGamesResponseTypes> {
+  const userIP = headers().get("x-real-ip");
+  console.log(userIP);
+  // const { success } = await ratelimit.limit(currentUser.userId);
+  // if (!success) {
+  //   return { success: false, message: "RATELIMIT ERROR: Too many actions." };
+  // }
+
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",
