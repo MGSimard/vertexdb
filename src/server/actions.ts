@@ -119,7 +119,27 @@ export async function getInitialRss(currentGameId: number | undefined) {
   }
 
   const user = auth();
-  const currentUser = user.userId;
+  let forwardedFor = headers().get("x-forwarded-for");
+  let realIP = headers().get("x-real-ip");
+
+  // Since this server action is allowed for non-auth users
+  // We need to identify them with something other than auth if not auth
+  const getUserIdentifier = () => {
+    if (user.userId) return user.userId;
+
+    if (forwardedFor) {
+      return forwardedFor.split(",")[0]!.trim();
+    } else if (realIP) {
+      return realIP.trim();
+    } else {
+      return "0.0.0.0";
+    }
+  };
+
+  const { success } = await ratelimit.limit(getUserIdentifier());
+  if (!success) {
+    return { success: false, message: "RATELIMIT ERROR: Too many actions." };
+  }
 
   try {
     const query = db
@@ -130,7 +150,7 @@ export async function getInitialRss(currentGameId: number | undefined) {
         description: gameRssEntries.description,
         section: gameRssEntries.section,
         score: gameRssEntries.score,
-        ...(currentUser ? { currentUserVote: gameRssVotes.voteType } : {}),
+        ...(user.userId ? { currentUserVote: gameRssVotes.voteType } : {}),
       })
       .from(gameRssEntries)
       .where(and(eq(gameRssEntries.gameId, currentGameId), isNull(gameRssEntries.deletedAt)))
@@ -138,14 +158,14 @@ export async function getInitialRss(currentGameId: number | undefined) {
 
     const dynamicQuery = query.$dynamic();
     // If user isn't logged in ignore leftJoin() and currentUserVote field check
-    if (!currentUser) {
+    if (!user.userId) {
       const data = await query;
       return { success: true, data, message: "SUCCESS: Submissions retrieved." };
     }
 
     const data = await dynamicQuery.leftJoin(
       gameRssVotes,
-      and(eq(gameRssEntries.rssId, gameRssVotes.rssId), eq(gameRssVotes.voterId, currentUser))
+      and(eq(gameRssEntries.rssId, gameRssVotes.rssId), eq(gameRssVotes.voterId, user.userId))
     );
     return { success: true, data, message: "SUCCESS: Submissions retrieved." };
   } catch (err) {
