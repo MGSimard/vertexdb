@@ -16,17 +16,22 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
   let forwardedFor = headers().get("x-forwarded-for");
   let realIP = headers().get("x-real-ip");
 
-  // const getUserIdentifier = () => {
-  //   if (user.userId) return user.userId;
-  //   else if (forwardedFor) return forwardedFor.split(",")[0].trim();
-  //   else if (realIP) return realIP.trim();
-  //   else return "0.0.0.0";
-  // };
+  const getUserIdentifier = () => {
+    if (user.userId) return user.userId;
 
-  // const { success } = await ratelimit.limit(getUserIdentifier());
-  // if (!success) {
-  //   return { success: false, message: "RATELIMIT ERROR: Too many actions." };
-  // }
+    if (forwardedFor) {
+      return forwardedFor.split(",")[0]!.trim();
+    } else if (realIP) {
+      return realIP.trim();
+    } else {
+      return "0.0.0.0";
+    }
+  };
+
+  const { success } = await ratelimit.limit(getUserIdentifier());
+  if (!success) {
+    return { success: false, message: `RATELIMIT ERROR: Too many actions. ${getUserIdentifier()}` };
+  }
 
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
