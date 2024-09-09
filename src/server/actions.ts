@@ -13,11 +13,17 @@ import { headers } from "next/headers";
 /* SEARCH BAR FETCH */
 export async function getGames(query: string): Promise<GetGamesResponseTypes> {
   const user = auth();
-
   let forwardedFor = headers().get("x-forwarded-for");
   let realIP = headers().get("x-real-ip");
 
-  // const { success } = await ratelimit.limit(currentUser.userId);
+  // const getUserIdentifier = () => {
+  //   if (user.userId) return user.userId;
+  //   else if (forwardedFor) return forwardedFor.split(",")[0].trim();
+  //   else if (realIP) return realIP.trim();
+  //   else return "0.0.0.0";
+  // };
+
+  // const { success } = await ratelimit.limit(getUserIdentifier());
   // if (!success) {
   //   return { success: false, message: "RATELIMIT ERROR: Too many actions." };
   // }
@@ -39,7 +45,11 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
 
     const data = await res.json();
 
-    return { success: true, data, message: `FORWADED FOR: ${forwardedFor} - USER IP: ${realIP}` };
+    return {
+      success: true,
+      data,
+      message: `FORWADED FOR: ${forwardedFor!.split(",")[0]!.trim()} - USER IP: ${realIP}`,
+    };
   } catch (err: unknown) {
     return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
