@@ -36,7 +36,7 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
 
     const data = await res.json();
 
-    return { success: true, data, message: "SUCCESS: Searched game list indexed." };
+    return { success: true, data, message: `USER IP: ${userIP}` };
   } catch (err: unknown) {
     return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
