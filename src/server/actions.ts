@@ -12,8 +12,11 @@ import { headers } from "next/headers";
 
 /* SEARCH BAR FETCH */
 export async function getGames(query: string): Promise<GetGamesResponseTypes> {
-  const userIP = headers().get("x-real-ip");
-  console.log(userIP);
+  const user = auth();
+
+  let forwardedFor = headers().get("x-forwarded-for");
+  let realIP = headers().get("x-real-ip");
+
   // const { success } = await ratelimit.limit(currentUser.userId);
   // if (!success) {
   //   return { success: false, message: "RATELIMIT ERROR: Too many actions." };
@@ -36,7 +39,7 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
 
     const data = await res.json();
 
-    return { success: true, data, message: `USER IP: ${userIP}` };
+    return { success: true, data, message: `FORWADED FOR: ${forwardedFor} - USER IP: ${realIP}` };
   } catch (err: unknown) {
     return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
   }
