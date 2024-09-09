@@ -101,7 +101,7 @@ export async function getGameData(query: string): Promise<GamedataResponseTypes>
 
     if (!res.ok) throw new Error(`HTTP ERROR: ${res.status}`);
 
-    const data: GamedataTypes[] = await res.json();
+    const data = (await res.json()) as GamedataTypes[];
 
     if (!data.length) {
       throw new Error("IGDB ERROR: Matching game not found.");
