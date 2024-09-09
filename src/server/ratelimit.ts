@@ -4,7 +4,7 @@ import { Redis } from "@upstash/redis";
 // Create a new ratelimiter, that allows 8 requests per 10 seconds
 export const ratelimit = new Ratelimit({
   redis: Redis.fromEnv(),
-  limiter: Ratelimit.slidingWindow(1, "10 s"),
+  limiter: Ratelimit.slidingWindow(8, "10 s"),
   analytics: true,
   /**
    * Optional prefix for the keys used in redis. This is useful if you want to share a redis
