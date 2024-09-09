@@ -13,8 +13,8 @@ import { headers } from "next/headers";
 /* SEARCH BAR FETCH */
 export async function getGames(query: string): Promise<GetGamesResponseTypes> {
   const user = auth();
-  let forwardedFor = headers().get("x-forwarded-for");
-  let realIP = headers().get("x-real-ip");
+  const forwardedFor = headers().get("x-forwarded-for");
+  const realIP = headers().get("x-real-ip");
 
   // Since this server action is allowed for non-auth users
   // We need to identify them with something other than auth if not auth
@@ -65,8 +65,8 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
 /* FETCH CURRENTGAME DATA */
 export async function getGameData(query: string): Promise<GamedataResponseTypes> {
   const user = auth();
-  let forwardedFor = headers().get("x-forwarded-for");
-  let realIP = headers().get("x-real-ip");
+  const forwardedFor = headers().get("x-forwarded-for");
+  const realIP = headers().get("x-real-ip");
 
   // Since this server action is allowed for non-auth users
   // We need to identify them with something other than auth if not auth
@@ -119,8 +119,8 @@ export async function getInitialRss(currentGameId: number | undefined) {
   }
 
   const user = auth();
-  let forwardedFor = headers().get("x-forwarded-for");
-  let realIP = headers().get("x-real-ip");
+  const forwardedFor = headers().get("x-forwarded-for");
+  const realIP = headers().get("x-real-ip");
 
   // Since this server action is allowed for non-auth users
   // We need to identify them with something other than auth if not auth

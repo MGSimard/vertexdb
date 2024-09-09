@@ -40,7 +40,7 @@ export function Searchbar() {
     };
 
     const delay = setTimeout(() => {
-      searchGames();
+      void searchGames();
     }, 500);
 
     return () => {
