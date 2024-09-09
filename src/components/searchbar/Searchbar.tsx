@@ -26,7 +26,6 @@ export function Searchbar() {
 
     const searchGames = async () => {
       const { success, data, message } = await getGames(query);
-      console.log(message);
 
       if (!ignore) {
         if (!success) {

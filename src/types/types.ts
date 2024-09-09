@@ -75,3 +75,9 @@ export type GetNameCoverResponseTypes = {
   data?: GetNameCoverTypes;
   message: string;
 };
+
+interface FormResponseTypes {
+  success: boolean;
+  message: string;
+}
+export type FormStatusTypes = FormResponseTypes | null;

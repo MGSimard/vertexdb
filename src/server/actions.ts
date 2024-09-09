@@ -8,6 +8,7 @@ import { z } from "zod";
 import { ratelimit } from "@/server/ratelimit";
 import { reportReasonEnums, sectionEnums } from "@/utils/enums";
 import type {
+  FormStatusTypes,
   GamedataResponseTypes,
   GamedataTypes,
   GameSearchbarTypes,
@@ -198,7 +199,7 @@ const CreateSubmission = submissionSchema.omit({
   updatedAt: true,
 });
 
-export async function createSubmission(currentState: any, formData: FormData) {
+export async function createSubmission(currentState: FormStatusTypes, formData: FormData) {
   const user = auth();
 
   if (!user.userId) {
@@ -357,7 +358,7 @@ const reportSchema = z.object({
   optionalComment: z.string().max(120).trim(),
 });
 const CreateReport = reportSchema.omit({ reportBy: true });
-export async function createReport(currentState: any, formData: FormData) {
+export async function createReport(currentState: FormStatusTypes, formData: FormData) {
   const user = auth();
   if (!user.userId) {
     return { success: false, message: "AUTH ERROR: Unauthorized." };
@@ -494,8 +495,6 @@ export async function getNameCover(gameId: number | null): Promise<GetNameCoverR
     const data = (await res.json()) as GetNameCoverTypes[];
 
     if (!data.length) throw new Error("IGDB ERROR: Game does not exist.");
-
-    console.log(data);
 
     return { success: true, data: data[0], message: "SUCCESS: Fetched game name & cover." };
   } catch (err: unknown) {
