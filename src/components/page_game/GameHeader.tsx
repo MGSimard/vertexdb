@@ -13,9 +13,9 @@ export async function GameHeader({ slug }: { slug: string }) {
   const developers = gameData?.involved_companies?.filter((company) => company.developer === true);
   const publishers = gameData?.involved_companies?.filter((company) => company.publisher === true);
 
-  // if (gameData?.websites && gameData.websites.length > 0) {
-  //   console.log("WEBSITES:", gameData.websites);
-  // }
+  if (gameData?.websites && gameData.websites.length > 0) {
+    console.log("WEBSITES:", gameData.websites);
+  }
   return (
     <>
       <section className="gamesection-header">
@@ -82,6 +82,25 @@ export async function GameHeader({ slug }: { slug: string }) {
               )}
             </div>
           ))}
+        </section>
+      )}
+
+      {gameData?.websites && gameData.websites.length > 0 && (
+        <section className="additional-links">
+          <details>
+            <summary className="noselect">
+              ADDITIONAL LINKS <small>(FROM IGDB)</small>
+            </summary>
+            <ul>
+              {gameData.websites.map((website) => (
+                <li key={website.id}>
+                  <a href={website.url} target="_blank" className="linkdeco">
+                    {website.url}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </details>
         </section>
       )}
     </>

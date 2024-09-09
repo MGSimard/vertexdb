@@ -20,28 +20,29 @@ import { headers } from "next/headers";
 
 /* SEARCH BAR FETCH */
 export async function getGames(query: string): Promise<GetGamesResponseTypes> {
-  const user = auth();
-  const forwardedFor = headers().get("x-forwarded-for");
-  const realIP = headers().get("x-real-ip");
+  // Optional ratelimit for both auth and non-auth users on non-auth server actions
+  // const user = auth();
+  // const forwardedFor = headers().get("x-forwarded-for");
+  // const realIP = headers().get("x-real-ip");
 
-  // Since this server action is allowed for non-auth users
-  // We need to identify them with something other than auth if not auth
-  const getUserIdentifier = () => {
-    if (user.userId) return user.userId;
+  // // Since this server action is allowed for non-auth users
+  // // We need to identify them with something other than auth if not auth
+  // const getUserIdentifier = () => {
+  //   if (user.userId) return user.userId;
 
-    if (forwardedFor) {
-      return forwardedFor.split(",")[0]!.trim();
-    } else if (realIP) {
-      return realIP.trim();
-    } else {
-      return "0.0.0.0";
-    }
-  };
+  //   if (forwardedFor) {
+  //     return forwardedFor.split(",")[0]!.trim();
+  //   } else if (realIP) {
+  //     return realIP.trim();
+  //   } else {
+  //     return "0.0.0.0";
+  //   }
+  // };
 
-  const { success } = await ratelimit.limit(getUserIdentifier());
-  if (!success) {
-    return { success: false, message: "RATELIMIT ERROR: Too many actions." };
-  }
+  // const { success } = await ratelimit.limit(getUserIdentifier());
+  // if (!success) {
+  //   return { success: false, message: "RATELIMIT ERROR: Too many actions." };
+  // }
 
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
@@ -68,28 +69,29 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
 
 /* FETCH CURRENTGAME DATA */
 export async function getGameData(query: string): Promise<GamedataResponseTypes> {
-  const user = auth();
-  const forwardedFor = headers().get("x-forwarded-for");
-  const realIP = headers().get("x-real-ip");
+  // Optional ratelimit for both auth and non-auth users on non-auth server actions
+  // const user = auth();
+  // const forwardedFor = headers().get("x-forwarded-for");
+  // const realIP = headers().get("x-real-ip");
 
-  // Since this server action is allowed for non-auth users
-  // We need to identify them with something other than auth if not auth
-  const getUserIdentifier = () => {
-    if (user.userId) return user.userId;
+  // // Since this server action is allowed for non-auth users
+  // // We need to identify them with something other than auth if not auth
+  // const getUserIdentifier = () => {
+  //   if (user.userId) return user.userId;
 
-    if (forwardedFor) {
-      return forwardedFor.split(",")[0]!.trim();
-    } else if (realIP) {
-      return realIP.trim();
-    } else {
-      return "0.0.0.0";
-    }
-  };
+  //   if (forwardedFor) {
+  //     return forwardedFor.split(",")[0]!.trim();
+  //   } else if (realIP) {
+  //     return realIP.trim();
+  //   } else {
+  //     return "0.0.0.0";
+  //   }
+  // };
 
-  const { success } = await ratelimit.limit(getUserIdentifier());
-  if (!success) {
-    return { success: false, message: "RATELIMIT ERROR: Too many actions." };
-  }
+  // const { success } = await ratelimit.limit(getUserIdentifier());
+  // if (!success) {
+  //   return { success: false, message: "RATELIMIT ERROR: Too many actions." };
+  // }
 
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
@@ -121,29 +123,30 @@ export async function getInitialRss(currentGameId: number | undefined) {
   if (currentGameId === null || currentGameId === undefined) {
     return { success: false, message: "DATABASE ERROR: Missing game ID." };
   }
-
   const user = auth();
-  const forwardedFor = headers().get("x-forwarded-for");
-  const realIP = headers().get("x-real-ip");
 
-  // Since this server action is allowed for non-auth users
-  // We need to identify them with something other than auth if not auth
-  const getUserIdentifier = () => {
-    if (user.userId) return user.userId;
+  // Optional ratelimit for both auth and non-auth users on non-auth server actions
+  // const forwardedFor = headers().get("x-forwarded-for");
+  // const realIP = headers().get("x-real-ip");
 
-    if (forwardedFor) {
-      return forwardedFor.split(",")[0]!.trim();
-    } else if (realIP) {
-      return realIP.trim();
-    } else {
-      return "0.0.0.0";
-    }
-  };
+  // // Since this server action is allowed for non-auth users
+  // // We need to identify them with something other than auth if not auth
+  // const getUserIdentifier = () => {
+  //   if (user.userId) return user.userId;
 
-  const { success } = await ratelimit.limit(getUserIdentifier());
-  if (!success) {
-    return { success: false, message: "RATELIMIT ERROR: Too many actions." };
-  }
+  //   if (forwardedFor) {
+  //     return forwardedFor.split(",")[0]!.trim();
+  //   } else if (realIP) {
+  //     return realIP.trim();
+  //   } else {
+  //     return "0.0.0.0";
+  //   }
+  // };
+
+  // const { success } = await ratelimit.limit(getUserIdentifier());
+  // if (!success) {
+  //   return { success: false, message: "RATELIMIT ERROR: Too many actions." };
+  // }
 
   try {
     const query = db

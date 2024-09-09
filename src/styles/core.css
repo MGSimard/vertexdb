@@ -656,6 +656,21 @@ ol[data-sonner-toaster] li[data-expanded="false"]:not(:first-child) .toast-icon 
   background: #3fd277;
   color: hsl(240, 24.03%, 7.26%);
 }
+details {
+  cursor: pointer;
+}
+.additional-links details {
+  display: inline-block;
+}
+.additional-links a {
+  filter: saturate(0);
+  opacity: 0.7;
+}
+.additional-links a:hover,
+.additional-links a:focus-visible {
+  filter: saturate(1);
+  opacity: 1;
+}
 @media only screen and (max-width: 968px) {
   body {
     background-image: radial-gradient(
