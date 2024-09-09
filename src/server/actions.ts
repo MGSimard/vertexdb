@@ -7,7 +7,7 @@ import { auth } from "@clerk/nextjs/server";
 import { z } from "zod";
 import { ratelimit } from "@/server/ratelimit";
 import { reportReasonEnums, sectionEnums } from "@/utils/enums";
-import type { GamedataResponseTypes, GetGamesResponseTypes } from "@/types/types";
+import type { GamedataResponseTypes, GetGamesResponseTypes, GetNameCoverResponseTypes } from "@/types/types";
 import { headers } from "next/headers";
 
 /* SEARCH BAR FETCH */
@@ -474,7 +474,7 @@ export async function getPendingReports() {
 }
 
 /* GET GAME NAME & COVER IMAGE FOR REPORTS IN ADMIN DASHBOARD */
-export async function getNameCover(gameId: number | null) {
+export async function getNameCover(gameId: number | null): Promise<GetNameCoverResponseTypes> {
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",
@@ -491,6 +491,8 @@ export async function getNameCover(gameId: number | null) {
     const data = await res.json();
 
     if (!data.length) throw new Error("IGDB ERROR: Game does not exist.");
+
+    console.log(data);
 
     return { success: true, data: data[0], message: "SUCCESS: Fetched game name & cover." };
   } catch (err: unknown) {

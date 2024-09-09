@@ -61,3 +61,17 @@ export interface ReportTypes {
   description: string | null;
   score: number | null;
 }
+
+export interface GetNameCoverTypes {
+  id: number;
+  name: string;
+  cover?: {
+    id: number;
+    image_id: string;
+  };
+}
+export type GetNameCoverResponseTypes = {
+  success: boolean;
+  data?: GetNameCoverTypes;
+  message: string;
+};
