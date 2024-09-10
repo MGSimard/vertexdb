@@ -15,6 +15,35 @@ const rajdhani = Rajdhani({ subsets: ["latin"], weight: ["400", "500", "600", "7
 export const metadata: Metadata = {
   title: "VERTEXDB",
   description: "Description",
+  icons: [
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "16x16",
+      url: "/favicon-16x16.png",
+    },
+    {
+      rel: "icon",
+      type: "image/png",
+      sizes: "32x32",
+      url: "/favicon-32x32.png",
+    },
+    {
+      rel: "apple-touch-icon",
+      sizes: "180x180",
+      url: "/layout/favicon/apple-touch-icon.png",
+    },
+    {
+      rel: "mask-icon",
+      color: "#f75049",
+      url: "/safari-pinned-tab.svg",
+    },
+    {
+      rel: "shortcut icon",
+      url: "/favicon.ico",
+    },
+  ],
+  manifest: "/site.webmanifest",
 };
 
 export default function RootLayout({
@@ -26,8 +55,6 @@ export default function RootLayout({
     <ClerkProvider appearance={{ baseTheme: dark, variables: { fontSize: "1.6rem" } }}>
       <html lang="en" suppressHydrationWarning /*for next-themes*/>
         <head>
-          <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#f75049"></link>
-          <link rel="manifest" href="/site.webmanifest" />
           <meta name="msapplication-TileColor" content="#F75049" />
         </head>
         <body className={`${rajdhani.className} antialiased`}>
