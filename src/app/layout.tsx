@@ -27,6 +27,7 @@ export default function RootLayout({
       <html lang="en" suppressHydrationWarning /*for next-themes*/>
         <head>
           <link rel="manifest" href="/site.webmanifest" />
+          <meta name="msapplication-TileColor" content="#F75049" />
         </head>
         <body className={`${rajdhani.className} antialiased`}>
           <ThemeProvider disableTransitionOnChange>
