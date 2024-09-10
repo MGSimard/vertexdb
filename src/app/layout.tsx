@@ -24,10 +24,6 @@ export const metadata: Metadata = {
   description: "Description",
   icons: [
     {
-      rel: "shortcut icon",
-      url: "/favicon.ico",
-    },
-    {
       rel: "icon",
       type: "image/png",
       sizes: "16x16",
