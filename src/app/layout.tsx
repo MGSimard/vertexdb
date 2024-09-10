@@ -24,6 +24,10 @@ export const metadata: Metadata = {
   description: "Description",
   icons: [
     {
+      rel: "shortcut icon",
+      url: "/favicons/favicon.ico",
+    },
+    {
       rel: "icon",
       type: "image/png",
       sizes: "16x16",
@@ -34,6 +38,11 @@ export const metadata: Metadata = {
       type: "image/png",
       sizes: "32x32",
       url: "/favicons/favicon-32x32.png",
+    },
+    {
+      rel: "apple-touch-icon",
+      sizes: "180x180",
+      url: "/favicons/apple-touch-icon.png",
     },
     {
       rel: "mask-icon",
