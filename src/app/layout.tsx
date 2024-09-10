@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Rajdhani } from "next/font/google";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ThemeProvider } from "next-themes";
@@ -11,6 +11,13 @@ import "@/styles/core.css";
 import "@/styles/custom.css";
 
 const rajdhani = Rajdhani({ subsets: ["latin"], weight: ["400", "500", "600", "700"] });
+
+export const viewport: Viewport = {
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#211B7B" }, // Light theme primary color
+    { media: "(prefers-color-scheme: dark)", color: "#F75049" }, // Dark theme primary color
+  ],
+};
 
 export const metadata: Metadata = {
   title: "VERTEXDB",
@@ -35,10 +42,6 @@ export const metadata: Metadata = {
     },
   ],
   manifest: "/favicons/site.webmanifest",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "#211B7B" }, // Light theme primary color
-    { media: "(prefers-color-scheme: dark)", color: "#F75049" }, // Dark theme primary color
-  ],
   other: {
     "msapplication-TileColor": "#F75049",
   },
