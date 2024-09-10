@@ -63,7 +63,11 @@ export function RssList({
               index >= 8 && (
                 <article className="card notched" key={submission.rssId}>
                   <div className="card-inner notched">
-                    <div className="card-left"></div>
+                    <div className="card-left">
+                      <SignedIn>
+                        <ReportButton info={submission} />
+                      </SignedIn>
+                    </div>
                     <div className="card-content">
                       <SubmissionEntry submission={submission} />
                     </div>
