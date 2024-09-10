@@ -35,6 +35,10 @@ export const metadata: Metadata = {
     },
   ],
   manifest: "/favicons/site.webmanifest",
+  themeColor: [
+    { media: "(prefers-color-scheme: light)", color: "#211B7B" }, // Light theme primary color
+    { media: "(prefers-color-scheme: dark)", color: "#F75049" }, // Dark theme primary color
+  ],
   other: {
     "msapplication-TileColor": "#F75049",
   },
