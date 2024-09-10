@@ -35,6 +35,9 @@ export const metadata: Metadata = {
     },
   ],
   manifest: "/favicons/site.webmanifest",
+  other: {
+    "msapplication-TileColor": "#F75049",
+  },
 };
 
 export default function RootLayout({
@@ -45,9 +48,6 @@ export default function RootLayout({
   return (
     <ClerkProvider appearance={{ baseTheme: dark, variables: { fontSize: "1.6rem" } }}>
       <html lang="en" suppressHydrationWarning /*for next-themes*/>
-        <head>
-          <meta name="msapplication-TileColor" content="#F75049" />
-        </head>
         <body className={`${rajdhani.className} antialiased`}>
           <ThemeProvider disableTransitionOnChange>
             <header>
