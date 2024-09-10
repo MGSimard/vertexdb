@@ -20,30 +20,30 @@ export const metadata: Metadata = {
       rel: "icon",
       type: "image/png",
       sizes: "16x16",
-      url: "/favicon-16x16.png",
+      url: "/favicons/favicon-16x16.png",
     },
     {
       rel: "icon",
       type: "image/png",
       sizes: "32x32",
-      url: "/favicon-32x32.png",
+      url: "/favicons/favicon-32x32.png",
     },
     {
       rel: "apple-touch-icon",
       sizes: "180x180",
-      url: "/layout/favicon/apple-touch-icon.png",
+      url: "/favicons/apple-touch-icon.png",
     },
     {
       rel: "mask-icon",
       color: "#f75049",
-      url: "/safari-pinned-tab.svg",
+      url: "/favicons/safari-pinned-tab.svg",
     },
     {
       rel: "shortcut icon",
       url: "/favicon.ico",
     },
   ],
-  manifest: "/site.webmanifest",
+  manifest: "/favicons/site.webmanifest",
 };
 
 export default function RootLayout({
