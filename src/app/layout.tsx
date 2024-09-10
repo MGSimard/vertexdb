@@ -26,6 +26,7 @@ export default function RootLayout({
     <ClerkProvider appearance={{ baseTheme: dark, variables: { fontSize: "1.6rem" } }}>
       <html lang="en" suppressHydrationWarning /*for next-themes*/>
         <head>
+          <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#f75049"></link>
           <link rel="manifest" href="/site.webmanifest" />
           <meta name="msapplication-TileColor" content="#F75049" />
         </head>
