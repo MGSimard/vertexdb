@@ -29,11 +29,6 @@ export const metadata: Metadata = {
       url: "/favicons/favicon-32x32.png",
     },
     {
-      rel: "apple-touch-icon",
-      sizes: "180x180",
-      url: "/favicons/apple-touch-icon.png",
-    },
-    {
       rel: "mask-icon",
       color: "#f75049",
       url: "/favicons/safari-pinned-tab.svg",
