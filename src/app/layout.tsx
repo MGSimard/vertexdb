@@ -38,10 +38,6 @@ export const metadata: Metadata = {
       color: "#f75049",
       url: "/favicons/safari-pinned-tab.svg",
     },
-    {
-      rel: "shortcut icon",
-      url: "/favicon.ico",
-    },
   ],
   manifest: "/favicons/site.webmanifest",
 };
