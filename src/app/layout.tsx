@@ -21,7 +21,8 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   title: "VERTEXDB",
-  description: "Description",
+  description:
+    "VertexDB is a community-powered resource database for video games. It's also just a 4fun Nextjs project please don't nuke my servers dear lord thank you.",
   icons: [
     {
       rel: "icon",
