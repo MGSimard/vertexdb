@@ -224,7 +224,7 @@ export async function createSubmission(currentState: FormStatusTypes, formData: 
   });
 
   if (!validated.success) {
-    return { success: false, message: "VALIDATION ERROR: Invalid Fields." };
+    return { success: false, message: "VALIDATION ERROR: Invalid fields." };
   }
 
   const { gameId, title, url, description, section, slug } = validated.data;
