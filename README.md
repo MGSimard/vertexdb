@@ -219,5 +219,5 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 - [x] Finalize websites
 - [x] Fix report button not appearing on see all details
 - [ ] Maybe make button styles like gun button design
-- [ ] Metadata
+- [x] Metadata
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
