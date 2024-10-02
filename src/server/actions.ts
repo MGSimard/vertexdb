@@ -56,6 +56,7 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
     });
 
     if (!res.ok) {
+      alert(res);
       throw new Error(`HTTP Error: ${res.status}`);
     }
 
