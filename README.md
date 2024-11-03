@@ -1,5 +1,3 @@
-## THIS APP IS IN ACTIVE DEVELOPMENT
-
 <br/>
 <div align="center">
 
@@ -140,7 +138,8 @@ MGSimard - g.marcgs@gmail.com
 
 For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github.io). Resume attached.
 
-## Task List
+<details>
+<summary><h2>Task List</h2></summary>
 
 - [x] Feature planning
 - [x] Establish design guidelines
@@ -222,3 +221,5 @@ For more info, view my portfolio at [mgsimard.github.io](https://mgsimard.github
 - [x] Metadata
 - [ ] Accessibility concerns for aria and button NAMING - run lighthouse
 - [ ] Look for potential ideas regarding sanitizing links against malicious attempts or adult content etc
+
+</details>
