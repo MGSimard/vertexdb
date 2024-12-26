@@ -54,7 +54,6 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
       } as HeadersInit,
       body: `fields name, slug, cover.image_id; where version_parent = null & category = (0,4,8,9,12);limit 9; search "${query}";`,
     });
-
     if (!res.ok) {
       throw new Error(`HTTP Error: ${res.status}`);
     }
@@ -63,7 +62,7 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
 
     return { success: true, data, message: "SUCCESS: Searched game list indexed." };
   } catch (err: unknown) {
-    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+    return { success: false, message: err instanceof Error ? err.message : "ERROR: UNKNOWN ERROR." };
   }
 }
 
@@ -103,11 +102,11 @@ export async function getGameData(query: string): Promise<GamedataResponseTypes>
       } as HeadersInit,
       body: `fields name, cover.image_id, first_release_date, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, summary, websites.category, websites.url; where slug = "${query}" & version_parent = null & category = (0,4,8,9,12);`,
     });
-
-    if (!res.ok) throw new Error(`HTTP ERROR: ${res.status}`);
+    if (!res.ok) {
+      throw new Error(`HTTP ERROR: ${res.status}`);
+    }
 
     const data = (await res.json()) as GamedataTypes[];
-
     if (!data.length) {
       throw new Error("IGDB ERROR: Matching game not found.");
     }
@@ -349,7 +348,7 @@ export async function createVote(rssId: number, voteType: boolean) {
       }
     }
   } catch (err: unknown) {
-    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+    return { success: false, message: err instanceof Error ? err.message : "ERROR: UNKNOWN ERROR." };
   }
 }
 
@@ -402,7 +401,7 @@ export async function createReport(currentState: FormStatusTypes, formData: Form
     if (err instanceof Error && "code" in err && Number(err.code) === 23505) {
       return { success: false, message: "DUPLICATE ERROR: User has already submitted a report." };
     }
-    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+    return { success: false, message: err instanceof Error ? err.message : "ERROR: UNKNOWN ERROR." };
   }
 
   revalidatePath("/admin/dashboard");
@@ -492,16 +491,18 @@ export async function getNameCover(gameId: number | null): Promise<GetNameCoverR
       } as HeadersInit,
       body: `fields name, cover.image_id; where id = ${gameId};`,
     });
-
-    if (!res.ok) throw new Error(`HTTP ERROR: ${res.status}`);
+    if (!res.ok) {
+      throw new Error(`HTTP ERROR: ${res.status}`);
+    }
 
     const data = (await res.json()) as GetNameCoverTypes[];
-
-    if (!data.length) throw new Error("IGDB ERROR: Game does not exist.");
+    if (!data.length) {
+      throw new Error("IGDB ERROR: Game does not exist.");
+    }
 
     return { success: true, data: data[0], message: "SUCCESS: Fetched game name & cover." };
   } catch (err: unknown) {
-    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+    return { success: false, message: err instanceof Error ? err.message : "ERROR: UNKNOWN ERROR." };
   }
 }
 
@@ -560,7 +561,7 @@ export async function modApproveReport(reportId: number, rssId: number) {
     });
   } catch (err: unknown) {
     revalidatePath("/admin/dashboard");
-    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+    return { success: false, message: err instanceof Error ? err.message : "ERROR: UNKNOWN ERROR." };
   }
 
   revalidatePath("/admin/dashboard");
@@ -608,7 +609,7 @@ export async function modDenyReport(reportId: number) {
     });
   } catch (err: unknown) {
     revalidatePath("/admin/dashboard");
-    return { success: false, message: err instanceof Error ? err.message : "UNKNOWN ERROR." };
+    return { success: false, message: err instanceof Error ? err.message : "ERROR: UNKNOWN ERROR." };
   }
 
   revalidatePath("/admin/dashboard");

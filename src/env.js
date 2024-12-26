@@ -9,6 +9,7 @@ export const env = createEnv({
   server: {
     POSTGRES_URL: z.string().url(),
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
+    VERCEL_API_TOKEN: z.string(),
     CRON_SECRET: z.string(),
     IGDB_CLIENT_SECRET: z.string(),
     IGDB_CLIENT_ID: z.string(),
@@ -31,6 +32,7 @@ export const env = createEnv({
   runtimeEnv: {
     POSTGRES_URL: process.env.POSTGRES_URL,
     NODE_ENV: process.env.NODE_ENV,
+    VERCEL_API_TOKEN: process.env.VERCEL_API_TOKEN,
     CRON_SECRET: process.env.CRON_SECRET,
     IGDB_CLIENT_SECRET: process.env.IGDB_CLIENT_SECRET,
     IGDB_CLIENT_ID: process.env.IGDB_CLIENT_ID,
