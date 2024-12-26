@@ -88,24 +88,22 @@ export interface IgdbBearerResponseTypes {
   token_type: "bearer";
 }
 
-export interface EnvVarTypes {
-  type: "system" | "encrypted" | "plain" | "sensitive" | "secret";
-  value: string;
-  target: [];
-  configurationId: string | null;
-  comment: string;
-  customEnvironmentIds: [];
-  id: string;
-  key: string;
-  createdAt: number;
-  updatedAt: number;
-  createdBy: string;
-  updatedBy: string | null;
-  vsmValue: string;
-  decrypted: boolean;
-  lastEditedByDisplayName: string;
-}
-
 export interface ProjectVarsResponseTypes {
-  envs: EnvVarTypes[];
+  envs: {
+    type: "system" | "encrypted" | "plain" | "sensitive" | "secret";
+    value: string;
+    target: [];
+    configurationId: string | null;
+    comment: string;
+    customEnvironmentIds: [];
+    id: string;
+    key: string;
+    createdAt: number;
+    updatedAt: number;
+    createdBy: string;
+    updatedBy: string | null;
+    vsmValue: string;
+    decrypted: boolean;
+    lastEditedByDisplayName: string;
+  }[];
 }
