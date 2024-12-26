@@ -1,5 +1,5 @@
-import { NextRequest, NextResponse } from "next/server";
-import { IgdbBearerResponseTypes, EnvVarTypes } from "@/types/types";
+import { type NextRequest, NextResponse } from "next/server";
+import type { IgdbBearerResponseTypes, EnvVarTypes, ProjectVarsResponseTypes } from "@/types/types";
 
 export async function GET(request: NextRequest) {
   const authHeader = request.headers.get("authorization");
@@ -74,7 +74,7 @@ async function updateIgdbBearerToken(newIgdbBearer: string) {
       throw new Error("VERCEL ERROR: Failed fetching project environment variables from Vercel.");
     }
 
-    const projectVars = await getProjectVars.json();
+    const projectVars = (await getProjectVars.json()) as ProjectVarsResponseTypes;
     const IgdbBearerTokenVarData = projectVars.envs.find((env: EnvVarTypes) => env.key === "IGDB_BEARER_TOKEN");
     if (!IgdbBearerTokenVarData) {
       throw new Error("VERCEL ERROR: Failed finding existing IGDB_BEARER_TOKEN environment variable in response.");

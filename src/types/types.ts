@@ -105,3 +105,7 @@ export interface EnvVarTypes {
   decrypted: boolean;
   lastEditedByDisplayName: string;
 }
+
+export interface ProjectVarsResponseTypes {
+  envs: EnvVarTypes[];
+}
