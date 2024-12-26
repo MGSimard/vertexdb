@@ -9,9 +9,10 @@ export const env = createEnv({
   server: {
     POSTGRES_URL: z.string().url(),
     NODE_ENV: z.enum(["development", "test", "production"]).default("development"),
-    CLIENT_SECRET: z.string(),
-    CLIENT_ID: z.string(),
-    BEARER_TOKEN: z.string(),
+    CRON_SECRET: z.string(),
+    IGDB_CLIENT_SECRET: z.string(),
+    IGDB_CLIENT_ID: z.string(),
+    IGDB_BEARER_TOKEN: z.string(),
   },
 
   /**
@@ -30,9 +31,10 @@ export const env = createEnv({
   runtimeEnv: {
     POSTGRES_URL: process.env.POSTGRES_URL,
     NODE_ENV: process.env.NODE_ENV,
-    CLIENT_SECRET: process.env.CLIENT_SECRET,
-    CLIENT_ID: process.env.CLIENT_ID,
-    BEARER_TOKEN: process.env.BEARER_TOKEN,
+    CRON_SECRET: process.env.CRON_SECRET,
+    IGDB_CLIENT_SECRET: process.env.IGDB_CLIENT_SECRET,
+    IGDB_CLIENT_ID: process.env.IGDB_CLIENT_ID,
+    IGDB_BEARER_TOKEN: process.env.IGDB_BEARER_TOKEN,
     // NEXT_PUBLIC_CLIENTVAR: process.env.NEXT_PUBLIC_CLIENTVAR,
   },
   /**

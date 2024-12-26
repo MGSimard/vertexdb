@@ -1,4 +1,5 @@
 "use server";
+import { NextRequest, NextResponse } from "next/server";
 import { revalidatePath } from "next/cache";
 import { eq, and, desc, count, sql, isNull } from "drizzle-orm";
 import { db } from "@/server/db";
@@ -49,8 +50,8 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Client-ID": process.env.CLIENT_ID,
-        Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
+        "Client-ID": process.env.IGDB_CLIENT_ID,
+        Authorization: `Bearer ${process.env.IGDB_BEARER_TOKEN}`,
       } as HeadersInit,
       body: `fields name, slug, cover.image_id; where version_parent = null & category = (0,4,8,9,12);limit 9; search "${query}";`,
     });
@@ -98,8 +99,8 @@ export async function getGameData(query: string): Promise<GamedataResponseTypes>
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Client-ID": process.env.CLIENT_ID,
-        Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
+        "Client-ID": process.env.IGDB_CLIENT_ID,
+        Authorization: `Bearer ${process.env.IGDB_BEARER_TOKEN}`,
       } as HeadersInit,
       body: `fields name, cover.image_id, first_release_date, involved_companies.company.name, involved_companies.developer, involved_companies.publisher, summary, websites.category, websites.url; where slug = "${query}" & version_parent = null & category = (0,4,8,9,12);`,
     });
@@ -487,8 +488,8 @@ export async function getNameCover(gameId: number | null): Promise<GetNameCoverR
       method: "POST",
       headers: {
         Accept: "application/json",
-        "Client-ID": process.env.CLIENT_ID,
-        Authorization: `Bearer ${process.env.BEARER_TOKEN}`,
+        "Client-ID": process.env.IGDB_CLIENT_ID,
+        Authorization: `Bearer ${process.env.IGDB_BEARER_TOKEN}`,
       } as HeadersInit,
       body: `fields name, cover.image_id; where id = ${gameId};`,
     });
@@ -614,3 +615,32 @@ export async function modDenyReport(reportId: number) {
   revalidatePath("/admin/dashboard");
   return { success: true, message: "SUCCESS: Report status set to 'DENIED'." };
 }
+
+export async function GET(request: NextRequest) {
+  const authHeader = request.headers.get("authorization");
+  if (authHeader !== `Bearer ${process.env.CRON_SECRET}`) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  console.log("Cron job running at:", new Date().toISOString());
+
+  await performCronTask();
+  console.log("Cron job success");
+
+  return NextResponse.json({ success: true });
+}
+
+async function performCronTask() {
+  console.log("Performing performCronTask.");
+  // For testing, just wait a second
+  await new Promise((resolve) => setTimeout(resolve, 1000));
+  console.log("performCronTask successful.");
+}
+
+// async function getNewIgdbBearerToken() {
+//   const postLink = `https://id.twitch.tv/oauth2/token?client_id=${process.env.IGDB_CLIENT_ID}&client_secret=${process.env.IGDB_CLIENT_SECRET}&grant_type=client_credentials`;
+//   // Request new IGDB_BEARER_TOKEN from IGDB API.
+//   // POST using IGDB_CLIENT_ID & IGDB_CLIENT_SECRET
+//   // UPDATE IGDB_BEARER_TOKEN ON VERCEL ENV FOR PROD
+//   // REDEPLOY BUILD TO SAVE ENV CHANGES
+// }
