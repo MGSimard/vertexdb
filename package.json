@@ -31,17 +31,19 @@
     "zod": "^3.24.1"
   },
   "devDependencies": {
+    "@eslint/eslintrc": "^3.2.0",
+    "@eslint/js": "^9.18.0",
     "@types/eslint": "^9.6.1",
     "@types/node": "^22.10.5",
     "@types/react": "^19.0.4",
     "@types/react-dom": "^19.0.2",
     "@typescript-eslint/eslint-plugin": "^8.19.1",
     "@typescript-eslint/parser": "^8.19.1",
+    "drizzle-kit": "^0.24.2",
     "eslint": "^9.18.0",
     "eslint-config-next": "15.1.4",
     "eslint-plugin-drizzle": "^0.2.3",
-    "typescript": "^5.7.3",
-    "drizzle-kit": "^0.24.2"
+    "typescript": "^5.7.3"
   },
   "ct3aMetadata": {
     "initVersion": "7.36.2"
