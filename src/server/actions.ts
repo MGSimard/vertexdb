@@ -21,7 +21,7 @@ import { headers } from "next/headers";
 /* SEARCH BAR FETCH */
 export async function getGames(query: string): Promise<GetGamesResponseTypes> {
   // Optional ratelimit for both auth and non-auth users on non-auth server actions
-  // const user = auth();
+  // const user = await auth();
   // const forwardedFor = headers().get("x-forwarded-for");
   // const realIP = headers().get("x-real-ip");
 
@@ -69,7 +69,7 @@ export async function getGames(query: string): Promise<GetGamesResponseTypes> {
 /* FETCH CURRENTGAME DATA */
 export async function getGameData(query: string): Promise<GamedataResponseTypes> {
   // Optional ratelimit for both auth and non-auth users on non-auth server actions
-  // const user = auth();
+  // const user = await auth();
   // const forwardedFor = headers().get("x-forwarded-for");
   // const realIP = headers().get("x-real-ip");
 

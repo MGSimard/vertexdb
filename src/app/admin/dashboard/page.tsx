@@ -8,7 +8,7 @@ import { OtherCountSkeleton, ReportsCardSkeleton } from "@/components/page_dashb
 import "@/styles/dashboard.css";
 
 export default async function Page() {
-  const currentUser = auth();
+  const currentUser = await auth();
 
   if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
     notFound();
