@@ -2,7 +2,7 @@ import { ToastIconWarning, Checkmark } from "@/components/icons";
 
 type IconOptions = "success" | "warning";
 
-const iconMap: Record<IconOptions, JSX.Element> = {
+const iconMap: Record<IconOptions, React.ReactNode> = {
   warning: <ToastIconWarning />,
   success: <Checkmark />,
 };
