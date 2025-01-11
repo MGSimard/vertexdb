@@ -14,9 +14,6 @@ importers:
       '@clerk/themes':
         specifier: ^2.2.5
         version: 2.2.5
-      '@eslint/eslintrc':
-        specifier: ^3.2.0
-        version: 3.2.0
       '@t3-oss/env-nextjs':
         specifier: ^0.10.1
         version: 0.10.1(typescript@5.7.3)(zod@3.24.1)
@@ -57,6 +54,9 @@ importers:
         specifier: ^3.24.1
         version: 3.24.1
     devDependencies:
+      '@eslint/eslintrc':
+        specifier: ^3.2.0
+        version: 3.2.0
       '@types/eslint':
         specifier: ^9.6.1
         version: 9.6.1
