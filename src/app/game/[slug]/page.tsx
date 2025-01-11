@@ -2,9 +2,11 @@ import { Suspense } from "react";
 import { GameHeader } from "@/components/page_game/GameHeader";
 import { GameSkeleton } from "@/components/page_game/GameSkeleton";
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+  const slug = (await params).slug;
+
   return {
-    title: `VERTEXDB - ${params.slug}`,
+    title: `VERTEXDB - ${slug}`,
   };
 }
 
