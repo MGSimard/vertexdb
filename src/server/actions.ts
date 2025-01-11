@@ -122,7 +122,7 @@ export async function getInitialRss(currentGameId: number | undefined) {
   if (currentGameId === null || currentGameId === undefined) {
     return { success: false, message: "DATABASE ERROR: Missing game ID." };
   }
-  const user = auth();
+  const user = await auth();
 
   // Optional ratelimit for both auth and non-auth users on non-auth server actions
   // const forwardedFor = headers().get("x-forwarded-for");
@@ -202,7 +202,7 @@ const CreateSubmission = submissionSchema.omit({
 });
 
 export async function createSubmission(currentState: FormStatusTypes, formData: FormData) {
-  const user = auth();
+  const user = await auth();
 
   if (!user.userId) {
     return { success: false, message: "AUTH ERROR: Unauthorized." };
@@ -256,7 +256,7 @@ const voteSchema = z.object({
 });
 const CreateVote = voteSchema.omit({ voteId: true, voterId: true, createdAt: true, updatedAt: true });
 export async function createVote(rssId: number, voteType: boolean) {
-  const user = auth();
+  const user = await auth();
   if (!user.userId) {
     return { success: false, message: "AUTH ERROR: Unauthorized" };
   }
@@ -361,7 +361,7 @@ const reportSchema = z.object({
 });
 const CreateReport = reportSchema.omit({ reportBy: true });
 export async function createReport(currentState: FormStatusTypes, formData: FormData) {
-  const user = auth();
+  const user = await auth();
   if (!user.userId) {
     return { success: false, message: "AUTH ERROR: Unauthorized." };
   }
@@ -512,7 +512,7 @@ const approveSchema = z.object({
   rssId: z.coerce.number().int().positive().lte(2147483647),
 });
 export async function modApproveReport(reportId: number, rssId: number) {
-  const currentUser = auth();
+  const currentUser = await auth();
   if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
     return { success: false, message: "AUTH ERROR: Unauthorized" };
   }
@@ -573,8 +573,7 @@ const denySchema = z.object({
   reportId: z.coerce.number().int().positive().lte(2147483647),
 });
 export async function modDenyReport(reportId: number) {
-  const currentUser = auth();
-
+  const currentUser = await auth();
   if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
     return { success: false, message: "AUTH ERROR: Unauthorized" };
   }
