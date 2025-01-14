@@ -1,9 +1,9 @@
-import typescriptEslint from "@typescript-eslint/eslint-plugin";
-/** @ts-ignore - eslint-plugin-drizzle is untyped */
-import drizzle from "eslint-plugin-drizzle";
-import tsParser from "@typescript-eslint/parser";
 /** @ts-ignore - @eslint/eslintrc is untyped */
 import { FlatCompat } from "@eslint/eslintrc";
+import tsEslint from "@typescript-eslint/eslint-plugin";
+import tsParser from "@typescript-eslint/parser";
+/** @ts-ignore - eslint-plugin-drizzle is untyped */
+import drizzle from "eslint-plugin-drizzle";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -18,7 +18,7 @@ export default [
   ),
   {
     plugins: {
-      "@typescript-eslint": typescriptEslint,
+      "@typescript-eslint": tsEslint,
       drizzle,
     },
 

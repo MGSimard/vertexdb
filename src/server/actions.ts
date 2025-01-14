@@ -16,7 +16,7 @@ import type {
   GetNameCoverResponseTypes,
   GetNameCoverTypes,
 } from "@/types/types";
-import { headers } from "next/headers";
+// import { headers } from "next/headers";
 
 /* SEARCH BAR FETCH */
 export async function getGames(query: string): Promise<GetGamesResponseTypes> {
