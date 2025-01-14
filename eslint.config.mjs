@@ -24,7 +24,7 @@ export default [
     languageOptions: {
       parser: tsParser,
       ecmaVersion: "latest",
-      sourceType: "script",
+      sourceType: "module",
       parserOptions: {
         project: true,
       },
