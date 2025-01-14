@@ -21,7 +21,6 @@ export default [
       "@typescript-eslint": tsEslint,
       drizzle,
     },
-
     languageOptions: {
       parser: tsParser,
       ecmaVersion: "latest",
