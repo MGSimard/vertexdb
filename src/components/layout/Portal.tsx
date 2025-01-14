@@ -6,11 +6,11 @@ import { createPortal } from "react-dom";
 export function Portal({ onClose, children }: { onClose: () => void; children: React.ReactNode }) {
   const [mounted, setMounted] = useState(false);
 
-  const handleKeyDown = (e: KeyboardEvent) => {
-    if (e.key === "Escape") onClose();
-  };
-
   useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") onClose();
+    };
+
     document.addEventListener("keydown", handleKeyDown);
     setMounted(true);
 
