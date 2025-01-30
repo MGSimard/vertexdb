@@ -133,10 +133,12 @@ Upon denial (and passing Auth+RBAC & validation checks), the following occurs as
 
 ## Contact
 
-MGSimard - mgsimard.dev@gmail.com
-[@MGSimard on X](https://x.com/MGSimard)
+MGSimard  
+X: [@MGSimard](https://x.com/MGSimard)  
+GitHub: [@MGSimard](https://github.com/MGSimard)  
+Mail: [mgsimard.dev@gmail.com](mailto:mgsimard.dev@gmail.com)
 
-For more info, view my portfolio at [mgsimard.dev](https://mgsimard.dev). Resume attached.
+For more info, view my portfolio at [mgsimard.dev](https://mgsimard.dev).
 
 <details>
 <summary><h2>Task List</h2></summary>
