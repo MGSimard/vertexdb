@@ -14,7 +14,13 @@ export function ThemeToggle() {
   useEffect(() => setMounted(true), []);
 
   return (
-    <button type="button" onClick={themeToggle} id="theme-toggle" title="Toggle theme" aria-label="Toggle theme">
+    <button
+      type="button"
+      className="theme-toggle"
+      onClick={themeToggle}
+      id="theme-toggle"
+      title="Toggle theme"
+      aria-label="Toggle theme">
       {mounted && (resolvedTheme === "light" ? <PowerOn /> : <PowerOff />)}
     </button>
   );
