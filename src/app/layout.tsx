@@ -63,7 +63,7 @@ export default function RootLayout({
     <ClerkProvider appearance={{ baseTheme: dark, variables: { fontSize: "1.6rem" } }}>
       <html lang="en" suppressHydrationWarning /*for next-themes*/>
         <body className={`${rajdhani.className} antialiased`}>
-          <ThemeProvider disableTransitionOnChange>
+          <ThemeProvider disableTransitionOnChange defaultTheme="system" enableSystem>
             <header>
               <Navbar />
               <GamesIndexed />
