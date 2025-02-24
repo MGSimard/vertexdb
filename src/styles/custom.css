@@ -172,7 +172,7 @@
 .card:focus-within .card-left::after {
   background-color: var(--clr-ui-overlay-active);
 }
-.card:hover .card-content::before {
+.card:hover .card-content::after {
   position: absolute;
   inset: 0;
   content: "";
