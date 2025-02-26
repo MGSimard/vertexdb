@@ -182,6 +182,7 @@
   pointer-events: none;
 }
 .card-content {
+  position: relative;
   padding: 1rem;
   flex-grow: 1;
   border-left: 1px solid var(--clr-ui-border-idle);
