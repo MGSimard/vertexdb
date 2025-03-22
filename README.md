@@ -112,7 +112,7 @@ Upon denial (and passing Auth+RBAC & validation checks), the following occurs as
 ### Built With
 
 - [Based on T3 Stack](https://create.t3.gg/)
-- [Next.js 15.0.0-rc.0](https://nextjs.org/)
+- [Next.js 15.2.3](https://nextjs.org/)
 - [React 19.0.0-rc-19bd26be-20240815](https://react.dev/)
 - [TypeScript 5.5.3](https://www.typescriptlang.org/)
 - [Drizzle (PostgreSQL)](https://orm.drizzle.team/)
