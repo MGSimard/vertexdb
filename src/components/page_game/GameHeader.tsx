@@ -28,7 +28,7 @@ export async function GameHeader({ slug }: { slug: string }) {
               className="gic-middle"
               style={{
                 backgroundImage: `url(${
-                  gameData?.cover?.image_id ? coverPath("720p", gameData.cover.image_id) : "/missingasset.webp"
+                  gameData?.cover?.image_id ? coverPath("720p", gameData.cover.image_id) : "/assets/missing_asset.webp"
                 })`,
               }}></div>
             <div className="gic-right"></div>
@@ -36,7 +36,7 @@ export async function GameHeader({ slug }: { slug: string }) {
         </div>
         <div className="game-metadata">
           <div className="game-table">
-            <h1>{gameData?.name ? gameData.name : "GAME NOT FOUND"}</h1>
+            <h1>{gameData?.name ?? "GAME NOT FOUND"}</h1>
             <table className="table-vertical">
               <tbody>
                 <tr>

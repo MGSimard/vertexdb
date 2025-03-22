@@ -10,7 +10,9 @@ export function Result({ game }: { game: GameSearchbarTypes }) {
           className="search-thumb"
           style={{
             backgroundImage: `url(${
-              game.cover?.image_id ? `${coverPath("cover_small", game.cover.image_id)}` : "/thumbph.webp"
+              game.cover?.image_id
+                ? `${coverPath("cover_small", game.cover.image_id)}`
+                : "/assets/placeholder_cover.webp"
             })`,
           }}></div>
         <span>{game.name}</span>

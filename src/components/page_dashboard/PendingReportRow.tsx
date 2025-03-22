@@ -27,7 +27,7 @@ export async function PendingReportRow({ reportInfo }: { reportInfo: ReportTypes
         className="prr-left"
         src={
           !nameAndCover.success || !nameAndCover.data?.cover?.image_id
-            ? "/missingasset.webp"
+            ? "/assets/missing_asset.webp"
             : coverPath("720p", nameAndCover.data.cover.image_id)
         }
         alt="Game Cover"
