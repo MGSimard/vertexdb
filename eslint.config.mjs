@@ -1,7 +1,8 @@
 import { FlatCompat } from "@eslint/eslintrc";
 import tseslint from "typescript-eslint";
-import drizzle from "eslint-plugin-drizzle";
+import tsParser from "@typescript-eslint/parser";
 import reactCompiler from "eslint-plugin-react-compiler";
+import drizzle from "eslint-plugin-drizzle";
 
 const compat = new FlatCompat({
   baseDirectory: import.meta.dirname,
@@ -43,8 +44,12 @@ export default tseslint.config(
       reportUnusedDisableDirectives: true,
     },
     languageOptions: {
+      parser: tsParser,
+      ecmaVersion: "latest",
+      sourceType: "module",
       parserOptions: {
-        projectService: true,
+        project: true,
+        tsconfigRootDir: import.meta.dirname,
       },
     },
   }
