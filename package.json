@@ -2,7 +2,23 @@
   "name": "vertexdb",
   "version": "1.1.0",
   "private": true,
+  "author": "MGSimard <mgsimard.dev@gmail.com> (https://mgsimard.dev)",
+  "description": "VertexDB is a community-powered resource database for video games.",
   "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MGSimard/vertexdb.git"
+  },
+  "keywords": [
+    "vertexdb",
+    "next.js",
+    "typescript",
+    "drizzle"
+  ],
+  "bugs": {
+    "url": "https://github.com/MGSimard/vertexdb/issues"
+  },
+  "homepage": "https://github.com/MGSimard/vertexdb#readme",
   "scripts": {
     "build": "next build",
     "dev": "next dev",
@@ -38,10 +54,12 @@
     "@types/react-dom": "^19.0.4",
     "@typescript-eslint/eslint-plugin": "^8.27.0",
     "@typescript-eslint/parser": "^8.27.0",
+    "babel-plugin-react-compiler": "19.0.0-beta-3229e95-20250315",
     "drizzle-kit": "^0.24.2",
     "eslint": "^9.23.0",
     "eslint-config-next": "15.2.3",
     "eslint-plugin-drizzle": "^0.2.3",
+    "eslint-plugin-react-compiler": "19.0.0-beta-3229e95-20250315",
     "typescript": "^5.8.2",
     "typescript-eslint": "^8.27.0"
   },
