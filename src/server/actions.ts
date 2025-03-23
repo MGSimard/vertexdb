@@ -413,6 +413,11 @@ export async function createReport(currentState: FormStatusTypes, formData: Form
  */
 /* GET TOTAL AMOUNT OF SUBMISSIONS */
 export async function getTotalSubmissions() {
+  const currentUser = await auth();
+  if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
+    return { success: false, message: "AUTH ERROR: Unauthorized" };
+  }
+
   try {
     const [submissionsAmount] = await db.select({ count: count() }).from(gameRssEntries);
     return { success: false, data: submissionsAmount, message: "SUCCESS: Retrieved total submissions." };
@@ -423,6 +428,11 @@ export async function getTotalSubmissions() {
 
 /* GET TOTAL AMOUNT OF VOTES */
 export async function getTotalVotes() {
+  const currentUser = await auth();
+  if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
+    return { success: false, message: "AUTH ERROR: Unauthorized" };
+  }
+
   try {
     const [votesAmount] = await db.select({ count: count() }).from(gameRssVotes);
     return { success: true, data: votesAmount, message: "SUCCESS: Retrieved total votes." };
@@ -433,6 +443,11 @@ export async function getTotalVotes() {
 
 /* GET COUNT OF ALL REPORT STATUS TYPES */
 export async function getReportCounts() {
+  const currentUser = await auth();
+  if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
+    return { success: false, message: "AUTH ERROR: Unauthorized" };
+  }
+
   try {
     const [counts] = await db
       .select({
@@ -450,6 +465,11 @@ export async function getReportCounts() {
 
 /* GET REPORTS WITH PENDING STATUS */
 export async function getPendingReports() {
+  const currentUser = await auth();
+  if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
+    return { success: false, message: "AUTH ERROR: Unauthorized" };
+  }
+
   try {
     const pendingReports = await db
       .select({
@@ -481,6 +501,11 @@ export async function getPendingReports() {
 
 /* GET GAME NAME & COVER IMAGE FOR REPORTS IN ADMIN DASHBOARD */
 export async function getNameCover(gameId: number | null): Promise<GetNameCoverResponseTypes> {
+  const currentUser = await auth();
+  if (!currentUser.userId || currentUser.sessionClaims.metadata.role !== "admin") {
+    return { success: false, message: "AUTH ERROR: Unauthorized" };
+  }
+
   try {
     const res = await fetch("https://api.igdb.com/v4/games", {
       method: "POST",
